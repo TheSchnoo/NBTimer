@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script type="text/javascript" src="nb-2.1.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="script.js" type="text/javascript"></script>
+    <meta name="smart-nb-viewport" content="width:449; height:600" />
+    <meta name="smart-nb-enable-resize" content="true" />
+    <meta name="smart-nb-maintain-aspect-ratio" content="true" />
+</head>
+
+<body onload="init()">
+    <form name="timeform">
+        <p>
+            Time remaining: <span id="time">00:00</span>
+        </p>
+        <p>
+            Time2 remaining: <span id="time2">10</span>
+        </p>
+
+        <p>
+            <input type="text" id="timeBox" value=0 />
+        </p>
+        <br/>
+            <button type="button" id="startDownBtn">CountDown</button>
+            <button type="button" id="startUpBtn">CountUp</button>
+            <button type="button" id="pauseBtn">pause</button>    
+            <button type="button" id="stopBtn">Stop</button>
+</form>
+
+
+
+</body>
+
+</html>

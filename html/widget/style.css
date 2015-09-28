@@ -1,0 +1,153 @@
+html {
+    width: 100%;
+    height: 100%;
+    -webkit-user-select: none;
+}
+body {
+    margin: 0;
+    font-family: "helvetica";
+}
+#big_container {
+    display: inline-block;
+    padding: 2px;
+    width: 100%;
+    height: 100%;
+}
+/*-----------------------ANALOG CLOCK CSS*/
+
+#hour_hand {
+    position: fixed;
+    z-index: 2;
+    left: 158px;
+    transform-origin: bottom center;
+    top: 113px;
+    height: 112px;
+}
+#minute_hand {
+    position: fixed;
+    z-index: 1;
+    left: 158px;
+    transform-origin: bottom center;
+    top: 59px;
+    height: 165px;
+}
+#second_hand {
+    position: fixed;
+    z-index: 0;
+    left: 158px;
+    transform-origin: bottom center;
+    top: 32px;
+    height: 220px;
+}
+#centre_dot {
+    top: 158px;
+    left: 158px;
+    position: fixed;
+    z-index: 99;
+    width: 20px;
+    height: 20px;
+}
+#clockimg {
+    width: 100%;
+    height: 100%;
+}
+/*-----------------------DIGITAL CLOCK CSS*/
+
+#digitalclock {
+    position: relative;
+}
+#ampm {
+    float: right;
+    width: 10%;
+    margin-right: 10px;
+    margin-top: 3%;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    font-size: 120%;
+}
+#AM,
+#PM {
+    font-size: 100%;
+}
+#digitaltime {
+    font-size: 350%;
+    color: white;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: inline-block;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.inactive {
+    color: grey;
+}
+.active {
+    color: white;
+}
+#container {
+    background-color: black;
+    height: 24vh;
+}
+/*-----------------------BUTTONS CSS*/
+
+#setting_buttons img {
+    cursor: pointer;
+    width: 50px;
+    width: 16%;
+}
+#top_buttons img {
+    margin-left: 12px;
+    cursor: pointer;
+    height: 0.5em;
+    padding-bottom: 3px;
+}
+#bottom_buttons img {
+    margin-left: 12px;
+    cursor: pointer;
+    height: 0.5em;
+    padding-top: 3px;
+}
+#noonbutton {
+    cursor: pointer;
+    background: white;
+    margin-left: 25px;
+    font-size: 0.7em;
+}
+/*-----------------------INPUT CSS*/
+
+#hour_input {
+    width: 20%;
+    margin-left: 5%;
+    display: inline-block;
+}
+#hour_input img {
+    width: 75%;
+}
+#minute_input {
+    width: 20%;
+    margin-left: 5%;
+    display: inline-block;
+}
+#minute_input img {
+    width: 75%;
+}
+#second_input {
+    width: 20%;
+    margin-left: 5%;
+    display: inline-block;
+}
+#second_input img {
+    width: 75%;
+}
+#timeinput {
+    color: white;
+    width: 80%;
+    font-size: 135%;
+}
+#timeinput div input {
+    width: 70%;
+    padding: 2px;
+}

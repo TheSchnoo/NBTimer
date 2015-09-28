@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <name>Clock Widget</name>
+  <version>1.0.74</version>
+  <id>com.smarttech.addon_widget.CLOCK</id>
+  <description>Analog and digital clock</description>
+  <company>SMART Technologies</company>
+  <website>http://www.smarttech.com</website>
+  <contact>
+    <phone>Toll free 1.866.518.6791 or 1.403.228.5940</phone>
+    <email>smarttech.com/contactsupport</email>
+    <address>SMART Technologies, 3636 Research Rd NW, Calgary, AB T2L 1Y1, CANADA</address>
+  </contact>
+  <authors>
+    <author>Jeremy Francispillai, Jacob Chan</author>
+  </authors>
+  <minimum-version>2.1.0</minimum-version>
+  <access-level>widget</access-level>
+  <content>
+    <file path="_nb/persist.json" hash="6b7678915cc7be623674a6bcb7af86d539094d6c"/>
+    <file path="index.html" hash="b745c3735ccfb72f1abbed14666f6ee94322bec6"/>
+    <file path="script.js" hash="f80b7a997a89ee3c602e0e5e8e2d23a9006ab7ca"/>
+    <file path="src/12h.png" hash="ee235267069fc804bb4be54afa76d8fdfb335771"/>
+    <file path="src/24h.png" hash="3dc9632eda4eff90124a8f8aed6fb7878d95db01"/>
+    <file path="src/arrow.png" hash="d37cdf426294e05ab53be01ad3846def888bac0e"/>
+    <file path="src/arrow2.png" hash="6ab77c9b27c8145d8bdbc429ccf525efaae40fd1"/>
+    <file path="src/centre.png" hash="42ae0f463f8e3f35259d5a7e00ca6271017c360d"/>
+    <file path="src/centre.svg" hash="65f7d2edfc164b6d49667e07139594917d4f197f"/>
+    <file path="src/clock.png" hash="6d88c6d1d8c7d53ccda9dfe1f2b3be60476451b4"/>
+    <file path="src/clock.svg" hash="faa74bc73149f0214dff686976143cc270398cfe"/>
+    <file path="src/hide-seconds.png" hash="05293124dc17b38ea99697b299e492c2ebc01d23"/>
+    <file path="src/hide.png" hash="5702bc8030b4080410f08a6ad22008bb76f46769"/>
+    <file path="src/hour.png" hash="caa6b0f2dfedf11cf6346b33020fda1047d0c05e"/>
+    <file path="src/hour.svg" hash="23f783b76958a8d3bbbc8dba1b9b32934f79e2ef"/>
+    <file path="src/minute.png" hash="9d9707b4a05a33db84fe8757b7a104c43ff1d659"/>
+    <file path="src/minute.svg" hash="b5179adcdf5d7bbd4de4c65b68504f07cb6780bf"/>
+    <file path="src/reset.png" hash="29714fa328ab27b6e435c6d465c99dd14dcbd314"/>
+    <file path="src/second.png" hash="4e05876deccea586434f0c78a449167fc2286691"/>
+    <file path="src/second.svg" hash="69022cc17ee511858652e08ae89c0f92e18fd7bc"/>
+    <file path="src/set.png" hash="2218cf22938db058864207faf62ffc0325f0a334"/>
+    <file path="src/show.png" hash="df00a31e712790018e80a073ac8d115d16a2f594"/>
+    <file path="src/start.png" hash="0786c12bd16a0d584046ac5a2eb30352fb2a1104"/>
+    <file path="style.css" hash="548d4d523c1abed9f238748d2b11ab340e18b04f"/>
+  </content>
+</manifest>

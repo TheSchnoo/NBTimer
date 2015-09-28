@@ -1,0 +1,19 @@
+<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3" xmlns:smartnotebook="http://www.smarttech.com/2006-01/notebook" xmlns:smartgallery="http://www.smarttech.com/2006-01/gallery" identifier="id1" version="2006-01" smartnotebook:filesource="SMART Notebook Macintosh Debug Version 9.5">
+		<metadata>
+		<schema>ADL SCORM</schema>
+		<schemaversion>CAM 1.3</schemaversion>
+		<adlcp:location>metadata.xml</adlcp:location>
+		</metadata>
+		<organizations>
+		<organization id="pagegroups"/>
+		</organizations>
+		<resources>
+		<resource identifier="pages" href="page0.svg" type="webcontent" adlcp:scormType="asset">
+		<file href="page0.svg"/>
+		</resource>
+		<resource identifier="images">
+		<file href="ogies/SMART Notebook/NotebookCrashRecovery/Notebook/images/internetBrowserImage.png"/>
+		</resource>
+		<resource identifier="html"><file href="html/widget_nb/persist.json"/><file href="html/widgetindex.html"/><file href="html/widgetscript.js"/><file href="html/widgetsrc/12h.png"/><file href="html/widgetsrc/24h.png"/><file href="html/widgetsrc/arrow.png"/><file href="html/widgetsrc/arrow2.png"/><file href="html/widgetsrc/centre.png"/><file href="html/widgetsrc/centre.svg"/><file href="html/widgetsrc/clock.png"/><file href="html/widgetsrc/clock.svg"/><file href="html/widgetsrc/hide-seconds.png"/><file href="html/widgetsrc/hide.png"/><file href="html/widgetsrc/hour.png"/><file href="html/widgetsrc/hour.svg"/><file href="html/widgetsrc/minute.png"/><file href="html/widgetsrc/minute.svg"/><file href="html/widgetsrc/reset.png"/><file href="html/widgetsrc/second.png"/><file href="html/widgetsrc/second.svg"/><file href="html/widgetsrc/set.png"/><file href="html/widgetsrc/show.png"/><file href="html/widgetsrc/start.png"/><file href="html/widgetstyle.css"/><file href="html/widget/manifest.xml"/><file href="html/widget/manifest.sig"/></resource>
+		</resources>
+		</manifest>
