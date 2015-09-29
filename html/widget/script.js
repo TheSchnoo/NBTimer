@@ -43,10 +43,6 @@ function stopWatch(){
 
         clearInterval(timer);
 
-        
-
-        alert('Finished counting down from '+timerSeconds);
-
     }else{
 
         var percent = 100-((seconds/timerSeconds)*100);
@@ -146,6 +142,11 @@ Timer.prototype.startDown = function(e) {
 
 Timer.prototype.startUp = function(e) {
     
+    var countTo = this.time;
+    if (e == null) {
+        this.time = 0;
+    }
+    
     this.type = "up";
     this.isPaused = false;
     
@@ -155,10 +156,6 @@ Timer.prototype.startUp = function(e) {
     if (this.intervalID != 0) {
         clearInterval(this.intervalID);
     }
-    
-    var countTo = this.time;
-    
-    this.time = 0;
     
     this.printTime();
     
@@ -202,16 +199,12 @@ Timer.prototype.pause = function() {
 // unpause timer
 Timer.prototype.unpause = function() {
     
-    alert("m");
-    
     this.isPaused = false;
     
-    alert("o");
-    
-    if (this.time == "up") {
-        this.startUp();
+    if (this.type == "up") {
+        this.startUp(this.time);
     }
-    if (this.time == "down") {
+    if (this.type == "down") {
         this.startDown();
     }
 };
