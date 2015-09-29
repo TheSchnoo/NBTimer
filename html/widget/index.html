@@ -15,21 +15,25 @@
 <body onload="init()">
     <form name="timeform">
         <p>
-            Time remaining: <span id="time">00:00:00</span>
-            
-            <button type="button" id="addHour">Add Hour</button>
-            <button type="button" id="addMinute">Add Minute</button>
-            <button type="button" id="addSecond">Add Second</button>
+        <div>
+            <span id="time">00:00:00</span>
+            </br>
+            <img src="src/arrow_up.png" id="addHour"></image>
+            <img src="src/arrow_down.png"id="subHour"></input>
+    &nbsp &nbsp
+            <img src="src/arrow_up.png" id="addMinute"></input>
+            <img src="src/arrow_down.png" id="subMinute"></input>
+    &nbsp &nbsp
+            <img src="src/arrow_up.png" id="addSecond"></input>
+            <img src="src/arrow_down.png" id="subSecond"></input>
+        </div>
+
+        <button type="button" id="startDownBtn">CountDown</button>
+        <button type="button" id="startUpBtn">CountUp</button>
+        <button type="button" id="pauseBtn">Pause</button>
+        <button type="button" id="resetBtn">Reset</button>
         </p>
-
-        <br/>
-            <button type="button" id="startDownBtn">CountDown</button>
-            <button type="button" id="startUpBtn">CountUp</button>
-            <button type="button" id="pauseBtn">Pause</button>    
-            <button type="button" id="resetBtn">Reset</button>
     </form>
-
-        <input type="button" id="watch" value="Start" />
 
         <div class="timer"></div><div class="timer fill"></div>
 

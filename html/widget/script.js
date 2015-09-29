@@ -58,7 +58,6 @@ function stopWatch(){
 }
 
 function StartCircle(sec, resetTriggered){
-
             if (resetTriggered === false){
 
                 timerSeconds = sec;
@@ -71,8 +70,6 @@ function StartCircle(sec, resetTriggered){
                 clearInterval(timer);
                 drawTimer(0);
             }
-
-
 }
 
 function formatTimeFromSec(sec){
@@ -235,8 +232,11 @@ function init() {
     var resetBtn = document.getElementById("resetBtn");
     
     var addHourBtn = document.getElementById("addHour");
+    var subHourBtn = document.getElementById("subHour");
     var addMinuteBtn = document.getElementById("addMinute");
+    var subMinuteBtn = document.getElementById("subMinute");
     var addSecondBtn = document.getElementById("addSecond");
+    var subSecondBtn = document.getElementById("subSecond");
 
     startDownBtn.onclick = function() {
         pauseBtn.innerHTML = "Pause";
@@ -278,12 +278,44 @@ function init() {
         timer.time = timer.time + 3600;
         timer.printTime();
     };
+    
+    subHourBtn.onclick = function() {
+        if (timer.time - 3600 <= 0) {
+            timer.time = 0;
+        }
+        else {
+            timer.time = timer.time - 3600;
+        }
+        timer.printTime();
+    };
+    
     addMinuteBtn.onclick = function() {
         timer.time = timer.time + 60;
         timer.printTime();
     };
+    
+    subMinuteBtn.onclick = function() {
+        if (timer.time - 60 <= 0) {
+            timer.time = 0;
+        }
+        else {
+            timer.time = timer.time - 60;
+        }
+        timer.printTime();
+    };
+    
     addSecondBtn.onclick = function() {
         timer.time = timer.time + 1;
+        timer.printTime();
+    };
+    
+    subSecondBtn.onclick = function() {
+        if (timer.time - 1 <= 0) {
+            timer.time = 0;
+        }
+        else {
+            timer.time = timer.time - 1;
+        }
         timer.printTime();
     };
 }
