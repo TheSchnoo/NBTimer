@@ -125,12 +125,6 @@ Timer.prototype.unpause = function(e) {
  * init method
  */
 function init() {
-
-    var timer2 = new Timer(100, 1000);
-    timer2.outputSpanID = "time2";
-    //timer2.init();
-    timer2.startDown();
-
     // get new instance of timer
     var timer = new Timer();
     timer.outputSpanID = "time";
@@ -140,6 +134,10 @@ function init() {
     var startUpBtn = document.getElementById("startUpBtn");
     var pauseBtn = document.getElementById("pauseBtn");
     var stopBtn = document.getElementById("stopBtn");
+    
+    var addHourBtn = document.getElementById("add hour");
+    var addMinuteBtn = document.getElementById("add minute");
+    var addSecondBtn = document.getElementById("add second");
 
     startDownBtn.onclick = function() {
         timer.count = document.getElementById("timeBox").value;
@@ -174,5 +172,10 @@ function init() {
 
     stopBtn.onclick = function() {
         timer.stop();
+    };
+    
+    addSecondBtn.onclick = function() {
+        document.getElementById("time").value ++;
+        alert(document.getElementById("time").value);
     };
 }
