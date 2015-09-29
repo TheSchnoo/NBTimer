@@ -14,6 +14,74 @@ function Timer(count, interval) {
     this.hours = count ? count : 00;
 }
 
+function drawTimer(percent){
+
+    $('div.timer').html('<div class="percent"></div><div id="slice"'+(percent > 50?' class="gt50"':'')+'><div class="pie"></div>'+(percent > 50?'<div class="pie fill"></div>':'')+'</div>');
+
+    var deg = 360/100*percent;
+
+    $('#slice .pie').css({
+
+        '-moz-transform':'rotate('+deg+'deg)',
+
+        '-webkit-transform':'rotate('+deg+'deg)',
+
+        '-o-transform':'rotate('+deg+'deg)',
+
+        'transform':'rotate('+deg+'deg)'
+
+    });
+
+
+}
+
+function stopWatch(){
+
+    var seconds = (timerFinish-(new Date().getTime()))/1000;
+
+    if(seconds <= 0){
+
+        drawTimer(100);
+
+        clearInterval(timer);
+
+        
+
+        alert('Finished counting down from '+timerSeconds);
+
+    }else{
+
+        var percent = 100-((seconds/timerSeconds)*100);
+
+        drawTimer(percent);
+
+    }
+
+}
+
+function StartCircle(sec){
+
+
+        if($('input[type=button]#watch').val() == 'Start'){
+
+            $('input[type=button]#watch').val('Stop');
+
+            timerSeconds = sec;
+
+            timerFinish = new Date().getTime()+(timerSeconds*1000);
+
+            timer = setInterval('stopWatch()',50);
+
+        }else{
+
+            $('input[type=button]#watch').val('Start');
+
+            clearInterval(timer);
+
+        }
+
+}
+
 function formatTimeFromSec(sec){
     var seconds = sec;
     var minutes = 0
@@ -158,6 +226,7 @@ function init() {
     startDownBtn.onclick = function() {
         timer.interval = 1000;
         timer.startDown();
+        StartCircle(timer.time);
         if (timer.isPaused === true) {
             pauseBtn.innerHTML = "pause";
         }
@@ -198,3 +267,4 @@ function init() {
         timer.printTime();
     };
 }
+
