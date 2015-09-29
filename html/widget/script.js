@@ -14,6 +14,34 @@ function Timer(count, interval) {
     this.hours = count ? count : 00;
 }
 
+function convertTimeToSec(sec){
+    var seconds = 0
+    var minutes = 0
+    var hours = 0
+    while (sec - 60 >= 0) {
+        minutes++;
+        sec = sec - 60;
+    }
+    while (minutes - 60 >= 0) {
+        hours++;
+        minutes = minutes - 60;
+    }
+    return convertToTimeFormat(hours, minutes, seconds);
+}
+
+function convertToTimeFormat(hr, min, sec){
+    if (hr < 10) {
+        hour = "0" + hr;
+    }
+    if (min < 10) {
+        minute = "0" + min;
+    }
+    if (sec < 10) {
+        second = "0" + sec;
+    }
+    return hour + ":" + minute + ":" + second;
+}
+        
 // init function
 Timer.prototype.init = function() {
     this.alert();
@@ -41,6 +69,8 @@ Timer.prototype.printTime = function() {
 
 // start the timer
 Timer.prototype.startDown = function(e) {
+    
+    document.getElementById("time").style.color = "black";
 
     //clear interval
     if (this.intervalID != 0) {
@@ -54,21 +84,26 @@ Timer.prototype.startDown = function(e) {
 
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
-        self.count -= 1;
-        if (self.count >= 0) {
+        self.second -- ;
+        if (self.count > 0) {
             self.printTime();
         } else {
+            document.getElementById("time").style.color = "red";
             self.stop();
         }
     }, self.interval);
 };
 
 Timer.prototype.startUp = function(e) {
+    
+    document.getElementById("time").style.color = "black";
 
     //clear interval
     if (this.intervalID != 0) {
         clearInterval(this.intervalID);
     }
+    
+    var countTo = document.getElementById("time").value;
 
     //print time
     this.printTime();
@@ -86,10 +121,11 @@ Timer.prototype.startUp = function(e) {
                 self.minutes = 0;
                 self.hours ++;
             }
-        if (self.seconds >= 0) {
-            self.printTime();
-        } else {
+        if (self.seconds == countTo) {
             self.stop();
+            document.getElementById("time").style.color = "red";
+        } else {
+            self.printTime();
         }
     }, self.interval);
 };
@@ -177,5 +213,9 @@ function init() {
     addSecondBtn.onclick = function() {
         document.getElementById("time").value ++;
         alert(document.getElementById("time").value);
+    };
+    
+    addHourBtn.onclick = function() {
+        alert(convertTimeToSec(3));
     };
 }
