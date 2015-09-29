@@ -58,7 +58,7 @@ Timer.prototype.startDown = function(e) {
         if (self.count >= 0) {
             self.printTime();
         } else {
-            self.stop();
+            self.reset();
         }
     }, self.interval);
 };
@@ -89,19 +89,24 @@ Timer.prototype.startUp = function(e) {
         if (self.seconds >= 0) {
             self.printTime();
         } else {
-            self.stop();
+            self.reset();
         }
     }, self.interval);
 };
 
-// stop timer
-Timer.prototype.stop = function() {
+// reset timer
+Timer.prototype.reset = function() {
     //this.alert();
     clearInterval(this.intervalID);
+
     this.count = 0;
-    this.interval = 0;
+    this.seconds = 0;
+    this.minutes = 0;
+    this.hours = 0;
     this.isPaused = false;
+    pauseBtn.innerHTML = "pause"
     this.printTime();
+
     if(this.callback) {
         this.callback();
     }
@@ -125,6 +130,7 @@ Timer.prototype.unpause = function(e) {
  * init method
  */
 function init() {
+
     // get new instance of timer
     var timer = new Timer();
     timer.outputSpanID = "time";
@@ -133,11 +139,7 @@ function init() {
     var startDownBtn = document.getElementById("startDownBtn");
     var startUpBtn = document.getElementById("startUpBtn");
     var pauseBtn = document.getElementById("pauseBtn");
-    var stopBtn = document.getElementById("stopBtn");
-    
-    var addHourBtn = document.getElementById("add hour");
-    var addMinuteBtn = document.getElementById("add minute");
-    var addSecondBtn = document.getElementById("add second");
+    var resetBtn = document.getElementById("resetBtn");
 
     startDownBtn.onclick = function() {
         timer.count = document.getElementById("timeBox").value;
@@ -149,10 +151,7 @@ function init() {
     };
     
     startUpBtn.onclick = function() {
-        timer.count = 0;
-        timer.seconds = 0;
-        timer.minutes = 0;
-        timer.hours = 0;
+
         timer.interval = 1000;
         timer.startUp();
         if (timer.isPaused === true) {
@@ -170,12 +169,7 @@ function init() {
         }
     };
 
-    stopBtn.onclick = function() {
-        timer.stop();
-    };
-    
-    addSecondBtn.onclick = function() {
-        document.getElementById("time").value ++;
-        alert(document.getElementById("time").value);
+    resetBtn.onclick = function() {
+        timer.reset();
     };
 }
