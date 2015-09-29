@@ -3,7 +3,7 @@
  * is not the same. Otherwise unpleasant things may happen.
  */
 function Timer(count, interval) {
-    this.count = count ? count : 0;
+    this.time = count ? count : 0;
     this.interval = interval ? interval : 0;
     this.isPaused = false;
     this.intervalID = 0;
@@ -14,13 +14,13 @@ function Timer(count, interval) {
     this.hours = count ? count : 00;
 }
 
-function convertTimeToSec(sec){
-    var seconds = 0
+function formatTimeFromSec(sec){
+    var seconds = sec;
     var minutes = 0
     var hours = 0
-    while (sec - 60 >= 0) {
+    while (seconds - 60 >= 0) {
         minutes++;
-        sec = sec - 60;
+        seconds = seconds - 60;
     }
     while (minutes - 60 >= 0) {
         hours++;
@@ -31,40 +31,20 @@ function convertTimeToSec(sec){
 
 function convertToTimeFormat(hr, min, sec){
     if (hr < 10) {
-        hour = "0" + hr;
+        hr = "0" + hr;
     }
     if (min < 10) {
-        minute = "0" + min;
+        min = "0" + min;
     }
     if (sec < 10) {
-        second = "0" + sec;
+        sec = "0" + sec;
     }
-    return hour + ":" + minute + ":" + second;
+    return hr + ":" + min + ":" + sec;
 }
-        
-// init function
-Timer.prototype.init = function() {
-    this.alert();
-};
-
-// alert the properties
-Timer.prototype.alert = function() {
-    alert(this.count + ":" + this.interval + ":" + this.isPaused + ":" + this.intervalID);
-};
 
 // print time
 Timer.prototype.printTime = function() {
-    function FormatNumberLength(num) {
-    var r = "" + num;
-    while (r.length < 2) {
-        r = "0" + r;
-    }
-    return r;
-    }
-
-
-
-    document.getElementById(this.outputSpanID).innerHTML = FormatNumberLength(this.hours) + ":" +  FormatNumberLength(this.minutes) + ":" + FormatNumberLength(this.seconds);
+    document.getElementById("time").innerHTML = formatTimeFromSec(this.time);
 };
 
 // start the timer
@@ -84,12 +64,13 @@ Timer.prototype.startDown = function(e) {
 
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
-        self.second -- ;
-        if (self.count > 0) {
+        self.time -- ;
+        if (self.time > 0) {
             self.printTime();
         } else {
             document.getElementById("time").style.color = "red";
-            self.reset();
+            self.printTime();
+            self.pause();
         }
     }, self.interval);
 };
@@ -103,26 +84,19 @@ Timer.prototype.startUp = function(e) {
         clearInterval(this.intervalID);
     }
     
-    var countTo = document.getElementById("time").value;
-
-    //print time
-    this.printTime();
+    var countTo = this.time;
 
     var self = this;
+    
+    self.time = 0
+    
+    var count = 0
 
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
-        self.seconds ++;
-            if (self.seconds >= 60){
-                self.seconds = 0;
-                self.minutes ++;
-            }
-            if (self.minutes >= 60){
-                self.minutes = 0;
-                self.hours ++;
-            }
-        if (self.seconds == countTo) {
-            self.reset();
+        count ++;
+        if (count == countTo) {
+            self.pause();
             document.getElementById("time").style.color = "red";
         } else {
             self.printTime();
@@ -132,10 +106,12 @@ Timer.prototype.startUp = function(e) {
 
 // reset timer
 Timer.prototype.reset = function() {
-    //this.alert();
+    
+    document.getElementById("time").style.color = "black";
+    
     clearInterval(this.intervalID);
 
-    this.count = 0;
+    this.time = 0;
     this.seconds = 0;
     this.minutes = 0;
     this.hours = 0;
@@ -150,14 +126,12 @@ Timer.prototype.reset = function() {
 
 // pause timer
 Timer.prototype.pause = function() {
-    //this.alert();
     clearInterval(this.intervalID);
     this.isPaused = true;
 };
 
 // unpause timer
 Timer.prototype.unpause = function(e) {
-    //this.alert();
     this.startUp();
     this.isPaused = false;
 };
@@ -176,9 +150,12 @@ function init() {
     var startUpBtn = document.getElementById("startUpBtn");
     var pauseBtn = document.getElementById("pauseBtn");
     var resetBtn = document.getElementById("resetBtn");
+    
+    var addHourBtn = document.getElementById("addHour");
+    var addMinuteBtn = document.getElementById("addMinute");
+    var addSecondBtn = document.getElementById("addSecond");
 
     startDownBtn.onclick = function() {
-        timer.count = document.getElementById("timeBox").value;
         timer.interval = 1000;
         timer.startDown();
         if (timer.isPaused === true) {
@@ -187,7 +164,6 @@ function init() {
     };
     
     startUpBtn.onclick = function() {
-
         timer.interval = 1000;
         timer.startUp();
         if (timer.isPaused === true) {
@@ -210,6 +186,15 @@ function init() {
     };
     
     addHourBtn.onclick = function() {
-        alert(convertTimeToSec(3));
+        timer.time = timer.time + 3600;
+        timer.printTime();
+    };
+    addMinuteBtn.onclick = function() {
+        timer.time = timer.time + 60;
+        timer.printTime();
+    };
+    addSecondBtn.onclick = function() {
+        timer.time = timer.time + 1;
+        timer.printTime();
     };
 }
