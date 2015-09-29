@@ -6,6 +6,7 @@ function Timer(count, interval) {
     this.time = count ? count : 0;
     this.interval = interval ? interval : 0;
     this.isPaused = false;
+    this.resetTriggered = false;
     this.intervalID = 0;
     this.outputSpanID = "time";
     this.type = "none";
@@ -56,26 +57,21 @@ function stopWatch(){
 
 }
 
-function StartCircle(sec){
+function StartCircle(sec, resetTriggered){
 
+            if (resetTriggered === false){
 
-        if($('input[type=button]#watch').val() == 'Start'){
+                timerSeconds = sec;
 
-            $('input[type=button]#watch').val('Stop');
+                timerFinish = new Date().getTime()+(timerSeconds*1000);
 
-            timerSeconds = sec;
+                timer = setInterval('stopWatch()',50);
+            }
+            else {
+                clearInterval(timer);
+                drawTimer(0);
+            }
 
-            timerFinish = new Date().getTime()+(timerSeconds*1000);
-
-            timer = setInterval('stopWatch()',50);
-
-        }else{
-
-            $('input[type=button]#watch').val('Start');
-
-            clearInterval(timer);
-
-        }
 
 }
 
@@ -246,7 +242,8 @@ function init() {
         pauseBtn.innerHTML = "Pause";
         timer.interval = 1000;
         timer.startDown();
-        StartCircle(timer.time);
+        timer.resetTriggered = false;
+        StartCircle(timer.time, timer.resetTriggered);
         if (timer.isPaused === true) {
             pauseBtn.innerHTML = "pause";
         }
@@ -256,6 +253,8 @@ function init() {
         pauseBtn.innerHTML = "Pause";
         timer.interval = 1000;
         timer.startUp();
+        timer.resetTriggered = false;
+        StartCircle("60", timer.resetTriggered);
     };
 
     pauseBtn.onclick = function() {
@@ -270,6 +269,9 @@ function init() {
 
     resetBtn.onclick = function() {
         timer.reset();
+        timer.resetTriggered = true;
+        StartCircle(timer.time, timer.resetTriggered);
+        start
     };
     
     addHourBtn.onclick = function() {
