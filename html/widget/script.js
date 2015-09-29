@@ -8,10 +8,7 @@ function Timer(count, interval) {
     this.isPaused = false;
     this.intervalID = 0;
     this.outputSpanID = "time";
-    this.callback = null;
-    this.seconds = count ? count : 00;
-    this.minutes = count ? count : 00;
-    this.hours = count ? count : 00;
+    this.type = "none";
 }
 
 function formatTimeFromSec(sec){
@@ -50,6 +47,17 @@ Timer.prototype.printTime = function() {
 // start the timer
 Timer.prototype.startDown = function(e) {
     
+    alert("moki");
+    
+    this.type = "down";
+    this.isPaused = false;
+    
+    if (this.time == 0){
+        document.getElementById("time").style.color = "red";
+        self.printTime();
+        self.pause();
+    }
+    
     document.getElementById("time").style.color = "black";
 
     //clear interval
@@ -77,6 +85,9 @@ Timer.prototype.startDown = function(e) {
 
 Timer.prototype.startUp = function(e) {
     
+    this.type = "up";
+    this.isPaused = false;
+    
     document.getElementById("time").style.color = "black";
 
     //clear interval
@@ -85,17 +96,18 @@ Timer.prototype.startUp = function(e) {
     }
     
     var countTo = this.time;
-
+    
+    this.time = 0;
+    
+    this.printTime();
+    
     var self = this;
-    
-    self.time = 0
-    
-    var count = 0
 
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
-        count ++;
-        if (count == countTo) {
+        self.time ++;
+        if (self.time == countTo) {
+            self.printTime();
             self.pause();
             document.getElementById("time").style.color = "red";
         } else {
@@ -118,10 +130,6 @@ Timer.prototype.reset = function() {
     this.isPaused = false;
     pauseBtn.innerHTML = "pause"
     this.printTime();
-
-    if(this.callback) {
-        this.callback();
-    }
 };
 
 // pause timer
@@ -131,9 +139,16 @@ Timer.prototype.pause = function() {
 };
 
 // unpause timer
-Timer.prototype.unpause = function(e) {
-    this.startUp();
+Timer.prototype.unpause = function() {
+    
     this.isPaused = false;
+    
+    if (this.time == "up") {
+        this.startUp();
+    }
+    if (this.time == "down") {
+        this.startDown();
+    }
 };
 
 /**
@@ -156,28 +171,24 @@ function init() {
     var addSecondBtn = document.getElementById("addSecond");
 
     startDownBtn.onclick = function() {
+        pauseBtn.innerHTML = "Pause";
         timer.interval = 1000;
         timer.startDown();
-        if (timer.isPaused === true) {
-            pauseBtn.innerHTML = "pause";
-        }
     };
     
     startUpBtn.onclick = function() {
+        pauseBtn.innerHTML = "Pause";
         timer.interval = 1000;
         timer.startUp();
-        if (timer.isPaused === true) {
-            pauseBtn.innerHTML = "pause";
-        }
     };
 
     pauseBtn.onclick = function() {
         if (timer.isPaused === false) {
             timer.pause();
-            this.innerHTML = "unpause";
+            this.innerHTML = "Unpause";
         } else {
             timer.unpause();
-            this.innerHTML = "pause";
+            this.innerHTML = "Pause";
         }
     };
 
