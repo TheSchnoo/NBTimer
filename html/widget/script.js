@@ -141,7 +141,11 @@ Timer.prototype.pause = function() {
 // unpause timer
 Timer.prototype.unpause = function() {
     
+    alert("m");
+    
     this.isPaused = false;
+    
+    alert("o");
     
     if (this.time == "up") {
         this.startUp();
