@@ -1,7 +1,8 @@
-/** Constructor with parameters
- * Make sure, the outputSpanID of two different instances
- * is not the same. Otherwise unpleasant things may happen.
- */
+function UI() {
+    this.timerFinish = 0;
+    this.timer = 0;
+}
+
 function Timer(count, interval) {
     this.time = count ? count : 0;
     this.interval = interval ? interval : 0;
@@ -12,15 +13,42 @@ function Timer(count, interval) {
     this.type = "none";
     this.alertNum = 0;
     this.alertBreaks = [];
+    this.total = this.time;
+    this.UI = new UI();
+    this.isStarted = false;
 }
 
-//Timer.prototype.checkAlertBreaks = function() {
-//    for each (var num in this.alertNum) {
-//        this.alertBreaks.push(document.getElementById('#' + num));
-//    }
-//};
+// Helper for turning a seconds value into hours, minutes, and seconds
+function formatTimeFromSec(sec){
+    var seconds = sec;
+    var minutes = 0
+    var hours = 0
+    while (seconds - 60 >= 0) {
+        minutes++;
+        seconds = seconds - 60;
+    }
+    while (minutes - 60 >= 0) {
+        hours++;
+        minutes = minutes - 60;
+    }
+    return convertToTimeFormat(hours, minutes, seconds);
+}
 
-function drawTimer(percent){
+// Helper for converting hour, minute, and seconds values into 00:00:00 format
+function convertToTimeFormat(hr, min, sec){
+    if (hr < 10) {
+        hr = "0" + hr;
+    }
+    if (min < 10) {
+        min = "0" + min;
+    }
+    if (sec < 10) {
+        sec = "0" + sec;
+    }
+    return hr + ":" + min + ":" + sec;
+}
+
+UI.prototype.drawTimer = function(percent) {
 
     $('div.timer').html('<div class="percent"></div><div id="slice"'+(percent > 50?' class="gt50"':'')+'><div class="pie"></div>'+(percent > 50?'<div class="pie fill"></div>':'')+'</div>');
 
@@ -37,69 +65,56 @@ function drawTimer(percent){
         'transform':'rotate('+deg+'deg)'
 
     });
-}
+};
 
-function stopWatch(){
+UI.prototype.stopWatch = function(finish) {
+    
+    this.timerFinish = finish;
 
-    var seconds = (timerFinish-(new Date().getTime()))/1000;
+    var seconds = (this.timerFinish-(new Date().getTime()))/1000;
 
     if(seconds <= 0){
-
-        drawTimer(100);
+        
+        this.drawTimer(100);
 
         clearInterval(timer);
+        
     }
     else {
-
+        
         var percent = 100-((seconds/timerSeconds)*100);
 
-        drawTimer(percent);
-
+        this.drawTimer(percent);
     }
+};
 
-}
+UI.prototype.startCircle = function(sec, resetTriggered) {
+    
+    if (resetTriggered === false){
 
-function StartCircle(sec, resetTriggered){
-            if (resetTriggered === false){
+        timerSeconds = sec;
+        
+        var finish = new Date().getTime()+(timerSeconds*1000);
 
-                timerSeconds = sec;
-
-                timerFinish = new Date().getTime()+(timerSeconds*1000);
-
-                timer = setInterval('stopWatch()',50);
-            }
-            else {
-                clearInterval(timer);
-                drawTimer(0);
-            }
-}
-
-function formatTimeFromSec(sec){
-    var seconds = sec;
-    var minutes = 0
-    var hours = 0
-    while (seconds - 60 >= 0) {
-        minutes++;
-        seconds = seconds - 60;
+        this.timer = setInterval(function(){
+            UI.prototype.stopWatch(finish);
+        }, 50);
+        
     }
-    while (minutes - 60 >= 0) {
-        hours++;
-        minutes = minutes - 60;
+    else {
+        clearInterval(this.timer);
+        self.drawTimer(0);
     }
-    return convertToTimeFormat(hours, minutes, seconds);
-}
+};
 
-function convertToTimeFormat(hr, min, sec){
-    if (hr < 10) {
-        hr = "0" + hr;
-    }
-    if (min < 10) {
-        min = "0" + min;
-    }
-    if (sec < 10) {
-        sec = "0" + sec;
-    }
-    return hr + ":" + min + ":" + sec;
+UI.prototype.updateTime = function(sec, resetTriggered) {
+    this.resetWatch();
+    this.startCircle(sec, resetTriggered);
+};
+
+UI.prototype.resetWatch = function() {
+    clearInterval(this.timer);
+    this.drawTimer(0);
 }
 
 // print time
@@ -109,6 +124,7 @@ Timer.prototype.printTime = function() {
 
 // start the timer
 Timer.prototype.startDown = function(e) {
+    
     this.type = "down";
     this.isPaused = false;
     
@@ -239,22 +255,26 @@ function init() {
     var addAlertBtn = document.getElementById("addAlert");
 
     startDownBtn.onclick = function() {
+        timer.total = timer.time;
         pauseBtn.innerHTML = "Pause";
         timer.interval = 1000;
         timer.startDown();
         timer.resetTriggered = false;
-        StartCircle(timer.time, timer.resetTriggered);
+        timer.UI.startCircle(timer.time, timer.resetTriggered);
         if (timer.isPaused === true) {
             pauseBtn.innerHTML = "pause";
         }
+        timer.isStarted = true;
     };
     
     startUpBtn.onclick = function() {
+        timer.total = timer.time;
         pauseBtn.innerHTML = "Pause";
         timer.interval = 1000;
         timer.startUp();
         timer.resetTriggered = false;
-        StartCircle("60", timer.resetTriggered);
+        timer.UI.startCircle("60", timer.resetTriggered);
+        timer.isStarted = true;
     };
 
     pauseBtn.onclick = function() {
@@ -270,13 +290,18 @@ function init() {
     resetBtn.onclick = function() {
         timer.reset();
         timer.resetTriggered = true;
-        StartCircle(timer.time, timer.resetTriggered);
+        timer.UI.startCircle(timer.time, timer.resetTriggered);
         start
     };
     
     addHourBtn.onclick = function() {
+        timer.pause();
         timer.time = timer.time + 3600;
         timer.printTime();
+        if (timer.isStarted == true) {
+            timer.UI.updateTime(timer.time, timer.resetTriggered);
+        }
+        timer.unpause();
     };
     
     subHourBtn.onclick = function() {
@@ -289,9 +314,14 @@ function init() {
         timer.printTime();
     };
     
-    addMinuteBtn.onclick = function() {
+    addMinuteBtn.onclick = function() { 
+        timer.pause();
         timer.time = timer.time + 60;
         timer.printTime();
+        if (timer.isStarted == true) {
+            timer.UI.updateTime(timer.time, timer.resetTriggered);
+        }
+        timer.unpause();
     };
     
     subMinuteBtn.onclick = function() {
@@ -305,8 +335,13 @@ function init() {
     };
     
     addSecondBtn.onclick = function() {
+        timer.pause();
         timer.time = timer.time + 1;
         timer.printTime();
+        if (timer.isStarted == true) {
+            timer.UI.updateTime(timer.time, timer.resetTriggered);
+        }
+        timer.unpause();
     };
     
     subSecondBtn.onclick = function() {
