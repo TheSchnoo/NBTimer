@@ -10,7 +10,15 @@ function Timer(count, interval) {
     this.intervalID = 0;
     this.outputSpanID = "time";
     this.type = "none";
+    this.alertNum = 0;
+    this.alertBreaks = [];
 }
+
+//Timer.prototype.checkAlertBreaks = function() {
+//    for each (var num in this.alertNum) {
+//        this.alertBreaks.push(document.getElementById('#' + num));
+//    }
+//};
 
 function drawTimer(percent){
 
@@ -29,8 +37,6 @@ function drawTimer(percent){
         'transform':'rotate('+deg+'deg)'
 
     });
-
-
 }
 
 function stopWatch(){
@@ -42,8 +48,8 @@ function stopWatch(){
         drawTimer(100);
 
         clearInterval(timer);
-
-    }else{
+    }
+    else {
 
         var percent = 100-((seconds/timerSeconds)*100);
 
@@ -103,9 +109,6 @@ Timer.prototype.printTime = function() {
 
 // start the timer
 Timer.prototype.startDown = function(e) {
-    
-    alert("moki");
-    
     this.type = "down";
     this.isPaused = false;
     
@@ -142,7 +145,8 @@ Timer.prototype.startDown = function(e) {
 
 Timer.prototype.startUp = function(e) {
     
-    var countTo = this.time;
+    var countTo = [this.time];
+    
     if (e == null) {
         this.time = 0;
     }
@@ -165,6 +169,7 @@ Timer.prototype.startUp = function(e) {
     this.intervalID = setInterval(function() {
         self.time ++;
         if (self.time == countTo) {
+            // check if the thing is contained...
             self.printTime();
             self.pause();
             document.getElementById("time").style.color = "red";
@@ -186,7 +191,7 @@ Timer.prototype.reset = function() {
     this.minutes = 0;
     this.hours = 0;
     this.isPaused = false;
-    pauseBtn.innerHTML = "pause"
+    pauseBtn.innerHTML = "Pause"
     this.printTime();
 };
 
@@ -230,6 +235,8 @@ function init() {
     var subMinuteBtn = document.getElementById("subMinute");
     var addSecondBtn = document.getElementById("addSecond");
     var subSecondBtn = document.getElementById("subSecond");
+    
+    var addAlertBtn = document.getElementById("addAlert");
 
     startDownBtn.onclick = function() {
         pauseBtn.innerHTML = "Pause";
@@ -310,6 +317,37 @@ function init() {
             timer.time = timer.time - 1;
         }
         timer.printTime();
+    };
+    
+    addAlertBtn.onclick = function() {
+        
+        var idNum = timer.alertNum;
+    
+        var parent = document.getElementById("newAlertPoint");
+
+        var alertIn = document.createElement("input");
+        alertIn.type = "text";
+        alertIn.id = idNum;
+        parent.appendChild(alertIn);
+        
+        var removeAlert = document.createElement("button");
+        var id = "removeAlertBtn" + idNum;
+        removeAlert.id = id;
+        removeAlert.innerHTML = "X"
+        
+        $(document).on('click','#'+id, function(){
+            $('#'+idNum).remove();
+            $('#'+id).remove();
+            $('#break'+idNum).remove();
+        });
+
+        parent.appendChild(removeAlert);
+
+        timer.alertNum ++;
+
+        var newBreak = parent.appendChild(document.createElement("br"));
+        newBreak.id = "break" + idNum;
+
     };
 }
 
