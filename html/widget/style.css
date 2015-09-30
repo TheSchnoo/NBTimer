@@ -1,14 +1,266 @@
+html, body {
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+div { 
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    -webkit-user-select: none; 
+    -o-user-select: none; 
+} 
+
+/*img {
+    width: 100%;
+    height: 100%;
+}*/
+
+img, .unselectable {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+#startreset{
+    width: 200px;
+}
+
+#container {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.dice-table {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 10%;
+    display: table;
+    border-spacing: 5px;
+}
+
+.dice-row {
+    display: table-row;
+}
+
+.dice-blank, .dice-dot {
+    box-sizing: border-box;
+    padding: 5px;
+    display: table-cell;
+    border: 1px solid transparent;
+    border-radius: 50%;
+}
+
+.dice-dot {
+    border-width: 0px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+#controls-cont {
+    position: relative;
+    left: -1500px;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 15px;
+    color: white;
+    background-color: #555555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 35px;
+    z-index: 1;
+    transition: left .5s ease;
+}
+
+#dice-container {
+    box-sizing: border-box;
+    position: relative;
+    /*background-color: #F5F6FA;*/
+    background-color: transparent;
+    /*border: 2px solid #555555;*/
+    border-top-width: 0px;
+    /* Variable Attributes */
+    width: 200px;
+    height: 200px;
+}
+
+#border-right {
+    position: absolute;
+    bottom: -1500px;
+    right: 0px;
+    width: 2px;
+    height: 1000px;
+    background-color: #555555;
+    transition: bottom .5s linear;
+}
+
+#border-left {
+    position: absolute;
+    top: -1500px;
+    left: 0px;
+    width: 2px;
+    height: 1000px;
+    background-color: #555555;
+    transition: top .5s linear;
+}
+
+#border-bottom {
+    position: absolute;
+    bottom: 0px;
+    left: -1500px;
+    width: 1000px;
+    height: 2px;
+    background-color: #555555;
+    transition: left .5s linear;
+}
+
+#dice-container section {
+    transition: top .3s ease, left .3s ease;
+}
+
+#controls-open {
+    position: absolute;
+    background-color: transparent;
+}
+
+button {
+    box-sizing: border-box;
+    background-color: #555555;
+    border: none;
+    float: left;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+button:hover {
+    background-color: #777777;
+    border: none;
+}
+
+button:active,
+button:focus {
+    background-color: #999999;
+    outline: none;
+}
+
+#controls-cont img {
+    width: 100%;
+    height: 100%;
+}
+
+#controls-cont img {
+    position: relative;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+}
+
+.ui-menu-item {
+    background-color: #555555;
+}
+
+#controls-dropdown {
+    position: absolute;
+    top: 35px;
+    left: 0px;
+    width: 150px;
+    height: auto;
+    z-index: 10;
+    background-color: #555555;
+}
+
+#controls-buttons {
+    position: absolute;
+    left: 200px;
+}
+
+input {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    text-align: center;
+}
+
+input{
+    width: 100px;
+}
+#d3{
+    -webkit-user-select: none;
+}
+#arrow{
+    position:fixed;
+    top:25px;
+    
+}
+body{
+    margin:0;
+}
+#winner{
+    position:fixed;
+    bottom:0;
+}
+#element-text{
+    color: black;
+    width: 80%;
+}
+#pointer {
+    display:none;
+    position:fixed;
+}
+
+/*
+    Settings Menu
+*/
+#controls-open img{
+    width: 100%;
+    height: 100%;
+}
+/*
+    Modal popup
+*/
+#element-text{
+    color: black;
+    width: 80%;
+}
+#element-color-picker, #element-font-color-picker{
+    min-height: 40px;
+}
+
+
+#advanced-options {
+    width: 30vw;
+}
+
+#remove-from-spin-radio input{
+    position: relative;
+}
+
 img {
     height: 30px;
     width: 20px;
 }
 
 #timerAll{
-    position:relative;
-    z-index: 1;
-    top:500px;
-    right:500px;
+    position:fixed;
+    top: 80px;
+    left: 60px;
 }
+
+#time{
+    top: 200px;
+    left: 200px;
+}
+
+#timerNums{
+    float:right;
+}
+
 
 #time {
     font-size: 50px
@@ -51,13 +303,13 @@ img {
 
             .timer > #slice > .pie {
 
-                border: 0.05em solid #c0c0c0;
+                border: 0.02em solid #00CCFF;
 
                 position:absolute;
 
-                width:0.9em; /* 1 - (2 * border width) */
+                width:0.96em; /* 1 - (2 * border width) */
 
-                height:0.9em; /* 1 - (2 * border width) */
+                height:0.96em; /* 1 - (2 * border width) */
 
                 clip:rect(0em,0.5em,1em,0em);
 
@@ -87,7 +339,7 @@ img {
 
                 border: transparent;
 
-                background-color: #c0c0c0;
+                background-color: #00CCFF;
 
                 width:1em;
 
