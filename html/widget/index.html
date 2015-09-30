@@ -13,8 +13,8 @@
 </head>
 
 <body onload="init()">
-    <form name="timeform">
-        <p>
+    <div class="timer"></div>
+        <div class="timerAll">
         <div>
             <div>&nbsp Hours &nbsp Minutes &nbsp Seconds </div>
             <span id="time">00:00:00</span>
@@ -28,7 +28,7 @@
             <img src="src/arrow_up.png" id="addSecond"></input>
             <img src="src/arrow_down.png" id="subSecond"></input>
         </div>
-
+        <div>
         <button type="button" id="startDownBtn">CountDown</button>
         <button type="button" id="startUpBtn">CountUp</button>
         <button type="button" id="pauseBtn">Pause</button>
@@ -40,8 +40,6 @@
 
 
         <div class="timer"></div><div class="timer fill"></div>
-
-
 
 </body>
 
