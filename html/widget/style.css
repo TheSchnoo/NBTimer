@@ -16,6 +16,14 @@ div {
     height: 100%;
 }*/
 
+#bar {
+    width:0px;
+    height:10px;
+    background-color:#00CCFF;
+    position: relative;
+
+}
+
 img, .unselectable {
     -webkit-user-select: none;
     user-select: none;
@@ -250,11 +258,6 @@ img {
     position:fixed;
     top: 80px;
     left: 60px;
-}
-
-#time{
-    top: 200px;
-    left: 200px;
 }
 
 #timerNums{

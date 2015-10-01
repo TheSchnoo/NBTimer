@@ -196,17 +196,4 @@ changeColorSchemechangeColorScheme//----------------------------------
 		d3Create();
 	}
 
-	function changeProgressAnimation(type){
-
-		alert(type);
-
-		if type = 'circle'{
-			var index = $(".timer").html();
-			data[index].show();
-		}
-		else if type = 'pie'{
-			var index = $(".timer").html();
-			data[index].hide();
-		}
-	}
 

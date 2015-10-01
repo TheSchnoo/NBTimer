@@ -14,6 +14,7 @@ function DiceThemer() {
 		addColorOption("Grey");
 		addProgressBarOption("circle", {});
 		addProgressBarOption("pie", {});
+		addProgressBarOption("bar", {});
 		// addThemeOption("Traditional", {content: diceContent.traditional, maxSides: 6});
 		// addThemeOption("Letters", {content: diceContent.letters, maxSides: 10});
 		// addThemeOption("Heath", {content: diceContent.squirrel, maxSides: 10});
@@ -145,11 +146,23 @@ function changeProgressAnimation(type){
 
 
 	if (shape === "circle"){
+		barTrigger = false;
 		$(".timer").show();
 		$(".timer.fill").hide();
+		$(".bar").hide();
 	}
 	else if (shape === "pie"){
+		barTrigger = false;
 		$(".timer").hide();
 		$(".timer.fill").show();
+		$(".bar").hide();
 	}
+	else if (shape === "bar"){
+		barTrigger = true;
+		$(".timer").hide();
+		$(".timer.fill").hide();
+		$(".bar").show();
+	}
+
+
 }

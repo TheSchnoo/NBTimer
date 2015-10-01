@@ -101,11 +101,13 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
         }, 50);
         
     }
-    else {
+    else{
         clearInterval(this.timer);
-        self.drawTimer(0);
+        this.drawTimer(0);
     }
 };
+
+
 
 UI.prototype.updateTime = function(sec, resetTriggered) {
     this.resetWatch();
@@ -117,8 +119,37 @@ UI.prototype.resetWatch = function() {
     this.drawTimer(0);
 }
 
-UI.prototype.startProgressBar = function() {
+function DrawBar(maxWidth) {
+    var w = $('#bar').width();
+    var percent = parseInt((w * 100) / maxWidth);
+}
+
+function resetBar(){
+    var $bar = $('#bar');
+        $bar.stop();
+
+        clearInterval(barTimer);
+}
+
+UI.prototype.startProgressBar = function(sec) {
     
+
+    var barMaxWidth = 350;
+    var barDuration = sec*1000;
+    var barTimer;
+
+        var $bar = $('#bar');
+        DrawBar(barMaxWidth);
+        barTimer = setInterval('DrawBar('+barMaxWidth+')', 100);
+
+        $bar.animate({
+            width: barMaxWidth
+        }, barDuration, function() {
+            $(this).css('background-color', 'red');
+            clearInterval(barTimer);
+        });
+
+
 }
 
 // print time
@@ -239,7 +270,8 @@ Timer.prototype.unpause = function() {
  */
 function init() {
 
-    // get new instance of timer
+    // get new instance of time
+
     var timer = new Timer();
     timer.outputSpanID = "time";
 
@@ -258,8 +290,13 @@ function init() {
     
     var addAlertBtn = document.getElementById("addAlert");
 
+    $(".timer").show();
+    $(".timer.fill").hide();
+    $(".bar").hide();
+
     startDownBtn.onclick = function() {
         timer.total = timer.time;
+        timer.UI.startProgressBar(timer.time);
         pauseBtn.innerHTML = "Pause";
         timer.interval = 1000;
         timer.startDown();
@@ -295,6 +332,7 @@ function init() {
         timer.reset();
         timer.resetTriggered = true;
         timer.UI.startCircle(timer.time, timer.resetTriggered);
+        resetBar();
         start
     };
     
