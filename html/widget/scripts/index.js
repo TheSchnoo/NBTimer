@@ -64,6 +64,9 @@
 				// Set the dice content (theme)
 				var theme = diceThemer.getThemeOption(item);
 				break;
+			case 'Progress Bar Type':
+				var hai = changeProgressAnimation(item);
+				break;
 			case 'Color':
 				// Set the color theme
 				var hai = changeColorScheme(item.toLowerCase());

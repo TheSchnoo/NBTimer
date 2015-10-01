@@ -1,4 +1,4 @@
-//----------------------------------
+changeColorSchemechangeColorScheme//----------------------------------
 //--BUTTON events and input clicking
 //----------------------------------
 
@@ -184,6 +184,8 @@
 		return COLOUR_SCHEMES[getColorCode(currentScheme)][(index+1)%4];
 	}
 	function changeColorScheme(color){
+		alert(color);
+
 		currentScheme = color;
 
 		color = getColorCode(color);
@@ -192,5 +194,19 @@
 		}
 		$("svg").remove();
 		d3Create();
+	}
+
+	function changeProgressAnimation(type){
+
+		alert(type);
+
+		if type = 'circle'{
+			var index = $(".timer").html();
+			data[index].show();
+		}
+		else if type = 'pie'{
+			var index = $(".timer").html();
+			data[index].hide();
+		}
 	}
 

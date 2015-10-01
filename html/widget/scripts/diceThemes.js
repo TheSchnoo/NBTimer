@@ -12,8 +12,8 @@ function DiceThemer() {
 		addColorOption("Purple");
 		addColorOption("Yellow");
 		addColorOption("Grey");
-		addSpinnerTypeOption("Wheel", {});
-		addSpinnerTypeOption("Pointer", {});
+		addProgressBarOption("circle", {});
+		addProgressBarOption("pie", {});
 		// addThemeOption("Traditional", {content: diceContent.traditional, maxSides: 6});
 		// addThemeOption("Letters", {content: diceContent.letters, maxSides: 10});
 		// addThemeOption("Heath", {content: diceContent.squirrel, maxSides: 10});
@@ -30,7 +30,7 @@ function DiceThemer() {
 		addAdvancedOption("Remove Upon Spin", "remove-from-spin");
 		//$("#remove-from-spin").append("<input type='radio' id='remove-from-spin-radio'>");
 	}
-	function addSpinnerTypeOption(name, theme){
+	function addProgressBarOption(name, theme){
 		spinnerOptions[name] = theme;
 		$('#progressbar-options').append('<li><span class="menu-option">' + name + '</span></li>');
 	}
@@ -135,5 +135,21 @@ function DiceThemer() {
 	diceThemesInit();
 	function resetSpinnerStyling(){
 		
+	}
+
+}
+
+function changeProgressAnimation(type){
+
+	var shape = type;
+
+
+	if (shape === "circle"){
+		$(".timer").show();
+		$(".timer.fill").hide();
+	}
+	else if (shape === "pie"){
+		$(".timer").hide();
+		$(".timer.fill").show();
 	}
 }

@@ -117,6 +117,10 @@ UI.prototype.resetWatch = function() {
     this.drawTimer(0);
 }
 
+UI.prototype.startProgressBar = function() {
+    
+}
+
 // print time
 Timer.prototype.printTime = function() {
     document.getElementById("time").innerHTML = formatTimeFromSec(this.time);
