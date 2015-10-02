@@ -48,6 +48,7 @@ function convertToTimeFormat(hr, min, sec){
     return hr + ":" + min + ":" + sec;
 }
 
+// Renders a section of the progress indicator (pie, bar, etc.)
 UI.prototype.drawTimer = function(percent) {
 
     $('div.timer').html('<div class="percent"></div><div id="slice"'+(percent > 50?' class="gt50"':'')+'><div class="pie"></div>'+(percent > 50?'<div class="pie fill"></div>':'')+'</div>');
@@ -65,8 +66,10 @@ UI.prototype.drawTimer = function(percent) {
         'transform':'rotate('+deg+'deg)'
 
     });
-};
 
+//  Progresses the progress indicator
+//  This function is called continuously to change the percent progressed concurrently with time
+//  It calls drawTimer on each run to draw the current percent/progress of the timer
 UI.prototype.stopWatch = function(finish) {
     
     this.timerFinish = finish;
@@ -88,6 +91,7 @@ UI.prototype.stopWatch = function(finish) {
     }
 };
 
+//  Begins the progress bar progression and rendering actions
 UI.prototype.startCircle = function(sec, resetTriggered) {
     
     if (resetTriggered === false){
@@ -108,12 +112,13 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
 };
 
 
-
+//  Updates the time and restarts the timer with the new time
 UI.prototype.updateTime = function(sec, resetTriggered) {
     this.resetWatch();
     this.startCircle(sec, resetTriggered);
 };
 
+//  Halts the timer and resets it to zero
 UI.prototype.resetWatch = function() {
     clearInterval(this.timer);
     this.drawTimer(0);
@@ -148,7 +153,6 @@ UI.prototype.startProgressBar = function(sec) {
             $(this).css('background-color', 'red');
             clearInterval(barTimer);
         });
-
 
 }
 
