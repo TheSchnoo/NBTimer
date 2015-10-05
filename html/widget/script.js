@@ -115,6 +115,7 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
         clearInterval(this.timer);
         this.drawTimer(0);
         this.drawBar(0);
+
     }
 };
 
@@ -304,7 +305,6 @@ function init() {
 
     countUpTrigger = false;
     countDownTrigger = true;
-
     $(".timer").show();
     $(".timer.fill").hide();
     $(".bar").hide();

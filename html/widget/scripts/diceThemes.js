@@ -17,6 +17,7 @@ function DiceThemer() {
 		addProgressBarOption("pie", {});
 		addProgressBarOption("bar", {});
 		addAlertOption("Add", {});
+
 		// addThemeOption("Traditional", {content: diceContent.traditional, maxSides: 6});
 		// addThemeOption("Letters", {content: diceContent.letters, maxSides: 10});
 		// addThemeOption("Heath", {content: diceContent.squirrel, maxSides: 10});
