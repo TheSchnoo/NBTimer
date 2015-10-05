@@ -42,6 +42,7 @@ div {
   text-decoration: none;
     width: 65px;
     height: 35px;
+    font-size:13px;
 }
 
 .btns:hover {
@@ -68,7 +69,22 @@ img, .unselectable {
 }
 
 #startreset{
-    width: 200px;
+    width: 70vw;
+}
+#display{
+    font-size: 14px;
+}
+.timerLabel{
+    display:inline-block;
+    text-align: center;
+}
+.arrowbtnsDiv{
+    display:inline-block;
+
+}
+.arrowbtnsDiv img{
+    margin-left:auto;
+    margin-right:auto;
 }
 
 #container {
@@ -294,6 +310,8 @@ img {
     position:fixed;
     top: 80px;
     left: 45px;
+    width:70vw;
+    height:70vh;
 }
 
 #timerNums{

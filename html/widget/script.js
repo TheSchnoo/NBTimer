@@ -445,4 +445,53 @@ function init() {
 
     // };
 }
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 300;
+NB.ready(function(){
+    init();
+    resize();
 
+    NB.addObserver('annotationResizedEvent',function(obj){
+        console.log('a');
+        resize();
+    });
+});
+
+function resize(){
+    toggleOptions(false);
+    toggleEditingMenu(false);
+    var ratio = NB.getHostObject().width/INITIAL_WIDTH;
+    var displayWidth = $("#display").width;
+    var containerWidth = $("#container").width;
+    $(".timerLabel").css('width', $("#display").width()*0.3);
+    $("#minutesLabel").css('margin-left',$("#display").width()*0.03);
+    $("#secondsLabel").css('margin-left',$("#display").width()*0.04);
+    $(".arrowbtnsDiv").css('width', $("#display").width()*0.3);
+    $("#addMinuteDiv").css('margin-left',$("#display").width()*0.03);
+    $("#addSecondDiv").css('margin-left',$("#display").width()*0.03);
+    $("#subMinuteDiv").css('margin-left',$("#display").width()*0.03);
+    $("#subSecondDiv").css('margin-left',$("#display").width()*0.03);
+    $(".timer").css('font-size', INITIAL_CIRCLE_SIZE*ratio+"px");
+    // $("#minutesLabel").css('margin-left',$("#display").width()*0.03);
+    // $("#secondsLabel").css('margin-left',$("#display").width()*0.04);
+    $("#timerAll").css('left', $("#container").width()/2-$("#timerAll").width()/2);
+    $("#timerAll").css('top', (NB.getHostObject().height-35)/2-$("#timerAll").height()/2+35);
+    $(".arrowbtns").css({
+        "width":INITIAL_ARROWS_WIDTH*ratio+"px",
+        "height":INITIAL_ARROWS_HEIGHT*ratio+"px",
+    });
+    $("#time").css({
+        "font-size":INITIAL_TIME_FONTSIZE*ratio+"px",
+    });
+    $("#display").css({
+        "font-size":INITIAL_LABELS_FONTSIZE*ratio+"px"
+    });
+    $(".btns").css({
+        "width":INITIAL_BUTTONS_WIDTH*ratio+"px",
+        "height":INITIAL_BUTTONS_HEIGHT*ratio+"px",
+        "font-size":INITIAL_BUTTONS_FONTSIZE*ratio+"px",
+        "border-radius":INITIAL_BUTTON_BORDERRADIUS*ratio+"px"
+    });
+    $(".arrowbtns").css('margin-left', $(".arrowbtnsDiv").width()*0.5-$(".arrowbtns").width()/2);
+    $("#time").css('margin-left', $("#display").width()/2-$("#time").width()/2);
+    $(".timer").css('left', $("#container").width()/2-$(".timer").width()/2);
+}
