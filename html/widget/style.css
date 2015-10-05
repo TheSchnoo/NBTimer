@@ -16,19 +16,17 @@ div {
     height: 10px;
 }
 
-
-
 #progressbar {
-    background-color: black;
+    background-color: #DEDEDE;
     border-radius: 13px; /* (height of inner div) / 2 + padding */
     padding: 3px;
-    width: 305px;
+    width: 306px;
 }
 
 #progressbar > div {
-    background-color: orange;
+    background-color: #00CCFF;
     width: 0; /* Adjust with JavaScript */
-    height: 20px;
+    height: 5px;
     border-radius: 10px;
 }
 
@@ -61,13 +59,6 @@ div {
     height: 100%;
 }*/
 
-#bar {
-    width:0px;
-    height:10px;
-    background-color:#00CCFF;
-    position: relative;
-
-}
 
 img, .unselectable {
     -webkit-user-select: none;

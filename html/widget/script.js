@@ -144,27 +144,6 @@ function resetBar(){
         clearInterval(barTimer);
 }
 
-UI.prototype.startProgressBar = function(sec) {
-    
-
-    var barMaxWidth = 350;
-    var barDuration = sec*1000;
-    var barTimer;
-
-        var $bar = $('#bar');
-        DrawBar(barMaxWidth);
-        barTimer = setInterval('DrawBar('+barMaxWidth+')', 100);
-
-        $bar.animate({
-            width: barMaxWidth
-        }, barDuration, function() {
-            $(this).css('background-color', 'red');
-            clearInterval(barTimer);
-        });
-
-
-}
-
 // print time
 Timer.prototype.printTime = function() {
     document.getElementById("time").innerHTML = formatTimeFromSec(this.time);
@@ -414,7 +393,6 @@ function init() {
     startBtn.onclick = function(){
         if (countUpTrigger === false && countDownTrigger === true){
             timer.total = timer.time;
-            timer.UI.startProgressBar(timer.time);
             pauseBtn.innerHTML = "Pause";
             timer.interval = 1000;
             timer.startDown();
