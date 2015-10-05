@@ -52,6 +52,7 @@ UI.prototype.drawTimer = function(percent) {
 
     $('div.timer').html('<div class="percent"></div><div id="slice"'+(percent > 50?' class="gt50"':'')+'><div class="pie"></div>'+(percent > 50?'<div class="pie fill"></div>':'')+'</div>');
 
+
     var deg = 360/100*percent;
 
     $('#slice .pie').css({
@@ -67,6 +68,13 @@ UI.prototype.drawTimer = function(percent) {
     });
 };
 
+UI.prototype.drawBar = function(percent) {
+
+    var deg = 300/100*percent;
+
+    $('#progressbar div').css("width", deg);  
+};
+
 UI.prototype.stopWatch = function(finish) {
     
     this.timerFinish = finish;
@@ -76,6 +84,7 @@ UI.prototype.stopWatch = function(finish) {
     if(seconds <= 0){
         
         this.drawTimer(100);
+        this.drawBar(100);
 
         clearInterval(timer);
         
@@ -85,6 +94,7 @@ UI.prototype.stopWatch = function(finish) {
         var percent = 100-((seconds/timerSeconds)*100);
 
         this.drawTimer(percent);
+        this.drawBar(percent);
     }
 };
 
@@ -101,11 +111,14 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
         }, 50);
         
     }
-    else {
+    else{
         clearInterval(this.timer);
-        self.drawTimer(0);
+        this.drawTimer(0);
+        this.drawBar(0);
     }
 };
+
+
 
 UI.prototype.updateTime = function(sec, resetTriggered) {
     this.resetWatch();
@@ -115,10 +128,40 @@ UI.prototype.updateTime = function(sec, resetTriggered) {
 UI.prototype.resetWatch = function() {
     clearInterval(this.timer);
     this.drawTimer(0);
+    this.drawBar(0);
 }
 
-UI.prototype.startProgressBar = function() {
+function DrawBar(maxWidth) {
+    var w = $('#bar').width();
+    var percent = parseInt((w * 100) / maxWidth);
+}
+
+function resetBar(){
+    var barMaxWidth = 0;
+    var $bar = $('#bar');
+        $bar.stop(true, true);
+        clearInterval(barTimer);
+}
+
+UI.prototype.startProgressBar = function(sec) {
     
+
+    var barMaxWidth = 350;
+    var barDuration = sec*1000;
+    var barTimer;
+
+        var $bar = $('#bar');
+        DrawBar(barMaxWidth);
+        barTimer = setInterval('DrawBar('+barMaxWidth+')', 100);
+
+        $bar.animate({
+            width: barMaxWidth
+        }, barDuration, function() {
+            $(this).css('background-color', 'red');
+            clearInterval(barTimer);
+        });
+
+
 }
 
 // print time
@@ -239,7 +282,8 @@ Timer.prototype.unpause = function() {
  */
 function init() {
 
-    // get new instance of timer
+    // get new instance of time
+
     var timer = new Timer();
     timer.outputSpanID = "time";
 
@@ -258,28 +302,36 @@ function init() {
     
     var addAlertBtn = document.getElementById("addAlert");
 
-    startDownBtn.onclick = function() {
-        timer.total = timer.time;
-        pauseBtn.innerHTML = "Pause";
-        timer.interval = 1000;
-        timer.startDown();
-        timer.resetTriggered = false;
-        timer.UI.startCircle(timer.time, timer.resetTriggered);
-        if (timer.isPaused === true) {
-            pauseBtn.innerHTML = "pause";
-        }
-        timer.isStarted = true;
-    };
+    countUpTrigger = false;
+    countDownTrigger = true;
+
+    $(".timer").show();
+    $(".timer.fill").hide();
+    $(".bar").hide();
+
+    // startDownBtn.onclick = function() {
+    //     timer.total = timer.time;
+    //     timer.UI.startProgressBar(timer.time);
+    //     pauseBtn.innerHTML = "Pause";
+    //     timer.interval = 1000;
+    //     timer.startDown();
+    //     timer.resetTriggered = false;
+    //     timer.UI.startCircle(timer.time, timer.resetTriggered);
+    //     if (timer.isPaused === true) {
+    //         pauseBtn.innerHTML = "pause";
+    //     }
+    //     timer.isStarted = true;
+    // };
     
-    startUpBtn.onclick = function() {
-        timer.total = timer.time;
-        pauseBtn.innerHTML = "Pause";
-        timer.interval = 1000;
-        timer.startUp();
-        timer.resetTriggered = false;
-        timer.UI.startCircle("60", timer.resetTriggered);
-        timer.isStarted = true;
-    };
+    // startUpBtn.onclick = function() {
+    //     timer.total = timer.time;
+    //     pauseBtn.innerHTML = "Pause";
+    //     timer.interval = 1000;
+    //     timer.startUp();
+    //     timer.resetTriggered = false;
+    //     timer.UI.startCircle("60", timer.resetTriggered);
+    //     timer.isStarted = true;
+    // };
 
     pauseBtn.onclick = function() {
         if (timer.isPaused === false) {
@@ -295,6 +347,7 @@ function init() {
         timer.reset();
         timer.resetTriggered = true;
         timer.UI.startCircle(timer.time, timer.resetTriggered);
+        resetBar();
         start
     };
     
@@ -358,35 +411,60 @@ function init() {
         timer.printTime();
     };
     
-    addAlertBtn.onclick = function() {
+    startBtn.onclick = function(){
+        if (countUpTrigger === false && countDownTrigger === true){
+            timer.total = timer.time;
+            timer.UI.startProgressBar(timer.time);
+            pauseBtn.innerHTML = "Pause";
+            timer.interval = 1000;
+            timer.startDown();
+            timer.resetTriggered = false;
+            timer.UI.startCircle(timer.time, timer.resetTriggered);
+            if (timer.isPaused === true) {
+                pauseBtn.innerHTML = "pause";
+            }
+            timer.isStarted = true;
+        }
+        else if (countUpTrigger === true && countDownTrigger === false){
+            timer.total = timer.time;
+            pauseBtn.innerHTML = "Pause";
+            timer.interval = 1000;
+            timer.startUp();
+            timer.resetTriggered = false;
+            timer.UI.startCircle("60", timer.resetTriggered);
+            timer.isStarted = true;
+        }
+    }
+
+    // addAlertBtn.onclick = function() {
         
-        var idNum = timer.alertNum;
+    //     var idNum = timer.alertNum;
     
-        var parent = document.getElementById("newAlertPoint");
+    //     var parent = document.getElementById("newAlertPoint");
 
-        var alertIn = document.createElement("input");
-        alertIn.type = "text";
-        alertIn.id = idNum;
-        parent.appendChild(alertIn);
+    //     var alertIn = document.createElement("input");
+    //     alertIn.type = "text";
+    //     alertIn.id = idNum;
+    //     parent.appendChild(alertIn);
         
-        var removeAlert = document.createElement("button");
-        var id = "removeAlertBtn" + idNum;
-        removeAlert.id = id;
-        removeAlert.innerHTML = "X"
+    //     var removeAlert = document.createElement("button");
+    //     var id = "removeAlertBtn" + idNum;
+    //     removeAlert.id = id;
+    //     removeAlert.innerHTML = "X"
         
-        $(document).on('click','#'+id, function(){
-            $('#'+idNum).remove();
-            $('#'+id).remove();
-            $('#break'+idNum).remove();
-        });
+    //     $(document).on('click','#'+id, function(){
+    //         $('#'+idNum).remove();
+    //         $('#'+id).remove();
+    //         $('#break'+idNum).remove();
+    //     });
 
-        parent.appendChild(removeAlert);
+    //     parent.appendChild(removeAlert);
 
-        timer.alertNum ++;
+    //     timer.alertNum ++;
 
-        var newBreak = parent.appendChild(document.createElement("br"));
-        newBreak.id = "break" + idNum;
+    //     var newBreak = parent.appendChild(document.createElement("br"));
+    //     newBreak.id = "break" + idNum;
 
-    };
+    // };
 }
 

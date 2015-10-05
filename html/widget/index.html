@@ -34,20 +34,14 @@
                 <li><span class="menu-option">Progress Bar Type</span>
                     <ul id="progressbar-options"></ul>
                 </li>
+                <li><span class="menu-option">Add Alert</span>
+                    <ul id="addAlert-options"></ul>
+                </li>
             <!--    <li><span class="menu-option"> Themes</span>
                     <ul id="theme-options"></ul>
                 </li> -->
-                <li><span class="menu-option">Color</span>
-                    <ul id="color-options"></ul>
-                </li>
                 <li><span class="menu-option">Background</span>
                     <ul id="background-options"></ul>
-                </li>
-                <li><span class="menu-option">Font Size</span>
-                    <ul id="textsize-options"></ul>
-                </li>
-                <li><span class="menu-option">Advanced</span>
-                    <ul id="advanced-options"></ul>
                 </li>
             </ul>
         </div>
@@ -72,29 +66,37 @@
 
         <div class="timer" id = "timerCircle"></div>
         <div class="timer fill" id = "timerPie"></div>
-        
     <div id="timerAll">
         <div id="display">
-            <div>&nbsp Hours &nbsp Minutes &nbsp Seconds </div>
+            <div>Hours &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Minutes &nbsp&nbsp&nbsp Seconds </div>
+            <div>
+            <img class="arrowbtns" src="src/up.png" id="addHour"></image>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <img class="arrowbtns" src="src/up.png" id="addMinute"></input>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <img class="arrowbtns" src="src/up.png" id="addSecond"></input>
+            </div>
             <span class="display" id="time">00:00:00</span>
+            <div>
+            <img class="arrowbtns" src="src/down.png"id="subHour"></input>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <img class="arrowbtns" src="src/down.png" id="subMinute"></input>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <img class="arrowbtns" src="src/down.png" id="subSecond"></input>
+            </div>
             </br>
-            <img src="src/arrow_up.png" id="addHour"></image>
-            <img src="src/arrow_down.png"id="subHour"></input>
-    &nbsp &nbsp
-            <img src="src/arrow_up.png" id="addMinute"></input>
-            <img src="src/arrow_down.png" id="subMinute"></input>
-    &nbsp &nbsp
-            <img src="src/arrow_up.png" id="addSecond"></input>
-            <img src="src/arrow_down.png" id="subSecond"></input>
         </div>
         <div id = "startreset">
-        <button type="button" id="startDownBtn">CountDown</button>
-        <button type="button" id="startUpBtn">CountUp</button>
-        <button type="button" id="pauseBtn">Pause</button>
-        <button type="button" id="resetBtn">Reset</button>
+        <button type="button" class="btns" id="pauseBtn">Pause</button>
+        <button type="button" class="btns" id="resetBtn">Reset</button>
+        <button type="button" class="btns" id="startBtn">Start</button>
         </div>
-        <button type="button" id="addAlert">Add Alert</button>
+<!--         <button type="button" id="addAlert">Add Alert</button> -->
         <div id="newAlertPoint"></div>
+    </div>
+    <div class= "bar" id="bar"></div>
+    <div id="progressbar">
+        <div></div>
     </div>
 
     <script type="text/javascript" src="scripts/diceThemes.js"></script>

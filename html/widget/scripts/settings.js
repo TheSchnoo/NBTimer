@@ -2,26 +2,12 @@ changeColorSchemechangeColorScheme//----------------------------------
 //--BUTTON events and input clicking
 //----------------------------------
 
-//freshly creates elements to fixed number length
-	function createElements(){
-		//clear out the svg and the array
-		clearOut();
-		var count=0;
-		for(count;count<$("#amount").val();count++){
-			data.push({"value":1,"label":"longer"});
-		}
-		d3Create();
-	}
+
    //--------Resets
     function resetRotate(){
-    	$("#d3").css({"transform":"","transition":""});
+    	window.location.reload();
     }
-    function resetSpinnerStyling(){
-		$("path").css({"opacity": 1,"stroke-width": 1});
-		if($(".ui-dialog").is(":visible")){
-			$("#dialog").dialog("close");
-		}
-	}
+
 	//-----------------------
 	//--------EVENTS--------
 	//-----------------------
@@ -61,51 +47,7 @@ changeColorSchemechangeColorScheme//----------------------------------
 	$("#element-font-color-picker").change(function(){
 		changeElementTextColor();
 	});
-	function getFontSizeCode(font){
-		switch(font){
-			case("Max"):
-				return 24;
-				break;
-			case("Large"):
-				return 18;
-				break;
-			case("Medium"):
-				return 12;
-				break;
-			case("Small"):
-				return 8;
-				break;
-			default:
-				return;
-		}
-	}
-	function changeFontSize(fontString,sliceIndex){
-		var size = getFontSizeCode(fontString);
-		if(sliceIndex == undefined){
-			for (var i=0; i<data.length; i++){
-				data[i].fontSize = size;
-			}
-		} else {
-			data[sliceIndex].fontSize=size;
-		}
-		$("svg").remove();
-		d3Create();
-	}
-	function changeElementColor(){
-		var index = $("#element-index").html();
-		data[index].color = $("#element-color-picker").val();
-		$("#slice"+index+" path").attr("fill",data[index].color);
-	}
-	function changeElementTextColor(){
-		var index = $("#element-index").html();
-		data[index].fontColor = $("#element-font-color-picker").val();
-		$("#slice"+index+" text").attr("fill",data[index].fontColor);
-	}
-	function changeElementText(){
-		var index = $("#element-index").html();
-		data[index].label = $("#element-text").val();
-		$("#slice"+index+" text").text(data[index].label);
-	}
+
 
 	function changeType(type){
 		if (type=="Wheel"){
@@ -196,17 +138,4 @@ changeColorSchemechangeColorScheme//----------------------------------
 		d3Create();
 	}
 
-	function changeProgressAnimation(type){
-
-		alert(type);
-
-		if type = 'circle'{
-			var index = $(".timer").html();
-			data[index].show();
-		}
-		else if type = 'pie'{
-			var index = $(".timer").html();
-			data[index].hide();
-		}
-	}
 
