@@ -52,7 +52,7 @@ UI.prototype.drawTimer = function(percent) {
 
     $('div.timer').html('<div class="percent"></div><div id="slice"'+(percent > 50?' class="gt50"':'')+'style="left:'+parseInt($("#container").width()/2-$(".timer").width()/2)+'px"><div class="pie"></div>'+(percent > 50?'<div class="pie fill"></div>':'')+'</div>');
 
-
+    console.log("Asdf");
     var deg = 360/100*percent;
 
     $('#slice .pie').css({
@@ -80,13 +80,19 @@ UI.prototype.stopWatch = function(finish) {
     this.timerFinish = finish;
 
     var seconds = (this.timerFinish-(new Date().getTime()))/1000;
-
-    if(seconds <= 0){
+    if (seconds <=0){
+        do{
+            clearInterval(the_timer);
+        }while(seconds==0)
+        console.log('a');
+        return;
+    }
+    else if(seconds < 0){
         
         this.drawTimer(100);
         this.drawBar(100);
 
-        clearInterval(this.timer);
+        clearInterval(the_timer);
         
     }
     else {
@@ -97,7 +103,7 @@ UI.prototype.stopWatch = function(finish) {
         this.drawBar(percent);
     }
 };
-
+var the_timer;
 UI.prototype.startCircle = function(sec, resetTriggered) {
     
     if (resetTriggered === false){
@@ -106,7 +112,9 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
         
         var finish = new Date().getTime()+(timerSeconds*1000);
 
-        this.timer = setInterval(function(){
+
+        the_timer = setInterval(function(){
+
             UI.prototype.stopWatch(finish);
         }, 50);
         
@@ -448,7 +456,6 @@ function init() {
 var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320;
 NB.ready(function(){
     init();
-    resize();
         toggleOptions(false);
     toggleEditingMenu(false);
 diceThemer = new DiceThemer();
@@ -510,11 +517,12 @@ diceThemer = new DiceThemer();
                 setCustomizationOption(category, item);
             }
         });
-        
     NB.addObserver('annotationResizedEvent',function(obj){
         console.log('a');
         resize();
     });
+    resize();
+    var timer = setTimeout(resize(),50);
 });
 
 function resize(){
