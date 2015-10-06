@@ -79,6 +79,7 @@ UI.prototype.stopWatch = function(finish) {
     
     this.timerFinish = finish;
 
+
     var seconds = (this.timerFinish-(new Date().getTime()))/1000;
     if (seconds <=0){
         do{
@@ -95,6 +96,10 @@ UI.prototype.stopWatch = function(finish) {
         clearInterval(the_timer);
         
     }
+    if(isPaused === true){
+        clearInterval(the_timer);
+    }
+
     else {
         
         var percent = 100-((seconds/timerSeconds)*100);
@@ -162,6 +167,7 @@ Timer.prototype.startDown = function(e) {
     
     this.type = "down";
     this.isPaused = false;
+    isPaused = false;
     
     if (this.time == 0){
         document.getElementById("time").style.color = "red";
@@ -204,6 +210,7 @@ Timer.prototype.startUp = function(e) {
     
     this.type = "up";
     this.isPaused = false;
+    isPaused = false;
     
     document.getElementById("time").style.color = "black";
 
@@ -250,12 +257,14 @@ Timer.prototype.reset = function() {
 Timer.prototype.pause = function() {
     clearInterval(this.intervalID);
     this.isPaused = true;
+    isPaused = true;
 };
 
 // unpause timer
 Timer.prototype.unpause = function() {
     
     this.isPaused = false;
+    isPaused = false;
     
     if (this.type == "up") {
         this.startUp(this.time);
@@ -289,6 +298,8 @@ function init() {
     var subSecondBtn = document.getElementById("subSecond");
     
     var addAlertBtn = document.getElementById("addAlert");
+
+    var isPaused = false;
 
     countUpTrigger = false;
     countDownTrigger = true;
