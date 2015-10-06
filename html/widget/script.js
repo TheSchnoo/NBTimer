@@ -445,11 +445,72 @@ function init() {
 
     // };
 }
-var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 300;
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320;
 NB.ready(function(){
     init();
     resize();
+        toggleOptions(false);
+    toggleEditingMenu(false);
+diceThemer = new DiceThemer();
+        toggleOptions(false);
+        toggleEditingMenu(false);
+        //$(window).resize();
 
+        // Page event hooks
+        //$(window).resize(onResize);
+
+        $("#controls-open").click(function() {
+            toggleOptions(true);
+            //going into menu
+            disableSpin = true;
+            //
+            eventAddClickEffect();
+        });
+        $("#controls-close").click(function() {
+            toggleOptions(false);
+            toggleEditingMenu(false);
+            //out of menu
+            disableSpin = false;
+            resetSpinnerStyling();
+        });
+
+        $("#controls-edit").click(function() {
+            toggleEditState = !toggleEditState;
+            toggleEditingMenu(toggleEditState);
+
+
+        });
+        $("#controls-reset").click(function(){
+            resetRotate();
+        });
+
+        $("#controls-add").click(function() {
+            countUpTrigger = true;
+            countDownTrigger = false;
+        });
+
+        $("#controls-remove").click(function() {
+            countUpTrigger = false;
+            countDownTrigger = true;
+        });
+
+        $("#remove-from-spin").click(function(){
+            toggleRemoveUponStop();
+        });
+
+        $('div#dialog').on('dialogclose',function(){
+            resetSpinnerStyling();
+        });
+
+        $("#menu").menu({
+            select: function( event, ui ) {
+                // Get which item was selected
+                var item = ui.item.find(".menu-option")[0].innerHTML;
+                var category = ui.item.parent().parent().find(".menu-option")[0].innerHTML;
+                setCustomizationOption(category, item);
+            }
+        });
+        
     NB.addObserver('annotationResizedEvent',function(obj){
         console.log('a');
         resize();
@@ -457,8 +518,7 @@ NB.ready(function(){
 });
 
 function resize(){
-    toggleOptions(false);
-    toggleEditingMenu(false);
+
     var ratio = NB.getHostObject().width/INITIAL_WIDTH;
     var displayWidth = $("#display").width;
     var containerWidth = $("#container").width;
@@ -474,7 +534,7 @@ function resize(){
     // $("#minutesLabel").css('margin-left',$("#display").width()*0.03);
     // $("#secondsLabel").css('margin-left',$("#display").width()*0.04);
     $("#timerAll").css('left', $("#container").width()/2-$("#timerAll").width()/2);
-    $("#timerAll").css('top', (NB.getHostObject().height-35)/2-$("#timerAll").height()/2+35);
+    $("#timerAll").css('top', (NB.getHostObject().height)/2-($("#timerAll").height()/2)+35);
     $(".arrowbtns").css({
         "width":INITIAL_ARROWS_WIDTH*ratio+"px",
         "height":INITIAL_ARROWS_HEIGHT*ratio+"px",
@@ -491,7 +551,8 @@ function resize(){
         "font-size":INITIAL_BUTTONS_FONTSIZE*ratio+"px",
         "border-radius":INITIAL_BUTTON_BORDERRADIUS*ratio+"px"
     });
+    $(".btns:first-child").css('margin-left',($("#startreset").width()-3*($(".btns").width()+20))/2);
     $(".arrowbtns").css('margin-left', $(".arrowbtnsDiv").width()*0.5-$(".arrowbtns").width()/2);
     $("#time").css('margin-left', $("#display").width()/2-$("#time").width()/2);
-    $(".timer").css('left', $("#container").width()/2-$(".timer").width()/2);
+    $(".pie").css('left', NB.getHostObject().width/2-$(".pie").width()/2);
 }

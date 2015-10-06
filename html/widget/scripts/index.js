@@ -97,7 +97,66 @@
 
 	// Initialization
 	// NB.ready(function() {
+		// countSections();
+		// diceThemer = new DiceThemer();
+		// toggleOptions(false);
+		// toggleEditingMenu(false);
+		// //$(window).resize();
 
+		// // Page event hooks
+		// //$(window).resize(onResize);
+
+		// $("#controls-open").click(function() {
+		// 	toggleOptions(true);
+		// 	//going into menu
+		// 	disableSpin = true;
+		// 	//
+		// 	eventAddClickEffect();
+		// });
+		// $("#controls-close").click(function() {
+		// 	toggleOptions(false);
+		// 	toggleEditingMenu(false);
+		// 	//out of menu
+		// 	disableSpin = false;
+		// 	resetSpinnerStyling();
+		// });
+
+		// $("#controls-edit").click(function() {
+		// 	toggleEditState = !toggleEditState;
+		// 	toggleEditingMenu(toggleEditState);
+
+
+		// });
+		// $("#controls-reset").click(function(){
+		// 	resetRotate();
+		// });
+
+		// $("#controls-add").click(function() {
+		// 	countUpTrigger = true;
+		// 	countDownTrigger = false;
+		// });
+
+		// $("#controls-remove").click(function() {
+		// 	countUpTrigger = false;
+		// 	countDownTrigger = true;
+		// });
+
+		// $("#remove-from-spin").click(function(){
+		// 	toggleRemoveUponStop();
+		// });
+
+		// $('div#dialog').on('dialogclose',function(){
+  //    		resetSpinnerStyling();
+ 	// 	});
+
+		// $("#menu").menu({
+		// 	select: function( event, ui ) {
+		// 		// Get which item was selected
+		// 		var item = ui.item.find(".menu-option")[0].innerHTML;
+		// 		var category = ui.item.parent().parent().find(".menu-option")[0].innerHTML;
+		// 		setCustomizationOption(category, item);
+		// 	}
+		// });
 		
 		// sideLength = NB.getHostObject().width*0.8;
   //   	centre = sideLength/2;
@@ -106,6 +165,17 @@
   //       $("#d3").width(sideLength).height(sideLength);
   //       $("svg").width(sideLength).height(sideLength);
   //       $("#arrow").css('transition','0s').css('left',centre-$("#arrow").width()/2).css('z-index',99);
-
+  //       NB.addObserver('annotationResizedEvent',function(obj){
+  //       	$("svg").remove();
+  //           //sideLength = obj.eventData.width*0.8;
+  //           //centre = sideLength/2;
+  //           //$("#arrow").css('transition','0s').css('left',centre-$("#arrow").width()/2);
+  //           //$("#arrow").width(25*sideLength/500);
+  //           //$("#d3").css('transition','0s').width(sideLength).height(sideLength);
+  //           $("svg").css('transition','0s').width(sideLength).height(sideLength);
+  //           //d3Create();
+  //       });
+  //       countSections();
+		// d3Create();
 	// });
 	// 
