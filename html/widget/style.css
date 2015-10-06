@@ -329,9 +329,9 @@ img {
 
                 font-size: 300px;
 
-                width:1em;
+                width:0.96em;
 
-                height:1em;
+                height:0.96em;
 
                 float: center;
 
@@ -344,9 +344,9 @@ img {
 
                 position:absolute;
 
-                width:1em;
+                width:0.96em;
 
-                height:1em;
+                height:0.96em;
 
                 clip:rect(0px,1em,1em,0.5em);
 
@@ -398,8 +398,8 @@ img {
 
                 background-color: #00CCFF;
 
-                width:1em;
+                width:0.96em;
 
-                height:1em;
+                height:0.96em;
 
             }

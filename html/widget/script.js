@@ -50,7 +50,7 @@ function convertToTimeFormat(hr, min, sec){
 
 UI.prototype.drawTimer = function(percent) {
 
-    $('div.timer').html('<div class="percent"></div><div id="slice"'+(percent > 50?' class="gt50"':'')+'><div class="pie"></div>'+(percent > 50?'<div class="pie fill"></div>':'')+'</div>');
+    $('div.timer').html('<div class="percent"></div><div id="slice"'+(percent > 50?' class="gt50"':'')+'style="left:'+parseInt($("#container").width()/2-$(".timer").width()/2)+'px"><div class="pie"></div>'+(percent > 50?'<div class="pie fill"></div>':'')+'</div>');
 
 
     var deg = 360/100*percent;
@@ -86,7 +86,7 @@ UI.prototype.stopWatch = function(finish) {
         this.drawTimer(100);
         this.drawBar(100);
 
-        clearInterval(timer);
+        clearInterval(this.timer);
         
     }
     else {
@@ -520,11 +520,11 @@ diceThemer = new DiceThemer();
 function resize(){
 
     var ratio = NB.getHostObject().width/INITIAL_WIDTH;
-    var displayWidth = $("#display").width;
-    var containerWidth = $("#container").width;
+    var displayWidth = $("#display").width();
+    var containerWidth = $("#container").width();
     $(".timerLabel").css('width', $("#display").width()*0.3);
-    $("#minutesLabel").css('margin-left',$("#display").width()*0.03);
-    $("#secondsLabel").css('margin-left',$("#display").width()*0.04);
+    $("#minutesLabel").css('margin-left',$("#display").width()*0.04);
+    $("#secondsLabel").css('margin-left',$("#display").width()*0.05);
     $(".arrowbtnsDiv").css('width', $("#display").width()*0.3);
     $("#addMinuteDiv").css('margin-left',$("#display").width()*0.03);
     $("#addSecondDiv").css('margin-left',$("#display").width()*0.03);
@@ -554,5 +554,5 @@ function resize(){
     $(".btns:first-child").css('margin-left',($("#startreset").width()-3*($(".btns").width()+20))/2);
     $(".arrowbtns").css('margin-left', $(".arrowbtnsDiv").width()*0.5-$(".arrowbtns").width()/2);
     $("#time").css('margin-left', $("#display").width()/2-$("#time").width()/2);
-    $(".pie").css('left', NB.getHostObject().width/2-$(".pie").width()/2);
+    // $("#slice").css('left', $("#container").width()/2-$("#slice").width()/2);
 }
