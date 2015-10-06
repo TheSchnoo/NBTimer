@@ -109,19 +109,20 @@ UI.prototype.stopWatch = function(finish) {
     }
 };
 var the_timer;
+var finish;
 UI.prototype.startCircle = function(sec, resetTriggered) {
     
     if (resetTriggered === false){
 
         timerSeconds = sec;
         
-        var finish = new Date().getTime()+(timerSeconds*1000);
+        finish = new Date().getTime()+(timerSeconds*1000);
 
+        d3Create(finish);
+        // the_timer = setInterval(function(){
 
-        the_timer = setInterval(function(){
-
-            UI.prototype.stopWatch(finish);
-        }, 50);
+        //     UI.prototype.stopWatch(finish);
+        // }, 50);
         
     }
     else{
@@ -575,4 +576,101 @@ function resize(){
     $(".arrowbtns").css('margin-left', $(".arrowbtnsDiv").width()*0.5-$(".arrowbtns").width()/2);
     $("#time").css('margin-left', $("#display").width()/2-$("#time").width()/2);
     // $("#slice").css('left', $("#container").width()/2-$("#slice").width()/2);
+}
+var width,height,data;
+function d3Create(finish){
+    data = [{
+        name: "one",
+        value: 1,
+        index:1
+    }];
+
+    var margin = {
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20
+    };
+    width = $("#container").width();
+    height = $("#container").width();
+
+    var chart = d3.select("body")
+        .append('svg')
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + ((width / 2)) + "," + ((height / 2)) + ")");
+
+
+    var radius = Math.min(width, height) / 2;
+
+    var color = d3.scale.ordinal()
+        .range(["#3399FF"]);
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius)
+        .innerRadius(0);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .startAngle(0)
+        .endAngle(2*Math.PI)
+        .value(function (d) {
+        return d.value;
+    });
+
+
+    var g = chart.selectAll(".arc")
+        .data(pie(data))
+        .enter().append("g")
+        .attr("class", "arc").attr("id",function(d){console.log(d);return "arc"+d.data.index;});
+console.log("created");
+    g.append("path")
+        .style("fill", function (d) {
+        return color(d.data.name);
+    }).transition()//delay(function (d, i) {
+        //return i * 500;
+    //})
+.duration((finish-(new Date().getTime())))
+.ease('linear')
+        .attrTween('d', function (d) {
+        var i = d3.interpolate(d.startAngle, d.endAngle);
+        return function (t) {
+            d.endAngle = i(t);
+            // console.log(arc(d));
+            return arc(d);
+        }
+    })
+        ;
+    time = (finish-(new Date().getTime()));
+}
+var time,timeleft,angle;
+function paused3(){
+    angle = (time - timeleft)/time*2*Math.PI;
+    timeleft=(finish-(new Date().getTime()));
+    var c = d3.select("path");
+    c.transition()
+        .duration( 0 );
+    var new_data = {
+        value:timeleft/time,
+        index:2
+    }
+    data.push(new_data);
+}
+function resumed3(){
+    var radius = Math.min(width, height) / 2;
+    var arc = d3.svg.arc()
+        .outerRadius(radius)
+        .innerRadius(0);   
+    var c = d3.select("path");
+    c.transition()
+        .duration(timeleft).ease('linear').attrTween('d', function (d) {
+        var i = d3.interpolate(angle, d.endAngle);
+        return function (t) {
+            d.endAngle = i(t);
+            // console.log(arc(d));
+            return arc(d);
+        }
+    })
+        ;
 }
