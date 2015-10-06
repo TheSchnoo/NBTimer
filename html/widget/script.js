@@ -79,8 +79,8 @@ UI.prototype.stopWatch = function(finish) {
     
     this.timerFinish = finish;
 
-
     var seconds = (this.timerFinish-(new Date().getTime()))/1000;
+
     if (seconds <=0){
         do{
             clearInterval(the_timer);
@@ -93,13 +93,8 @@ UI.prototype.stopWatch = function(finish) {
         this.drawTimer(100);
         this.drawBar(100);
 
-        clearInterval(the_timer);
-        
+        timer1.stop();   
     }
-    if(isPaused === true){
-        clearInterval(the_timer);
-    }
-
     else {
         
         var percent = 100-((seconds/timerSeconds)*100);
@@ -115,13 +110,19 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
 
         timerSeconds = sec;
         
-        var finish = new Date().getTime()+(timerSeconds*1000);
+        finish = new Date().getTime()+(timerSeconds*1000);
+
+        timer1 = $.timer(function() {
+        UI.prototype.stopWatch(finish);
+        });
+
+        timer1.set({ time : 50, autostart : true });
 
 
-        the_timer = setInterval(function(){
+        // the_timer = setInterval(function(){
 
-            UI.prototype.stopWatch(finish);
-        }, 50);
+        //     UI.prototype.stopWatch(finish);
+        // }, 50);
         
     }
     else{
@@ -258,6 +259,7 @@ Timer.prototype.pause = function() {
     clearInterval(this.intervalID);
     this.isPaused = true;
     isPaused = true;
+
 };
 
 // unpause timer
@@ -335,9 +337,14 @@ function init() {
         if (timer.isPaused === false) {
             timer.pause();
             this.innerHTML = "Unpause";
+            timer1.pause();
+            timer2 = $.timer(function() {finish = finish+50;});
+            timer2.set({ time : 50, autostart : true });
         } else {
             timer.unpause();
             this.innerHTML = "Pause";
+            timer2.stop();
+            timer1.play();
         }
     };
 
