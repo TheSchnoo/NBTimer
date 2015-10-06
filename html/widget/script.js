@@ -125,7 +125,7 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
         
     }
     else{
-        clearInterval(this.timer);
+        clearInterval(the_timer);
         this.drawTimer(0);
         this.drawBar(0);
 
@@ -343,6 +343,7 @@ function init() {
 
     resetBtn.onclick = function() {
         timer.reset();
+        timer.isPaused = true;
         timer.resetTriggered = true;
         timer.UI.startCircle(timer.time, timer.resetTriggered);
         resetBar();
