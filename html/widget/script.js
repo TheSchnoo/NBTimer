@@ -200,9 +200,8 @@ Timer.prototype.startDown = function(e) {
     $(".colon").css('color',startColor);
 
     //clear interval
-    if (this.intervalID < 0) {
+    if (this.intervalID != 0) {
         clearInterval(this.intervalID);
-        self.time = 0;
     }
 
     //print time
@@ -366,6 +365,7 @@ function init() {
             timer1.pause();
             timer2 = $.timer(function() {finish = finish+102;}); 
             timer2.set({ time : 100, autostart : true });
+            startBtn.disabled = false;
         } else {
             timer.unpause();
             this.innerHTML = "Pause";
@@ -381,6 +381,7 @@ function init() {
         timer.resetTriggered = true;
         timer.UI.startCircle(timer.time, timer.resetTriggered);
         timer1.stop();
+        startBtn.disabled = false;
     };
     
     addHourBtn.onclick = function() {
@@ -477,7 +478,10 @@ function init() {
             timer1.play();
             pauseBtn.innerHTML = "Pause";
             timer.isStarted = true;
+            startBtn.disabled = true;
         }
+
+        startBtn.disabled = true;
     }
 
     // addAlertBtn.onclick = function() {
