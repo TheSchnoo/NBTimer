@@ -1,141 +1,177 @@
-// changeColorSchemechangeColorScheme//----------------------------------
-// //--BUTTON events and input clicking
-// //----------------------------------
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40;
 
+var BACKGROUND_COLORS=["#FFAAAA","#CAEA9C", "#C1C6E0","#D3BDDF","#FFFAD6","#eeeeee"];
+var TIMER_COLORS = ["#901515","#4D7514","#404C88","#6A3985","#C7BA4F","#333333"];
+var BUTTON_COLORS=[["#AA3939","#901515"],["#729C34","#4D7514"],["#646EA4","#404C88"],["#885CA0","#6A3985"],["#F0E384","#C7BA4F"],["#777777","#333333"]];
+var currentTimerColor;
+var currentButtonColor;
+var ratio = NB.getHostObject().width/INITIAL_WIDTH;
+var currentProgressAnimation;
+var currentTheme;
+var startColor='black', endColor='red';
+var currentTimeColor;
+function resetRotate(){
+	window.location.reload();
+}
 
-//    //--------Resets
-//     function resetRotate(){
-//     	window.location.reload();
-//     }
-
-// 	//-----------------------
-// 	//--------EVENTS--------
-// 	//-----------------------
-// 	function eventAddClickEffect(){
-//         $('path').click(function() {
-//             if(!disableSpin){
-//                 return;
-//             }
-//             //reset all borders
-//             $("path").attr("stroke-width",0);
-
-//             //blur the other ones out 
-//             $("path").css("opacity", 0.3);
-//             $(this).css("opacity",1);
-//             $(this).css("stroke-width", 4);
-//             $parent = $(this).parent();
-//             //let's the id from the parent and use it as our array index
-//             var index = $parent.attr("id").replace("slice","");
-//             $(function() {
-//                 $("#dialog").dialog();
-//                 $("#element-setting").html("Element #"+index);
-//                 $("#element-color-picker").val(data[index].color);
-//                 $("#element-font-color-picker").val(data[index].fontColor);
-//                 $("#element-text").val(data[index].label);
-//                 $("#element-color").html(data[index].color);
-//                 $("#element-index").html(index);
-//                 $("#element-font-size").html(data[index].fontSize);
-//             });
-//         });
-//     }
-// 	$("#element-text").keyup(function(){
-// 		changeElementText();
-// 	});
-// 	$("#element-color-picker").change(function(){
-// 		changeElementColor();
-// 	});
-// 	$("#element-font-color-picker").change(function(){
-// 		changeElementTextColor();
-// 	});
-
-
-// 	function changeType(type){
-// 		if (type=="Wheel"){
-// 			wheelSpinner = true;
-// 		} else wheelSpinner = false;
-// 		if(!wheelSpinner){
-// 			$("svg").remove();
-// 			d3Create();
-// 			$("#d3").css('transition','0s').css('-webkit-transform','');
-// 			$("#arrow").css('display','none');
-// 			$("#pointer").css('display','block');
-// 			disableSpin = true;
-// 		}
-// 	}
-// 	function joinSections(sections){
-// 		//sections is an array of indexes, first val will always be the one that is first
-// 		var amount = sections.length;
-// 		var size =0;
-// 		for (var i=0; i<sections.length; i++){
-// 			size+=data[sections[i]].value;
-// 		}
-// 		data[sections[0]].value = size;
-// 		for (var i=1; i<sections.length; i++){
-// 			removeSection(sections[i]);
-// 		}
-// 		$("svg").remove();
-// 		d3Create();
-// 	}
-
-// 	var COLOUR_SCHEMES=[
-// 		[
-// 			"#FFAAAA","#D46A6A","#AA3939","#901515" //red
-// 		], [
-// 			"#CAEA9C","#9BC362","#729C34","#4D7514" //green
-// 		],[
-// 			"#C1C6E0","#9098C2","#646EA4","#404C88" //blue
-// 		],[
-// 			"#D3BDDF","#AC89BF","#885CA0","#6A3985" //purple
-// 		],[
-// 			"#FFFAD6","#FFF6B3","#F0E384","#C7BA4F" //yellow
-// 		],[
-// 			"#eeeeee","#aaaaaa","#777777","#333333" //grey
-// 		]
-// 	];
-// 	var currentScheme = 'red';
-	function getColorCode(color){
-		switch(color){
-			case("red"):
-				color = 0;
-				break;
-			case("green"):
-				color = 1;
-				break;
-			case("blue"):
-				color = 2;
-				break;
-			case("purple"):
-				color = 3;
-				break;
-			case("yellow"):
-				color = 4;
-				break;
-			case("grey"):
-				color = 5;
-				break;
-			default:
-				return;
-		}
-		return color;
+function getColorCode(color){
+	switch(color){
+		case("red"):
+			color = 0;
+			break;
+		case("green"):
+			color = 1;
+			break;
+		case("blue"):
+			color = 2;
+			break;
+		case("purple"):
+			color = 3;
+			break;
+		case("yellow"):
+			color = 4;
+			break;
+		case("grey"):
+			color = 5;
+			break;
+		default:
+			return;
 	}
-// 	function nextColor(){
-// 		if(data.length ==0){
-// 			return COLOUR_SCHEMES[getColorCode(currentScheme)][0];
-// 		}
-// 		var index = COLOUR_SCHEMES[getColorCode(currentScheme)].indexOf(data[data.length-1].color);
-// 		return COLOUR_SCHEMES[getColorCode(currentScheme)][(index+1)%4];
-// 	}
-// 	function changeColorScheme(color){
-// 		alert(color);
-
-// 		currentScheme = color;
-
-// 		color = getColorCode(color);
-// 		for (var i=0; i<data.length; i++){
-// 			data[i].color=COLOUR_SCHEMES[color][i%4];
-// 		}
-// 		$("svg").remove();
-// 		d3Create();
-// 	}
+	return color;
+}
 
 
+
+
+function getColorCode(color){
+    switch(color){
+        case("red"):
+            color = 0;
+            break;
+        case("green"):
+            color = 1;
+            break;
+        case("blue"):
+            color = 2;
+            break;
+        case("purple"):
+            color = 3;
+            break;
+        case("yellow"):
+            color = 4;
+            break;
+        case("grey"):
+            color = 5;
+            break;
+        default:
+            return;
+    }
+    return color;
+}
+function changeBackgroundColor(color){
+    
+    if(color=="transparent"){
+        $("body").css("background-color", "transparent");
+
+        return;
+    }
+    if(color=="white"){
+        $("body").css("background-color", "white");
+
+        return;
+    }
+    currentBackground = color;
+    color = getColorCode(color);
+
+    $("body").css("background-color", BACKGROUND_COLORS[color]);
+
+}
+
+function changeTimerColor(color){
+    if(color=="white"){
+        $(".pie").css("border-color", "white");
+        return;
+    }
+    currentTimerColor = color;
+    color = getColorCode(color);
+
+    $(".pie").css("border-color", TIMER_COLORS[color]);
+    $(".pie").css("background-color", TIMER_COLORS[color]);
+}
+
+function changeButtonColor(color){
+    currentButtonColor = color;
+    color = getColorCode(color);
+    $(".btns").css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    $(".btns").hover(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
+    });
+    $(".btns").mouseleave(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    });
+}
+$(document).ready(function(){
+    $(".btns").hover(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
+    });
+    $(".btns").mouseleave(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    });
+});
+
+
+
+function changeTheme(theme){
+    currentTheme = theme;
+    if(theme=="digital"){
+        startColor = "white";
+        endColor = "red";
+        $("body").css({
+            'background': 'black',
+            'color':'#fff',
+            'font-family':'monospace'
+        });
+        $(".btns").css({
+            'font-family':'monospace'
+        });
+        currentTimerColor = 'white';
+        changeButtonColor('red');
+        resize();
+    }
+    $("#slice, #progressbar").remove();
+}
+
+function changeTimeColor(color){
+    currenTimeColor = color;
+    if(color=="white"){
+        startColor = "white";
+        endColor = "red";
+    } else if (color=="black"){
+        startColor = "black";
+    }
+    $(".colon").css('color', startColor);
+    $(".display").css('color', startColor);
+    $("body").css('color', startColor);
+}
+function editEvent(){
+    console.log('asdf');
+    $("#dialog").css('display','block');
+    $(function(){
+        $("#dialog").dialog();
+    });
+}
+function lockAll(){
+    var objects = Object.keys(NB.document.getPage(NB.document.getCurrentPageId()).getObjects());
+    for (var i = 0; i<objects.length; i++){
+        NB.getObject(Object.keys(NB.document.getPage(NB.document.getCurrentPageId()).getObjects())[i]).lockType = "Lock In Place";
+    }
+}
+//POTENTIAL EVENTS--------------
+//lockAll();
+//NB.document.viewNextPage()
+//NB.document.viewPreviousPage()
+//THIS IS WHERE I WOULD PUT VIEW FIRST/LAST PAGE
+//IF I KNEW HOW
+//NB.getHostObject().deleteObject()
+//NB.addObject(NB.objectPrototype.text('asdf',{width:100,height:100}));
+//NB.addObject(NB.objectPrototype.file(path));
