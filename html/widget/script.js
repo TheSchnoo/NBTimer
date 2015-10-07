@@ -81,7 +81,7 @@ UI.prototype.drawTimer = function(percent) {
 
 UI.prototype.drawBar = function(percent) {
 
-    var deg = 300/100*percent;
+    var deg = $("#progressbar").width()/100*percent;
 
     $('#progressbar div').css({
         "width": deg,
@@ -503,24 +503,14 @@ NB.ready(function(){
     toggleOptions(false);
     toggleEditingMenu(false);
     diceThemer = new DiceThemer();
-    if(NB.persist.load('timer'+NB.getHostObject().guid)!=undefined){
-        var loaded_data = JSON.parse(NB.persist.load('timer'+NB.getHostObject().guid));
-        currentProgressAnimation = loaded_data.currentProgressAnimation;
-    currentTimerColor = loaded_data.currentTimerColor;
-    currentButtonColor = loaded_data.currentButtonColor;
-    currentBackground = loaded_data.currentBackground;
-    } else {
-        loaded_data = undefined;
-        currentProgressAnimation = 'circle';
-        currentTimerColor = 'blue';
-        currentButtonColor = 'grey';
-        currentBackground = 'white';
-    }
+    loadData();
     //defaults!!!
     
     changeBackgroundColor(currentBackground);
     changeButtonColor(currentButtonColor);
     changeTimerColor(currentTimerColor);
+    changeTheme(currentTheme);
+    changeTimeColor(currentTimeColor);
 
     $("#controls-open").click(function() {
         toggleOptions(true);
@@ -620,7 +610,7 @@ function resize(obj){
     $(".display").css('margin-left',$(".arrowbtnsDiv").width()/2-$(".display").width()/2);
     $("#progressbar").css('left', $("#container").width()/2 - $("#progressbar").width()/2)
     $(".btns").css('background', BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
-    // $("#slice").css('left', $("#container").width()/2-$("#slice").width()/2);
+    $("#slice").css('left', $("#container").width()/2-$("#slice").width()/2);
     $("#border-left").css('height',NB.getHostObject().height-20+"px");
     $("#border-right").css('height',NB.getHostObject().height+"px");
     $("#border-bottom").css('width',NB.getHostObject().width-20+"px");
@@ -681,7 +671,7 @@ function changeBackgroundColor(color){
     $("body").css("background-color", BACKGROUND_COLORS[color]);
 
 }
-var TIMER_COLORS = ["#FFAAAA","#CAEA9C", "#C1C6E0","#D3BDDF","#FFFAD6","#eeeeee"];
+var TIMER_COLORS = ["#901515","#4D7514","#404C88","#6A3985","#C7BA4F","#333333"];
 var currentTimerColor;
 function changeTimerColor(color){
     if(color=="white"){
@@ -722,7 +712,28 @@ function saveData(){
     hostobject.currentTimerColor = currentTimerColor;
     hostobject.currentButtonColor = currentButtonColor;
     hostobject.currentBackground = currentBackground;
+    hostobject.currentTimeColor = currentTimeColor;
+    hostobject.currentTheme = currentTheme;
     NB.persist.save("timer"+hostobject.guid, hostobject);
+}
+function loadData(){
+    if(NB.persist.load('timer'+NB.getHostObject().guid)!=undefined){
+        var loaded_data = JSON.parse(NB.persist.load('timer'+NB.getHostObject().guid));
+        currentProgressAnimation = loaded_data.currentProgressAnimation;
+        currentTimerColor = loaded_data.currentTimerColor;
+        currentButtonColor = loaded_data.currentButtonColor;
+        currentBackground = loaded_data.currentBackground;
+        currentTimeColor=loaded_data.currentTimeColor;
+        currentTheme=loaded_data.currentTheme;
+    } else {
+        loaded_data = undefined;
+        currentProgressAnimation = 'circle';
+        currentTimerColor = 'blue';
+        currentButtonColor = 'grey';
+        currentBackground = 'white';
+        currentTheme ='';
+        currentTimeColor = 'black';
+    }
 }
 var currentTheme;
 var startColor='black', endColor='red';
@@ -743,4 +754,18 @@ function changeTheme(theme){
         changeButtonColor('red');
         resize();
     }
+    $("#slice, #progressbar").remove();
+}
+var currentTimeColor;
+function changeTimeColor(color){
+    currenTimeColor = color;
+    if(color=="white"){
+        startColor = "white";
+        endColor = "red";
+    } else if (color=="black"){
+        startColor = "black";
+    }
+    $(".colon").css('color', startColor);
+    $(".display").css('color', startColor);
+    $("body").css('color', startColor);
 }
