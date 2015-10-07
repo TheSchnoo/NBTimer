@@ -148,35 +148,34 @@ img, .unselectable {
     width: 200px;
     height: 200px;
 }
-
 #border-right {
     position: absolute;
-    bottom: -1500px;
+    bottom: 0px;
     right: 0px;
     width: 2px;
-    height: 1000px;
-    background-color: #555555;
-    transition: bottom .5s linear;
+    height: 400px;
+    background-color: #fff;
+    transition: background-color .5s linear;
 }
 
 #border-left {
     position: absolute;
-    top: -1500px;
+    top: 0px;
     left: 0px;
     width: 2px;
-    height: 1000px;
-    background-color: #555555;
-    transition: top .5s linear;
+    height: 400px;
+    background-color: #fff;
+    transition: background-color .5s linear;
 }
 
 #border-bottom {
     position: absolute;
     bottom: 0px;
-    left: -1500px;
-    width: 1000px;
+    left: 0px;
+    width: 350px;
     height: 2px;
-    background-color: #555555;
-    transition: left .5s linear;
+    background-color: #fff;
+    transition: background-color .5s linear;
 }
 
 #dice-container section {

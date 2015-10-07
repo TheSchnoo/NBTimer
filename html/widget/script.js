@@ -81,14 +81,17 @@ UI.prototype.stopWatch = function(finish) {
     this.timerFinish = finish;
 
     var seconds = (this.timerFinish-(new Date().getTime()))/1000;
-
-    if (seconds <=0){
-        do{
-            clearInterval(the_timer);
-        }while(seconds==0)
-        console.log('a');
+    if (seconds == 0){
+        console.log('end');
         return;
     }
+    // if (seconds <0){
+    //     // do{
+    //     //     clearInterval(the_timer);
+    //     // }while(seconds==0)
+    //     console.log('a');
+    //     return;
+    // }
     else if(seconds < 0){
         
         this.drawTimer(100);
@@ -276,7 +279,7 @@ Timer.prototype.unpause = function() {
         this.startDown();
     }
 };
-
+var timer1;
 /**
  * init method
  */
@@ -476,80 +479,81 @@ function init() {
 var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320;
 NB.ready(function(){
     init();
-        toggleOptions(false);
+    toggleOptions(false);
     toggleEditingMenu(false);
-diceThemer = new DiceThemer();
+    diceThemer = new DiceThemer();
+    var loaded_data = JSON.parse(NB.persist.load('timer'+NB.getHostObject().guid));
+    //defaults!!!
+    currentProgressAnimation = loaded_data.currentProgressAnimation?loaded_data.currentProgressAnimation:'circle';
+    currentTimerColor = loaded_data.currentTimerColor?loaded_data.currentTimerColor:'blue';
+    currentButtonColor = loaded_data.currentButtonColor?loaded_data.currentButtonColor:'grey';
+    currentBackground = loaded_data.currentBackground?loaded_data.currentBackground:'white';
+    changeBackgroundColor(currentBackground);
+    changeButtonColor(currentButtonColor);
+    changeTimerColor(currentTimerColor);
+
+    $("#controls-open").click(function() {
+        toggleOptions(true);
+        //going into menu
+        disableSpin = true;
+        //
+        eventAddClickEffect();
+    });
+    $("#controls-close").click(function() {
         toggleOptions(false);
         toggleEditingMenu(false);
-        //$(window).resize();
+        //out of menu
+        disableSpin = false;
+        resetSpinnerStyling();
+    });
 
-        // Page event hooks
-        //$(window).resize(onResize);
-
-        $("#controls-open").click(function() {
-            toggleOptions(true);
-            //going into menu
-            disableSpin = true;
-            //
-            eventAddClickEffect();
-        });
-        $("#controls-close").click(function() {
-            toggleOptions(false);
-            toggleEditingMenu(false);
-            //out of menu
-            disableSpin = false;
-            resetSpinnerStyling();
-        });
-
-        $("#controls-edit").click(function() {
-            toggleEditState = !toggleEditState;
-            toggleEditingMenu(toggleEditState);
+    $("#controls-edit").click(function() {
+        toggleEditState = !toggleEditState;
+        toggleEditingMenu(toggleEditState);
 
 
-        });
-        $("#controls-reset").click(function(){
-            resetRotate();
-        });
+    });
+    $("#controls-reset").click(function(){
+        resetRotate();
+    });
 
-        $("#controls-add").click(function() {
-            countUpTrigger = true;
-            countDownTrigger = false;
-        });
+    $("#controls-add").click(function() {
+        countUpTrigger = true;
+        countDownTrigger = false;
+    });
 
-        $("#controls-remove").click(function() {
-            countUpTrigger = false;
-            countDownTrigger = true;
-        });
+    $("#controls-remove").click(function() {
+        countUpTrigger = false;
+        countDownTrigger = true;
+    });
 
-        $("#remove-from-spin").click(function(){
-            toggleRemoveUponStop();
-        });
+    $("#remove-from-spin").click(function(){
+        toggleRemoveUponStop();
+    });
 
-        $('div#dialog').on('dialogclose',function(){
-            resetSpinnerStyling();
-        });
+    $('div#dialog').on('dialogclose',function(){
+        resetSpinnerStyling();
+    });
 
-        $("#menu").menu({
-            select: function( event, ui ) {
-                // Get which item was selected
-                var item = ui.item.find(".menu-option")[0].innerHTML;
-                var category = ui.item.parent().parent().find(".menu-option")[0].innerHTML;
-                setCustomizationOption(category, item);
-            }
-        });
+    $("#menu").menu({
+        select: function( event, ui ) {
+            // Get which item was selected
+            var item = ui.item.find(".menu-option")[0].innerHTML;
+            var category = ui.item.parent().parent().find(".menu-option")[0].innerHTML;
+            setCustomizationOption(category, item);
+        }
+    });
     NB.addObserver('annotationResizedEvent',function(obj){
         console.log('a');
-        resize();
+        resize(obj);
     });
     resize();
     var timer = setTimeout(resize(),50);
 });
 
-function resize(){
+function resize(obj){
 
     var ratio = NB.getHostObject().width/INITIAL_WIDTH;
-    var displayWidth = $("#display").width();
-    var containerWidth = $("#container").width();
     $(".timerLabel").css('width', $("#display").width()*0.3);
     $("#minutesLabel").css('margin-left',$("#display").width()*0.04);
     $("#secondsLabel").css('margin-left',$("#display").width()*0.05);
@@ -585,6 +589,9 @@ function resize(){
     $("#progressbar").css('left', $("#container").width()/2 - $("#progressbar").width()/2)
     $(".btns").css('background', BUTTON_COLORS[getColorCode(currentButtonColor)][1])
     // $("#slice").css('left', $("#container").width()/2-$("#slice").width()/2);
+    $("#border-left").css('height',NB.getHostObject().height-20+"px");
+    $("#border-right").css('height',NB.getHostObject().height+"px");
+    $("#border-bottom").css('width',NB.getHostObject().width-20+"px");
 }
 var BACKGROUND_COLORS=["#FFAAAA","#CAEA9C", "#C1C6E0","#D3BDDF","#FFFAD6","#eeeeee"];
 function getColorCode(color){
@@ -631,7 +638,7 @@ function changeBackgroundColor(color){
 
 }
 var TIMER_COLORS = ["#901515","#4D7514","#404C88","#6A3985","#C7BA4F","#333333"];
-var currentTimerColor=currentTimerColor?currentTimerColor:"blue";
+var currentTimerColor;
 function changeTimerColor(color){
     if(color=="transparent"){
         $(".pie").css("border-color", "transparent");
@@ -648,14 +655,18 @@ function changeTimerColor(color){
 
     $(".pie").css("border-color", TIMER_COLORS[color]);
 }
-var currentButtonColor=currentButtonColor?currentButtonColor:"blue";
+var currentButtonColor;
 var BUTTON_COLORS=[["#AA3939","#901515"],["#729C34","#4D7514"],["#646EA4","#404C88"],["#885CA0","#6A3985"],["#F0E384","#C7BA4F"],["#777777","#333333"]];
 function changeButtonColor(color){
     currentButtonColor = color;
     color = getColorCode(color);
-
-    $(".btns:hover").css("background", BUTTON_COLORS[color][0]);
-    $(".btns").css("background", BUTTON_COLORS[color][1]);
+    $(".btns").css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    $(".btns").hover(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
+    });
+    $(".btns").mouseleave(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    });
 }
 $(document).ready(function(){
     $(".btns").hover(function(){
@@ -664,4 +675,13 @@ $(document).ready(function(){
     $(".btns").mouseleave(function(){
         $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
     });
-})
+});
+var currentProgressAnimation;
+function saveData(){
+    hostobject = NB.getHostObject();
+    hostobject.currentProgressAnimation = currentProgressAnimation;
+    hostobject.currentTimerColor = currentTimerColor;
+    hostobject.currentButtonColor = currentButtonColor;
+    hostobject.currentBackground = currentBackground;
+    NB.persist.save("timer"+hostobject.guid, hostobject);
+}

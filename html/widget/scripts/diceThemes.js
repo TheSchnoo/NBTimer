@@ -99,7 +99,7 @@ function DiceThemer() {
 }
 
 function changeProgressAnimation(type){
-
+	currentProgressAnimation = type;
 	var shape = type;
 
 
