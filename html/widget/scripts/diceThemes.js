@@ -22,10 +22,28 @@ function DiceThemer() {
 		// addThemeOption("Letters", {content: diceContent.letters, maxSides: 10});
 		// addThemeOption("Heath", {content: diceContent.squirrel, maxSides: 10});
 		// addThemeOption("Custom", {content: diceContent.custom, maxSides: 6});
-		addBackgroundOption("None", "transparent");
-		addBackgroundOption("Gray", "#333333");
-		addBackgroundOption("Green", "green");
-		addBackgroundOption("White", "#F5F5F5");
+		addBackgroundOption("Transparent");
+		addBackgroundOption("White");
+		addBackgroundOption("Grey");
+		addBackgroundOption("Green");
+		addBackgroundOption("Yellow");
+		addBackgroundOption("Red");
+		addBackgroundOption("Blue");
+		addBackgroundOption("Purple");
+		addTimerColorOption("Transparent");
+		addTimerColorOption("White");
+		addTimerColorOption("Grey");
+		addTimerColorOption("Green");
+		addTimerColorOption("Yellow");
+		addTimerColorOption("Red");
+		addTimerColorOption("Blue");
+		addTimerColorOption("Purple");
+		addButtonColorOption("Grey");
+		addButtonColorOption("Green");
+		addButtonColorOption("Yellow");
+		addButtonColorOption("Red");
+		addButtonColorOption("Blue");
+		addButtonColorOption("Purple");
 
 		//$("#remove-from-spin").append("<input type='radio' id='remove-from-spin-radio'>");
 	}
@@ -46,10 +64,17 @@ function DiceThemer() {
 		$('#color-options').append('<li><span class="menu-option">' + name + '</span></li>');
 	}
 	function addBackgroundOption(name, color) {
-		backgroundColors[name] = color;
+		// backgroundColors[name] = color;
 		$('#background-options').append('<li><span class="menu-option">' + name + '</span></li>');
 	}
-
+	function addTimerColorOption(name, color) {
+		// backgroundColors[name] = color;
+		$('#timer-color-options').append('<li><span class="menu-option">' + name + '</span></li>');
+	}
+	function addButtonColorOption(name, color) {
+		// backgroundColors[name] = color;
+		$('#button-color-options').append('<li><span class="menu-option">' + name + '</span></li>');
+	}
 
 	this.getThemeOption = function(name) {
 		return $.extend(true, {}, diceThemes[name]);

@@ -63,7 +63,8 @@ UI.prototype.drawTimer = function(percent) {
 
         '-o-transform':'rotate('+deg+'deg)',
 
-        'transform':'rotate('+deg+'deg)'
+        'transform':'rotate('+deg+'deg)',
+        'border-color':currentTimerColor?currentTimerColor:'red'
 
     });
 };
@@ -79,8 +80,8 @@ UI.prototype.stopWatch = function(finish) {
     
     this.timerFinish = finish;
 
-
     var seconds = (this.timerFinish-(new Date().getTime()))/1000;
+
     if (seconds <=0){
         do{
             clearInterval(the_timer);
@@ -93,13 +94,8 @@ UI.prototype.stopWatch = function(finish) {
         this.drawTimer(100);
         this.drawBar(100);
 
-        clearInterval(the_timer);
-        
+        timer1.stop();   
     }
-    if(isPaused === true){
-        clearInterval(the_timer);
-    }
-
     else {
         
         var percent = 100-((seconds/timerSeconds)*100);
@@ -109,7 +105,6 @@ UI.prototype.stopWatch = function(finish) {
     }
 };
 var the_timer;
-var finish;
 UI.prototype.startCircle = function(sec, resetTriggered) {
     
     if (resetTriggered === false){
@@ -118,7 +113,13 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
         
         finish = new Date().getTime()+(timerSeconds*1000);
 
-        d3Create(finish);
+        timer1 = $.timer(function() {
+        UI.prototype.stopWatch(finish);
+        });
+
+        timer1.set({ time : 50, autostart : true });
+
+
         // the_timer = setInterval(function(){
 
         //     UI.prototype.stopWatch(finish);
@@ -259,6 +260,7 @@ Timer.prototype.pause = function() {
     clearInterval(this.intervalID);
     this.isPaused = true;
     isPaused = true;
+
 };
 
 // unpause timer
@@ -336,9 +338,14 @@ function init() {
         if (timer.isPaused === false) {
             timer.pause();
             this.innerHTML = "Unpause";
+            timer1.pause();
+            timer2 = $.timer(function() {finish = finish+50;});
+            timer2.set({ time : 50, autostart : true });
         } else {
             timer.unpause();
             this.innerHTML = "Pause";
+            timer2.stop();
+            timer1.play();
         }
     };
 
@@ -575,102 +582,86 @@ function resize(){
     $(".btns:first-child").css('margin-left',($("#startreset").width()-3*($(".btns").width()+20))/2);
     $(".arrowbtns").css('margin-left', $(".arrowbtnsDiv").width()*0.5-$(".arrowbtns").width()/2);
     $("#time").css('margin-left', $("#display").width()/2-$("#time").width()/2);
+    $("#progressbar").css('left', $("#container").width()/2 - $("#progressbar").width()/2)
+    $(".btns").css('background', BUTTON_COLORS[getColorCode(currentButtonColor)][1])
     // $("#slice").css('left', $("#container").width()/2-$("#slice").width()/2);
 }
-var width,height,data;
-function d3Create(finish){
-    data = [{
-        name: "one",
-        value: 1,
-        index:1
-    }];
-
-    var margin = {
-        top: 20,
-        right: 20,
-        bottom: 20,
-        left: 20
-    };
-    width = $("#container").width();
-    height = $("#container").width();
-
-    var chart = d3.select("body")
-        .append('svg')
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + ((width / 2)) + "," + ((height / 2)) + ")");
-
-
-    var radius = Math.min(width, height) / 2;
-
-    var color = d3.scale.ordinal()
-        .range(["#3399FF"]);
-
-    var arc = d3.svg.arc()
-        .outerRadius(radius)
-        .innerRadius(0);
-
-    var pie = d3.layout.pie()
-        .sort(null)
-        .startAngle(0)
-        .endAngle(2*Math.PI)
-        .value(function (d) {
-        return d.value;
-    });
-
-
-    var g = chart.selectAll(".arc")
-        .data(pie(data))
-        .enter().append("g")
-        .attr("class", "arc").attr("id",function(d){console.log(d);return "arc"+d.data.index;});
-console.log("created");
-    g.append("path")
-        .style("fill", function (d) {
-        return color(d.data.name);
-    }).transition()//delay(function (d, i) {
-        //return i * 500;
-    //})
-.duration((finish-(new Date().getTime())))
-.ease('linear')
-        .attrTween('d', function (d) {
-        var i = d3.interpolate(d.startAngle, d.endAngle);
-        return function (t) {
-            d.endAngle = i(t);
-            // console.log(arc(d));
-            return arc(d);
-        }
-    })
-        ;
-    time = (finish-(new Date().getTime()));
-}
-var time,timeleft,angle;
-function paused3(){
-    angle = (time - timeleft)/time*2*Math.PI;
-    timeleft=(finish-(new Date().getTime()));
-    var c = d3.select("path");
-    c.transition()
-        .duration( 0 );
-    var new_data = {
-        value:timeleft/time,
-        index:2
+var BACKGROUND_COLORS=["#FFAAAA","#CAEA9C", "#C1C6E0","#D3BDDF","#FFFAD6","#eeeeee"];
+function getColorCode(color){
+    switch(color){
+        case("red"):
+            color = 0;
+            break;
+        case("green"):
+            color = 1;
+            break;
+        case("blue"):
+            color = 2;
+            break;
+        case("purple"):
+            color = 3;
+            break;
+        case("yellow"):
+            color = 4;
+            break;
+        case("grey"):
+            color = 5;
+            break;
+        default:
+            return;
     }
-    data.push(new_data);
+    return color;
 }
-function resumed3(){
-    var radius = Math.min(width, height) / 2;
-    var arc = d3.svg.arc()
-        .outerRadius(radius)
-        .innerRadius(0);   
-    var c = d3.select("path");
-    c.transition()
-        .duration(timeleft).ease('linear').attrTween('d', function (d) {
-        var i = d3.interpolate(angle, d.endAngle);
-        return function (t) {
-            d.endAngle = i(t);
-            // console.log(arc(d));
-            return arc(d);
-        }
-    })
-        ;
+function changeBackgroundColor(color){
+    
+    if(color=="transparent"){
+        $("body").css("background-color", "transparent");
+
+        return;
+    }
+    if(color=="white"){
+        $("body").css("background-color", "white");
+
+        return;
+    }
+    currentBackground = color;
+    color = getColorCode(color);
+
+    $("body").css("background-color", BACKGROUND_COLORS[color]);
+
 }
+var TIMER_COLORS = ["#901515","#4D7514","#404C88","#6A3985","#C7BA4F","#333333"];
+var currentTimerColor=currentTimerColor?currentTimerColor:"blue";
+function changeTimerColor(color){
+    if(color=="transparent"){
+        $(".pie").css("border-color", "transparent");
+
+        return;
+    }
+    if(color=="white"){
+        $(".pie").css("border-color", "white");
+
+        return;
+    }
+    currentTimerColor = color;
+    color = getColorCode(color);
+
+    $(".pie").css("border-color", TIMER_COLORS[color]);
+}
+var currentButtonColor=currentButtonColor?currentButtonColor:"blue";
+var BUTTON_COLORS=[["#AA3939","#901515"],["#729C34","#4D7514"],["#646EA4","#404C88"],["#885CA0","#6A3985"],["#F0E384","#C7BA4F"],["#777777","#333333"]];
+function changeButtonColor(color){
+    currentButtonColor = color;
+    color = getColorCode(color);
+
+    $(".btns:hover").css("background", BUTTON_COLORS[color][0]);
+    $(".btns").css("background", BUTTON_COLORS[color][1]);
+}
+$(document).ready(function(){
+    $(".btns").hover(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
+    });
+    $(".btns").mouseleave(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    });
+})

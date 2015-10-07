@@ -75,12 +75,13 @@
 				var hai = changeColorScheme(item.toLowerCase());
 				break;
 			case 'Background':
-				// Set the background color
-				var bgColor = diceThemer.getBackgroundOption(item);
-				if (bgColor) {
-					elements.body.css("background-color", bgColor);
-					elements.diceContainer.css("background-color", bgColor);
-				}
+				changeBackgroundColor(item.toLowerCase());
+				break;
+			case 'Timer Color':
+				changeTimerColor(item.toLowerCase());
+				break;
+			case 'Button Color':
+				changeButtonColor(item.toLowerCase());
 				break;
 			case 'Font Size':
 				changeFontSize(item);
