@@ -143,7 +143,7 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
         
     }
     else{
-        clearInterval(the_timer);
+        timer1.stop();
         this.drawTimer(0);
         this.drawBar(0);
 
@@ -200,8 +200,9 @@ Timer.prototype.startDown = function(e) {
     $(".colon").css('color',startColor);
 
     //clear interval
-    if (this.intervalID != 0) {
+    if (this.intervalID < 0) {
         clearInterval(this.intervalID);
+        self.time = 0;
     }
 
     //print time
@@ -363,8 +364,8 @@ function init() {
             timer.pause();
             this.innerHTML = "Unpause";
             timer1.pause();
-            timer2 = $.timer(function() {finish = finish+50;});
-            timer2.set({ time : 50, autostart : true });
+            timer2 = $.timer(function() {finish = finish+102;}); 
+            timer2.set({ time : 100, autostart : true });
         } else {
             timer.unpause();
             this.innerHTML = "Pause";
@@ -376,20 +377,20 @@ function init() {
     resetBtn.onclick = function() {
         timer.reset();
         timer.isPaused = true;
+        timer.isStarted = false;
         timer.resetTriggered = true;
         timer.UI.startCircle(timer.time, timer.resetTriggered);
-        resetBar();
-        start
+        timer1.stop();
     };
     
     addHourBtn.onclick = function() {
         timer.pause();
         timer.time = timer.time + 3600;
         timer.printTime();
-        if (timer.isStarted == true) {
+        if (timer.isStarted === true) {
             timer.UI.updateTime(timer.time, timer.resetTriggered);
+            timer.unpause();
         }
-        timer.unpause();
     };
     
     subHourBtn.onclick = function() {
@@ -406,10 +407,10 @@ function init() {
         timer.pause();
         timer.time = timer.time + 60;
         timer.printTime();
-        if (timer.isStarted == true) {
+        if (timer.isStarted === true) {
             timer.UI.updateTime(timer.time, timer.resetTriggered);
+            timer.unpause();
         }
-        timer.unpause();
     };
     
     subMinuteBtn.onclick = function() {
@@ -426,10 +427,10 @@ function init() {
         timer.pause();
         timer.time = timer.time + 1;
         timer.printTime();
-        if (timer.isStarted == true) {
+        if (timer.isStarted === true) {
             timer.UI.updateTime(timer.time, timer.resetTriggered);
+            timer.unpause();
         }
-        timer.unpause();
     };
     
     subSecondBtn.onclick = function() {
@@ -443,25 +444,38 @@ function init() {
     };
     
     startBtn.onclick = function(){
-        if (countUpTrigger === false && countDownTrigger === true){
-            timer.total = timer.time;
-            pauseBtn.innerHTML = "Pause";
-            timer.interval = 1000;
-            timer.startDown();
-            timer.resetTriggered = false;
-            timer.UI.startCircle(timer.time, timer.resetTriggered);
-            if (timer.isPaused === true) {
-                pauseBtn.innerHTML = "pause";
-            }
-            timer.isStarted = true;
+        if (timer.isStarted === false){
+            timer.unpause();
         }
-        else if (countUpTrigger === true && countDownTrigger === false){
-            timer.total = timer.time;
+
+        if (timer.isPaused === false){
+            if (countUpTrigger === false && countDownTrigger === true && isPaused ===false){
+                timer.total = timer.time;
+                pauseBtn.innerHTML = "Pause";
+                timer.interval = 1000;
+                timer.startDown();
+                timer.resetTriggered = false;
+                timer.UI.startCircle(timer.time, timer.resetTriggered);
+                if (timer.isPaused === true) {
+                    pauseBtn.innerHTML = "pause";
+                }
+                timer.isStarted = true;
+            }
+            else if (countUpTrigger === true && countDownTrigger === false && isPaused === false){
+                timer.total = timer.time;
+                pauseBtn.innerHTML = "Pause";
+                timer.interval = 1000;
+                timer.startUp();
+                timer.resetTriggered = false;
+                timer.UI.startCircle("60", timer.resetTriggered);
+                timer.isStarted = true;
+            }
+        }
+        else if (timer.isPaused === true){
+            timer.unpause();
+            timer2.stop();
+            timer1.play();
             pauseBtn.innerHTML = "Pause";
-            timer.interval = 1000;
-            timer.startUp();
-            timer.resetTriggered = false;
-            timer.UI.startCircle("60", timer.resetTriggered);
             timer.isStarted = true;
         }
     }
