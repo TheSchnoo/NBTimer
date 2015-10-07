@@ -83,7 +83,10 @@ UI.prototype.drawBar = function(percent) {
 
     var deg = 300/100*percent;
 
-    $('#progressbar div').css("width", deg);  
+    $('#progressbar div').css({
+        "width": deg,
+        'background-color':TIMER_COLORS[getColorCode(currentTimerColor)]
+    });  
 };
 
 UI.prototype.stopWatch = function(finish) {
@@ -625,6 +628,14 @@ function resize(obj){
     $("#colon1").css('left', $(".third").width()+$(".third").width()*0.085);
     $("#colon2").css('left', $(".third").width()*2+$(".third").width()*0.155);
     $(".colon").css('top', $(".timerLabel").height()+$(".arrowbtnsDiv").height()+$(".timerLabel").height()*0.2);
+    $('#progressbar div').css({
+
+        'background-color':TIMER_COLORS[getColorCode(currentTimerColor)]
+    });  
+    $("#progressbar").css({
+        'width':0.95*$("#container").width(),
+    });
+    $("#progressbar").css('margin-left',$("#container").width()/2-$("#progressbar").width()/2);
 }
 var BACKGROUND_COLORS=["#FFAAAA","#CAEA9C", "#C1C6E0","#D3BDDF","#FFFAD6","#eeeeee"];
 function getColorCode(color){
