@@ -22,6 +22,7 @@ function DiceThemer() {
 		// addThemeOption("Letters", {content: diceContent.letters, maxSides: 10});
 		// addThemeOption("Heath", {content: diceContent.squirrel, maxSides: 10});
 		// addThemeOption("Custom", {content: diceContent.custom, maxSides: 6});
+		//background colours
 		addBackgroundOption("Transparent");
 		addBackgroundOption("White");
 		addBackgroundOption("Grey");
@@ -30,7 +31,7 @@ function DiceThemer() {
 		addBackgroundOption("Red");
 		addBackgroundOption("Blue");
 		addBackgroundOption("Purple");
-		addTimerColorOption("Transparent");
+		//timer colours
 		addTimerColorOption("White");
 		addTimerColorOption("Grey");
 		addTimerColorOption("Green");
@@ -38,6 +39,7 @@ function DiceThemer() {
 		addTimerColorOption("Red");
 		addTimerColorOption("Blue");
 		addTimerColorOption("Purple");
+		//button colours
 		addButtonColorOption("Grey");
 		addButtonColorOption("Green");
 		addButtonColorOption("Yellow");

@@ -19,7 +19,7 @@ function Timer(count, interval) {
 }
 
 // Helper for turning a seconds value into hours, minutes, and seconds
-function formatTimeFromSec(sec){
+function formatTimeFromSec(sec, entry){
     var seconds = sec;
     var minutes = 0
     var hours = 0
@@ -30,6 +30,15 @@ function formatTimeFromSec(sec){
     while (minutes - 60 >= 0) {
         hours++;
         minutes = minutes - 60;
+    }
+    if(entry =="seconds"){
+        return seconds;
+    }
+    if(entry =="minutes"){
+        return minutes;
+    }
+    if(entry =="hours"){
+        return hours;
     }
     return convertToTimeFormat(hours, minutes, seconds);
 }
@@ -64,7 +73,8 @@ UI.prototype.drawTimer = function(percent) {
         '-o-transform':'rotate('+deg+'deg)',
 
         'transform':'rotate('+deg+'deg)',
-        'border-color':currentTimerColor?currentTimerColor:'red'
+        'border-color':TIMER_COLORS[getColorCode(currentTimerColor)],
+        'background-color':currentProgressAnimation=="pie"?TIMER_COLORS[getColorCode(currentTimerColor)]:'none'
 
     });
 };
@@ -81,10 +91,10 @@ UI.prototype.stopWatch = function(finish) {
     this.timerFinish = finish;
 
     var seconds = (this.timerFinish-(new Date().getTime()))/1000;
-    if (seconds == 0){
-        console.log('end');
-        return;
-    }
+    // if (seconds == 0){
+    //     console.log('end');
+    //     return;
+    // }
     // if (seconds <0){
     //     // do{
     //     //     clearInterval(the_timer);
@@ -92,7 +102,7 @@ UI.prototype.stopWatch = function(finish) {
     //     console.log('a');
     //     return;
     // }
-    else if(seconds < 0){
+     if(seconds < 0){
         
         this.drawTimer(100);
         this.drawBar(100);
@@ -164,7 +174,9 @@ function resetBar(){
 
 // print time
 Timer.prototype.printTime = function() {
-    document.getElementById("time").innerHTML = formatTimeFromSec(this.time);
+    document.getElementById("timeSeconds").innerHTML = formatTimeFromSec(this.time, 'seconds')<10?"0"+formatTimeFromSec(this.time, 'seconds'):formatTimeFromSec(this.time, 'seconds');
+    document.getElementById("timeMinutes").innerHTML = formatTimeFromSec(this.time, 'minutes')<10?"0"+formatTimeFromSec(this.time, 'minutes'):formatTimeFromSec(this.time, 'minutes');
+    document.getElementById("timeHours").innerHTML = formatTimeFromSec(this.time, 'hours')<10?"0"+formatTimeFromSec(this.time, 'hours'):formatTimeFromSec(this.time, 'hours');
 };
 
 // start the timer
@@ -175,12 +187,14 @@ Timer.prototype.startDown = function(e) {
     isPaused = false;
     
     if (this.time == 0){
-        document.getElementById("time").style.color = "red";
+        $(".display").css('color',endColor);
+        $(".colon").css('color',endColor);
         self.printTime();
         self.pause();
     }
     
-    document.getElementById("time").style.color = "black";
+    $(".display").css('color',startColor);
+    $(".colon").css('color',startColor);
 
     //clear interval
     if (this.intervalID != 0) {
@@ -198,7 +212,8 @@ Timer.prototype.startDown = function(e) {
         if (self.time > 0) {
             self.printTime();
         } else {
-            document.getElementById("time").style.color = "red";
+            $(".display").css('color',endColor);
+            $(".colon").css('color',endColor);
             self.printTime();
             self.pause();
         }
@@ -217,7 +232,8 @@ Timer.prototype.startUp = function(e) {
     this.isPaused = false;
     isPaused = false;
     
-    document.getElementById("time").style.color = "black";
+    $(".display").css('color',startColor);
+    $(".colon").css('color',startColor);
 
     //clear interval
     if (this.intervalID != 0) {
@@ -235,7 +251,8 @@ Timer.prototype.startUp = function(e) {
             // check if the thing is contained...
             self.printTime();
             self.pause();
-            document.getElementById("time").style.color = "red";
+            $(".display").css('color',endColor);
+            $(".colon").css('color',endColor);
         } else {
             self.printTime();
         }
@@ -245,7 +262,8 @@ Timer.prototype.startUp = function(e) {
 // reset timer
 Timer.prototype.reset = function() {
     
-    document.getElementById("time").style.color = "black";
+    $(".display").css('color',startColor);
+    $(".colon").css('color',startColor);
     
     clearInterval(this.intervalID);
 
@@ -476,18 +494,27 @@ function init() {
 
     // };
 }
-var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320;
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40;
 NB.ready(function(){
     init();
     toggleOptions(false);
     toggleEditingMenu(false);
     diceThemer = new DiceThemer();
-    var loaded_data = JSON.parse(NB.persist.load('timer'+NB.getHostObject().guid));
+    if(NB.persist.load('timer'+NB.getHostObject().guid)!=undefined){
+        var loaded_data = JSON.parse(NB.persist.load('timer'+NB.getHostObject().guid));
+        currentProgressAnimation = loaded_data.currentProgressAnimation;
+    currentTimerColor = loaded_data.currentTimerColor;
+    currentButtonColor = loaded_data.currentButtonColor;
+    currentBackground = loaded_data.currentBackground;
+    } else {
+        loaded_data = undefined;
+        currentProgressAnimation = 'circle';
+        currentTimerColor = 'blue';
+        currentButtonColor = 'grey';
+        currentBackground = 'white';
+    }
     //defaults!!!
-    currentProgressAnimation = loaded_data.currentProgressAnimation?loaded_data.currentProgressAnimation:'circle';
-    currentTimerColor = loaded_data.currentTimerColor?loaded_data.currentTimerColor:'blue';
-    currentButtonColor = loaded_data.currentButtonColor?loaded_data.currentButtonColor:'grey';
-    currentBackground = loaded_data.currentBackground?loaded_data.currentBackground:'white';
+    
     changeBackgroundColor(currentBackground);
     changeButtonColor(currentButtonColor);
     changeTimerColor(currentTimerColor);
@@ -549,19 +576,20 @@ NB.ready(function(){
     });
     resize();
     var timer = setTimeout(resize(),50);
+    saveData();
 });
-
+var ratio = NB.getHostObject().width/INITIAL_WIDTH;
 function resize(obj){
 
-    var ratio = NB.getHostObject().width/INITIAL_WIDTH;
+    ratio = NB.getHostObject().width/INITIAL_WIDTH;
     $(".timerLabel").css('width', $("#display").width()*0.3);
-    $("#minutesLabel").css('margin-left',$("#display").width()*0.04);
-    $("#secondsLabel").css('margin-left',$("#display").width()*0.05);
+    // $("#minutesLabel").css('margin-left',$("#display").width()*0.04);
+    // $("#secondsLabel").css('margin-left',$("#display").width()*0.05);
     $(".arrowbtnsDiv").css('width', $("#display").width()*0.3);
-    $("#addMinuteDiv").css('margin-left',$("#display").width()*0.03);
-    $("#addSecondDiv").css('margin-left',$("#display").width()*0.03);
-    $("#subMinuteDiv").css('margin-left',$("#display").width()*0.03);
-    $("#subSecondDiv").css('margin-left',$("#display").width()*0.03);
+    // $("#addMinuteDiv").css('margin-left',$("#display").width()*0.03);
+    // $("#addSecondDiv").css('margin-left',$("#display").width()*0.03);
+    // $("#subMinuteDiv").css('margin-left',$("#display").width()*0.03);
+    // $("#subSecondDiv").css('margin-left',$("#display").width()*0.03);
     $(".timer").css('font-size', INITIAL_CIRCLE_SIZE*ratio+"px");
     // $("#minutesLabel").css('margin-left',$("#display").width()*0.03);
     // $("#secondsLabel").css('margin-left',$("#display").width()*0.04);
@@ -571,7 +599,7 @@ function resize(obj){
         "width":INITIAL_ARROWS_WIDTH*ratio+"px",
         "height":INITIAL_ARROWS_HEIGHT*ratio+"px",
     });
-    $("#time").css({
+    $(".display").css({
         "font-size":INITIAL_TIME_FONTSIZE*ratio+"px",
     });
     $("#display").css({
@@ -583,15 +611,20 @@ function resize(obj){
         "font-size":INITIAL_BUTTONS_FONTSIZE*ratio+"px",
         "border-radius":INITIAL_BUTTON_BORDERRADIUS*ratio+"px"
     });
-    $(".btns:first-child").css('margin-left',($("#startreset").width()-3*($(".btns").width()+20))/2);
+    $(".third:first-child").css('margin-left',($("#display").width()/2-$(".third").width()*3/2)/2);
+    $(".btns:first-child").css('margin-left',($("#display").width()-3*($(".btns").width()+20))/2);
     $(".arrowbtns").css('margin-left', $(".arrowbtnsDiv").width()*0.5-$(".arrowbtns").width()/2);
-    $("#time").css('margin-left', $("#display").width()/2-$("#time").width()/2);
+    $(".display").css('margin-left',$(".arrowbtnsDiv").width()/2-$(".display").width()/2);
     $("#progressbar").css('left', $("#container").width()/2 - $("#progressbar").width()/2)
-    $(".btns").css('background', BUTTON_COLORS[getColorCode(currentButtonColor)][1])
+    $(".btns").css('background', BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
     // $("#slice").css('left', $("#container").width()/2-$("#slice").width()/2);
     $("#border-left").css('height',NB.getHostObject().height-20+"px");
     $("#border-right").css('height',NB.getHostObject().height+"px");
     $("#border-bottom").css('width',NB.getHostObject().width-20+"px");
+    $(".colon").css('font-size',INITIAL_COLON_SIZE*ratio+"px");
+    $("#colon1").css('left', $(".third").width()+$(".third").width()*0.085);
+    $("#colon2").css('left', $(".third").width()*2+$(".third").width()*0.155);
+    $(".colon").css('top', $(".timerLabel").height()+$(".arrowbtnsDiv").height()+$(".timerLabel").height()*0.2);
 }
 var BACKGROUND_COLORS=["#FFAAAA","#CAEA9C", "#C1C6E0","#D3BDDF","#FFFAD6","#eeeeee"];
 function getColorCode(color){
@@ -637,23 +670,18 @@ function changeBackgroundColor(color){
     $("body").css("background-color", BACKGROUND_COLORS[color]);
 
 }
-var TIMER_COLORS = ["#901515","#4D7514","#404C88","#6A3985","#C7BA4F","#333333"];
+var TIMER_COLORS = ["#FFAAAA","#CAEA9C", "#C1C6E0","#D3BDDF","#FFFAD6","#eeeeee"];
 var currentTimerColor;
 function changeTimerColor(color){
-    if(color=="transparent"){
-        $(".pie").css("border-color", "transparent");
-
-        return;
-    }
     if(color=="white"){
         $(".pie").css("border-color", "white");
-
         return;
     }
     currentTimerColor = color;
     color = getColorCode(color);
 
     $(".pie").css("border-color", TIMER_COLORS[color]);
+    $(".pie").css("background-color", TIMER_COLORS[color]);
 }
 var currentButtonColor;
 var BUTTON_COLORS=[["#AA3939","#901515"],["#729C34","#4D7514"],["#646EA4","#404C88"],["#885CA0","#6A3985"],["#F0E384","#C7BA4F"],["#777777","#333333"]];
@@ -684,4 +712,24 @@ function saveData(){
     hostobject.currentButtonColor = currentButtonColor;
     hostobject.currentBackground = currentBackground;
     NB.persist.save("timer"+hostobject.guid, hostobject);
+}
+var currentTheme;
+var startColor='black', endColor='red';
+function changeTheme(theme){
+    currentTheme = theme;
+    if(theme=="digital"){
+        startColor = "white";
+        endColor = "red";
+        $("body").css({
+            'background': 'black',
+            'color':'#fff',
+            'font-family':'monospace'
+        });
+        $(".btns").css({
+            'font-family':'monospace'
+        });
+        currentTimerColor = 'white';
+        changeButtonColor('red');
+        resize();
+    }
 }

@@ -75,11 +75,6 @@
 				var hai = changeProgressAnimation(item);
 				saveData();
 				break;
-			case 'Color':
-				// Set the color theme
-				var hai = changeColorScheme(item.toLowerCase());
-				saveData();
-				break;
 			case 'Background':
 				changeBackgroundColor(item.toLowerCase());
 				saveData();

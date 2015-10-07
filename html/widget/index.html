@@ -75,17 +75,25 @@
         <div class="timer fill" id = "timerPie"></div>
     <div id="timerAll">
         <div id="display">
-            <div><div id="hoursLabel" class="timerLabel">Hours</div><div id="minutesLabel"class="timerLabel">Minutes</div><div id="secondsLabel"class="timerLabel">Seconds</div> </div>
-            <div>
-            <div id="addHourDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addHour"></image></div>
-            <div id="addMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addMinute"></input></div>
-            <div id="addSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addSecond"></input></div>
+            <div id="hour" class="third">
+                <div id="hoursLabel" class="timerLabel">Hours</div>
+                <div id="addHourDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addHour"></image></div>
+                <span class="display" id="timeHours">00</span>
+                <div id="subHourDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png"id="subHour"></input></div>
             </div>
-            <span class="display" id="time">00:00:00</span>
-            <div>
-            <div id="subHourDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png"id="subHour"></input></div>
-            <div id="subMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png" id="subMinute"></input></div>
-            <div id="subSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png" id="subSecond"></input></div>
+            <span class="colon"id="colon1">:</span>
+            <div id="minute"class="third">
+                <div id="minutesLabel" class="timerLabel">Minutes</div>
+                <div id="addMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addMinute"></image></div>
+                <span class="display" id="timeMinutes">00</span>
+                <div id="subMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png"id="subMinute"></input></div>
+            </div>
+            <span class="colon"id="colon2">:</span>
+            <div id="second"class="third">
+                <div id="secondsLabel" class="timerLabel">Seconds</div>
+                <div id="addSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addSecond"></image></div>
+                <span class="display" id="timeSeconds">00</span>
+                <div id="subSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png"id="subSecond"></input></div>
             </div>
             </br>
         </div>

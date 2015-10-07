@@ -43,6 +43,7 @@ div {
     width: 65px;
     height: 35px;
     font-size:13px;
+    margin-top:3vh;
 }
 
 .btns:hover {
@@ -73,6 +74,7 @@ img, .unselectable {
 }
 #display{
     font-size: 14px;
+    width:70vw;
 }
 .timerLabel{
     display:inline-block;
@@ -272,6 +274,11 @@ body{
     display:none;
     position:fixed;
 }
+.third{
+    width:20vw;
+    height:30vh;
+    display: inline-block;
+}
 
 /*
     Settings Menu
@@ -316,9 +323,12 @@ img {
 #timerNums{
     float:right;
 }
+.colon{
+    font-size:40px;
+    position:absolute;
+}
 
-
-#time {
+#time,#timeHours, #timeMinutes, #timeSeconds {
     font-size: 50px
 }
 
@@ -395,7 +405,7 @@ img {
 
                 border: transparent;
 
-                background-color: #00CCFF;
+                background-color: ;
 
                 width:0.96em;
 
