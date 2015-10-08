@@ -326,6 +326,7 @@ Timer.prototype.snooze = function() {
 
 
         snoozeBtn.onclick = function() { 
+            timer.time = snoozeTime;
             startBtn.click();
         };
 
@@ -336,6 +337,7 @@ Timer.prototype.snooze = function() {
 
 var timer1;
 var snoozeTrigger = false;
+var snoozeTime = 600;
 /**
  * init method
  */
@@ -364,7 +366,6 @@ function init() {
 
     var isPaused = false;
 
-    var snoozeTime;
 
     countUpTrigger = false;
     countDownTrigger = true;
