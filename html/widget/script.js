@@ -110,7 +110,9 @@ UI.prototype.stopWatch = function(finish) {
         this.drawTimer(100);
         this.drawBar(100);
 
-        timer1.stop();   
+        timer1.stop();  
+
+
     }
     else {
         
@@ -222,6 +224,9 @@ Timer.prototype.startDown = function(e) {
             self.pause();
             self.isStarted = false;
             startBtn.disabled = false;
+            if (snoozeTrigger === false){
+                self.snooze();
+            }
         }
     }, self.interval);
 };
@@ -303,7 +308,30 @@ Timer.prototype.unpause = function() {
         this.startDown();
     }
 };
+
+Timer.prototype.snooze = function() {
+
+        var snoozeBtn = document.createElement("input"); 
+
+        snoozeBtn.type = "button";
+        snoozeBtn.value = "SNOOZE";
+        snoozeBtn.name = "button";
+        snoozeBtn.className = "btnSnooze";
+        snoozeBtn.style.width = "150px";
+        snoozeTrigger = true;
+
+
+        snoozeBtn.onclick = function() { 
+            startBtn.click();
+        };
+
+        var foo = document.getElementById("snooze");
+        foo.appendChild(snoozeBtn);
+
+};
+
 var timer1;
+var snoozeTrigger = false;
 /**
  * init method
  */
@@ -330,6 +358,8 @@ function init() {
     var addAlertBtn = document.getElementById("addAlert");
 
     var isPaused = false;
+
+    var snoozeTime;
 
     countUpTrigger = false;
     countDownTrigger = true;
@@ -487,6 +517,7 @@ function init() {
 
         startBtn.disabled = true;
     }
+
 
     // addAlertBtn.onclick = function() {
         
