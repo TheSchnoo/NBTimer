@@ -117,9 +117,34 @@ $(document).ready(function(){
     $(".btns").mouseleave(function(){
         $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
     });
+
+    $(".display").click(function(){
+    	if(timer.isPaused||timer.time==0){
+	    	$(".displayInput").toggleClass('invisible');
+	    	$(".display").toggleClass('invisible');
+	    	timer.printTime();
+	    }
+    });
+    $(".displayInput").on('change keyup paste',function(){
+    	timeEdited = true;
+    	if(this.time!=0){
+    		$(".colon").css('color',startColor);
+    	} else {
+    		// $("#slice, #progressbar").remove();
+    		timer.reset();
+	        timer.isPaused = true;
+	        timer.isStarted = false;
+	        timer.resetTriggered = true;
+	        timer.UI.startCircle(timer.time, timer.resetTriggered);
+	        timer1.stop();
+	        startBtn.disabled = false;
+    	}
+    	// $("#slice, #progressbar").remove();
+    	timer.time = parseInt($("#timeSecondsInput").val())+parseInt($("#timeMinutesInput").val()*60) + parseInt($("#timeHoursInput").val()*60*60);
+    });
 });
 
-
+var timeEdited;
 
 function changeTheme(theme){
     currentTheme = theme;

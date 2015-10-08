@@ -110,9 +110,10 @@ UI.prototype.stopWatch = function(finish) {
         this.drawTimer(100);
         this.drawBar(100);
 
-        timer1.stop();  
-
-
+        startBtn.disabled = false;
+        timer.isStarted = false;
+        timer.isPaused = true;
+        timer1.stop();   
     }
     else {
         
@@ -180,8 +181,11 @@ function resetBar(){
 // print time
 Timer.prototype.printTime = function() {
     document.getElementById("timeSeconds").innerHTML = formatTimeFromSec(this.time, 'seconds')<10?"0"+formatTimeFromSec(this.time, 'seconds'):formatTimeFromSec(this.time, 'seconds');
+    $("#timeSecondsInput").val(formatTimeFromSec(this.time, 'seconds')<10?"0"+formatTimeFromSec(this.time, 'seconds'):formatTimeFromSec(this.time, 'seconds'));
     document.getElementById("timeMinutes").innerHTML = formatTimeFromSec(this.time, 'minutes')<10?"0"+formatTimeFromSec(this.time, 'minutes'):formatTimeFromSec(this.time, 'minutes');
+    $("#timeMinutesInput").val(formatTimeFromSec(this.time, 'minutes')<10?"0"+formatTimeFromSec(this.time, 'minutes'):formatTimeFromSec(this.time, 'minutes'));
     document.getElementById("timeHours").innerHTML = formatTimeFromSec(this.time, 'hours')<10?"0"+formatTimeFromSec(this.time, 'hours'):formatTimeFromSec(this.time, 'hours');
+    $("#timeHoursInput").val(formatTimeFromSec(this.time, 'hours')<10?"0"+formatTimeFromSec(this.time, 'hours'):formatTimeFromSec(this.time, 'hours'));
 };
 
 // start the timer
@@ -194,9 +198,8 @@ Timer.prototype.startDown = function(e) {
     if (this.time == 0){
         $(".display").css('color',endColor);
         $(".colon").css('color',endColor);
-        this.printTime();
-        this.pause();
-
+        timer.printTime();
+        timer.pause();
     }
     
     $(".display").css('color',startColor);
@@ -210,25 +213,25 @@ Timer.prototype.startDown = function(e) {
     //print time
     this.printTime();
 
-    var self = this;
+    var timer = this;
 
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
-        self.time -- ;
-        if (self.time > 0) {
-            self.printTime();
+        timer.time -- ;
+        if (timer.time > 0) {
+            timer.printTime();
         } else {
             $(".display").css('color',endColor);
             $(".colon").css('color',endColor);
-            self.printTime();
-            self.pause();
-            self.isStarted = false;
+            timer.printTime();
+            timer.pause();
+            timer.isStarted = false;
             startBtn.disabled = false;
             if (snoozeTrigger === false){
                 self.snooze();
             }
         }
-    }, self.interval);
+    }, timer.interval);
 };
 
 Timer.prototype.startUp = function(e) {
@@ -253,21 +256,21 @@ Timer.prototype.startUp = function(e) {
     
     this.printTime();
     
-    var self = this;
+    var timer = this;
 
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
-        self.time ++;
-        if (self.time == countTo) {
+        timer.time ++;
+        if (timer.time == countTo) {
             // check if the thing is contained...
-            self.printTime();
-            self.pause();
+            timer.printTime();
+            timer.pause();
             $(".display").css('color',endColor);
             $(".colon").css('color',endColor);
         } else {
-            self.printTime();
+            timer.printTime();
         }
-    }, self.interval);
+    }, timer.interval);
 };
 
 // reset timer
@@ -335,11 +338,12 @@ var snoozeTrigger = false;
 /**
  * init method
  */
+
+    var timer = new Timer();
+
 function init() {
 
     // get new instance of time
-
-    var timer = new Timer();
     timer.outputSpanID = "time";
 
     /* get the buttons and attach eventhandlers */
@@ -415,6 +419,7 @@ function init() {
         timer.UI.startCircle(timer.time, timer.resetTriggered);
         timer1.stop();
         startBtn.disabled = false;
+        $("#slice, #progressbar").remove();
     };
     
     addHourBtn.onclick = function() {
@@ -483,7 +488,7 @@ function init() {
             timer.unpause();
         }
 
-        if (timer.isPaused === false){
+        if (timer.isPaused === false||timeEdited){
             if (countUpTrigger === false && countDownTrigger === true && isPaused ===false){
                 timer.total = timer.time;
                 pauseBtn.innerHTML = "Pause";
@@ -514,7 +519,10 @@ function init() {
             timer.isStarted = true;
             startBtn.disabled = true;
         }
-
+        if($(".display").hasClass('invisible')){
+            $(".displayInput").toggleClass('invisible');
+            $(".display").toggleClass('invisible');
+        }
         startBtn.disabled = true;
     }
 

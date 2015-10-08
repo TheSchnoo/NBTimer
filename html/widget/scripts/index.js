@@ -10,6 +10,7 @@
 //		- Change background colour
 //		- Change theme
 //		- Add event at the end
+//		- Ability to edit time with keyboard (only when is paused)
 // Authors: 
 //------------------------------------------------------------------------------------
 	//used to check if the user is in menu mode or not
@@ -221,6 +222,11 @@ function resize(obj){
         'width':0.95*$("#container").width(),
     });
     $("#progressbar").css('margin-left',$("#container").width()/2-$("#progressbar").width()/2);
+    $(".displayInput").css({
+    	'font-size':parseInt($(".display").css('font-size').substr(0,$(".display").css('font-size').length-2))*0.8,
+    	'margin-left':$(".third").width()/2-$(".displayInput").width()/2
+    });
+
 }
 function saveData(){
     hostobject = NB.getHostObject();
