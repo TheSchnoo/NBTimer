@@ -16,6 +16,7 @@ function DiceThemer() {
 		addProgressBarOption("circle", {});
 		addProgressBarOption("pie", {});
 		addProgressBarOption("bar", {});
+		addProgressBarOption("none", {});
 		addAlertOption("Add", {});
 
 		// addThemeOption("Traditional", {content: diceContent.traditional, maxSides: 6});
@@ -47,6 +48,9 @@ function DiceThemer() {
 		addButtonColorOption("Blue");
 		addButtonColorOption("Purple");
 
+		addTimerLabelOption("on", {});
+		addTimerLabelOption("off", {});
+
 		//$("#remove-from-spin").append("<input type='radio' id='remove-from-spin-radio'>");
 	}
 	function addProgressBarOption(name, theme){
@@ -77,6 +81,11 @@ function DiceThemer() {
 		// backgroundColors[name] = color;
 		$('#button-color-options').append('<li><span class="menu-option">' + name + '</span></li>');
 	}
+	function addTimerLabelOption(name, theme) {
+		// backgroundColors[name] = color;
+		$('#timer-labels-options').append('<li><span class="menu-option">' + name + '</span></li>');
+	}
+
 
 	this.getThemeOption = function(name) {
 		return $.extend(true, {}, diceThemes[name]);
@@ -123,7 +132,22 @@ function changeProgressAnimation(type){
 		$(".timer.fill").hide();
 		$(".bar").show();
 	}
+	else if (shape === "none"){
+		barTrigger = true;
+		$(".timer").hide();
+		$(".timer.fill").hide();
+		$(".bar").hide();
+	}
 
+}
+
+function ChangeLabelsDisplay(item){
+	if (item === "on"){
+		$(".timerLabel").show();
+	}
+	else if (item === "off"){
+		$(".timerLabel").hide();
+	}
 
 }
 

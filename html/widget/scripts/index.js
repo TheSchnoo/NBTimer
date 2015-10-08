@@ -101,6 +101,10 @@
 				changeFontSize(item);
 				saveData();
 				break;
+            case 'Timer Labels':
+                ChangeLabelsDisplay(item);
+                saveData();
+                break;
 			default:
 				break;
 		}
