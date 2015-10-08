@@ -228,7 +228,7 @@ Timer.prototype.startDown = function(e) {
             timer.isStarted = false;
             startBtn.disabled = false;
             if (snoozeTrigger === false){
-                self.snooze();
+                timer.snooze();
             }
         }
     }, timer.interval);
@@ -318,9 +318,10 @@ Timer.prototype.snooze = function() {
 
         snoozeBtn.type = "button";
         snoozeBtn.value = "SNOOZE";
-        snoozeBtn.name = "button";
+        snoozeBtn.name = "snooze1";
         snoozeBtn.className = "btnSnooze";
         snoozeBtn.style.width = "150px";
+        snoozeBtn.id = "sn";
         snoozeTrigger = true;
 
 
@@ -420,6 +421,8 @@ function init() {
         timer1.stop();
         startBtn.disabled = false;
         $("#slice, #progressbar").remove();
+        document.getElementById("sn").remove();
+        snoozeTrigger = false;
     };
     
     addHourBtn.onclick = function() {
