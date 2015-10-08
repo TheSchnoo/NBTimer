@@ -192,8 +192,9 @@ Timer.prototype.startDown = function(e) {
     if (this.time == 0){
         $(".display").css('color',endColor);
         $(".colon").css('color',endColor);
-        self.printTime();
-        self.pause();
+        this.printTime();
+        this.pause();
+
     }
     
     $(".display").css('color',startColor);
@@ -219,6 +220,8 @@ Timer.prototype.startDown = function(e) {
             $(".colon").css('color',endColor);
             self.printTime();
             self.pause();
+            self.isStarted = false;
+            startBtn.disabled = false;
         }
     }, self.interval);
 };
