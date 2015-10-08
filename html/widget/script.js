@@ -224,6 +224,8 @@ Timer.prototype.startDown = function(e) {
             $(".colon").css('color',endColor);
             timer.printTime();
             timer.pause();
+            timer.isStarted = false;
+            startBtn.disabled = false;
         }
     }, timer.interval);
 };
@@ -436,7 +438,8 @@ function init() {
         timer.time = timer.time + 1;
         timer.printTime();
         if (timer.isStarted === true) {
-            timer.UI.updateTime(timer.time, timer.resetTriggered);
+            finish = finish + 1900
+            // timer.UI.updateTime(timer.time, timer.resetTriggered);
             timer.unpause();
         }
     };
