@@ -129,7 +129,7 @@ NB.ready(function(){
         toggleEditingMenu(false);
         //out of menu
         disableSpin = false;
-        resetSpinnerStyling();
+        // resetSpinnerStyling();
     });
 
     $("#controls-edit").click(function() {
@@ -157,7 +157,7 @@ NB.ready(function(){
     });
 
     $('div#dialog').on('dialogclose',function(){
-        resetSpinnerStyling();
+        // resetSpinnerStyling();
     });
 
     $("#menu").menu({

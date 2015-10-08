@@ -142,6 +142,34 @@ $(document).ready(function(){
     	// $("#slice, #progressbar").remove();
     	timer.time = parseInt($("#timeSecondsInput").val())+parseInt($("#timeMinutesInput").val()*60) + parseInt($("#timeHoursInput").val()*60*60);
     });
+    $("#save").click(function(){
+    	console.log('asdf');
+		chooseEvent($("#eventDropdown").val());
+		if($(".ui-dialog").is(":visible")){
+			$("#dialog").dialog("close");
+ 		}
+    });
+    $("#eventDropdown").change(function(){
+    	if($("#eventDropdown").val()=="Add Text"){
+    	$("#eventTextInput").attr('placeholder',"Add Text annotation");
+    	$("#eventTextInput").removeClass('invisible');
+    } else if($("#eventDropdown").val()=="Add Image"){
+    	$("#eventTextInput").attr('placeholder',"Add Image annotation (filepath here)");
+    	$("#eventTextInput").removeClass('invisible');
+    } else {
+    	$("#eventTextInput").addClass('invisible');}
+    });
+    // $("#save").click(function(){
+    	
+    // });
+    // if($("#eventDropdown").val()=="Add Text"){
+    // 	$("#eventTextInput").attr('placeholder',"Add Text annotation");
+    // 	$("#eventTextInput").removeClass('invisible');
+    // } else if($("#eventDropdown").val()=="Add Image"){
+    // 	$("#eventTextInput").attr('placeholder',"Add Image annotation (filepath here)");
+    // 	$("#eventTextInput").removeClass('invisible');
+    // } else {
+    // 	$("#eventTextInput").addClass('invisible');}
 });
 
 var timeEdited;
@@ -179,8 +207,11 @@ function changeTimeColor(color){
     $("body").css('color', startColor);
 }
 function editEvent(){
-    console.log('asdf');
-    $("#dialog").css('display','block');
+    console.log('asdffffff');
+    $("#dialog").removeClass('invisible');
+    if($(".ui-dialog").css('display')=="none"){
+    	$(".ui-dialog").css('display','block');
+    }
     $(function(){
         $("#dialog").dialog();
     });
@@ -190,6 +221,46 @@ function lockAll(){
     for (var i = 0; i<objects.length; i++){
         NB.getObject(Object.keys(NB.document.getPage(NB.document.getCurrentPageId()).getObjects())[i]).lockType = "Lock In Place";
     }
+}
+var currentEvent={};
+function chooseEvent(chosenEvent){
+	if(!chosenEvent){
+		currentEvent = "None";
+		return;
+	}
+	currentEvent.event = chosenEvent;
+	currentEvent.data = $("#eventTextInput").val();
+}
+function runEvent(){
+	var properties = {
+		x: NB.getHostObject().x,
+		y: NB.getHostObject().height+NB.getHostObject().y,
+	}
+	switch(currentEvent.event){
+		case "None":
+			break;
+		case "Lock All":
+			lockAll();
+			break;
+		case "Next Page":
+			NB.document.viewNextPage();
+			break;
+		case "Previous Page":
+			NB.document.viewPreviousPage();
+			break;
+		case "Delete Timer":
+			NB.getHostObject().deleteObject();
+			break;
+		case "Add Text":
+			NB.addObject(NB.objectPrototype.text(currentEvent.data, properties));
+			break;
+		case "Add Image":
+			NB.addObject(NB.objectPrototype.file(currentEvent.data));
+			break;
+		default:
+			break;
+	}
+
 }
 //POTENTIAL EVENTS--------------
 //lockAll();

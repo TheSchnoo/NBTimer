@@ -112,6 +112,8 @@ UI.prototype.stopWatch = function(finish) {
         startBtn.disabled = false;
         timer.isStarted = false;
         timer.isPaused = true;
+        console.log('end');
+        runEvent();
         timer1.stop();   
     }
     else {

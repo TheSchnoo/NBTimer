@@ -320,7 +320,10 @@ img {
     height:70vh;
 }
 #dialog{
-    display:none;
+    /*display:none;*/
+}
+#dialog input{
+    color:black;
 }
 
 #timerNums{
@@ -331,7 +334,8 @@ img {
     position:absolute;
 }
 #eventDropdown {
-    font-color:black;
+    height:2em;
+    color:black;
 }
 .displayInput{
     text-align:center;
@@ -341,6 +345,9 @@ img {
 }
 #time,#timeHours, #timeMinutes, #timeSeconds {
     font-size: 50px
+}
+#eventTextInput{
+    color:black;
 }
 
 .timer {

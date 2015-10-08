@@ -113,17 +113,19 @@
     <div class ="bar" id="progressbar">
         <div></div>
     </div>
-    <div id="dialog">
+    <div id="dialog"class="invisible">
         Event:
         <select id="eventDropdown">
-            <option value="nextPage">Next Page</option>
-            <option value="prevPage">Previous Page</option>
-            <option value="firstPage">First Page</option>
-            <option value="lastPage">Last Page</option>
-            <option value="nextPage">Next Page</option>
-            <option value="nextPage">Next Page</option>
+            <option value="">None</option>
+            <option value="Next Page">Next Page</option>
+            <option value="Previous Page">Previous Page</option>
+            <option value="Delete Timer">Delete Timer</option>
+            <option value="Lock All">Lock All</option>
+            <option value="Add Text">Add Text</option>
+            <option value="Add Image">Add Image</option>
         </select>
-
+        <input type="submit" id="save"></input>
+        <textarea type="text" id="eventTextInput" class="invisible"cols="30" rows="3" placeholder=""></textarea>
     </div>
 
     <script type="text/javascript" src="scripts/diceThemes.js"></script>
