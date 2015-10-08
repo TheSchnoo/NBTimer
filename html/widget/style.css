@@ -241,7 +241,7 @@ button:focus {
     left: 200px;
 }
 
-input {
+/*input {
     margin-left: 10%;
     margin-right: 10%;
     width: 80%;
@@ -250,7 +250,7 @@ input {
 
 input{
     width: 100px;
-}
+}*/
 #d3{
     -webkit-user-select: none;
 }
@@ -332,6 +332,12 @@ img {
 }
 #eventDropdown {
     font-color:black;
+}
+.displayInput{
+    text-align:center;
+}
+.invisible{
+    display:none;
 }
 #time,#timeHours, #timeMinutes, #timeSeconds {
     font-size: 50px
