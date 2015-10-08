@@ -236,6 +236,7 @@ function runEvent(){
 		x: NB.getHostObject().x,
 		y: NB.getHostObject().height+NB.getHostObject().y,
 	}
+	var pageIds = NB.document.getPageIds();
 	switch(currentEvent.event){
 		case "None":
 			break;
@@ -247,6 +248,12 @@ function runEvent(){
 			break;
 		case "Previous Page":
 			NB.document.viewPreviousPage();
+			break;
+		case "First Page":
+			NB.document.viewPage(pageIds[0]);
+			break;
+		case "Last Page":
+			NB.document.viewPage(pageIds[pageIds.length-1]);
 			break;
 		case "Delete Timer":
 			NB.getHostObject().deleteObject();
