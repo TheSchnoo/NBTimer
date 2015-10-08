@@ -429,7 +429,8 @@ function init() {
         timer.time = timer.time + 1;
         timer.printTime();
         if (timer.isStarted === true) {
-            timer.UI.updateTime(timer.time, timer.resetTriggered);
+            finish = finish + 1900
+            // timer.UI.updateTime(timer.time, timer.resetTriggered);
             timer.unpause();
         }
     };
