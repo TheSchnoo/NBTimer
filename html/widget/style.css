@@ -56,6 +56,26 @@ div {
   text-decoration: none;
 }
 
+.btnSnooze {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 15px;
+  background: #f20e0e;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  position: relative;
+
+
+}
+
+.btnSnooze:hover {
+  background: #c20202;
+  text-decoration: none;
+}
+
 /*img {
     width: 100%;
     height: 100%;

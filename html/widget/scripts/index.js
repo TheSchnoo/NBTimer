@@ -101,6 +101,10 @@
 				changeFontSize(item);
 				saveData();
 				break;
+            case 'Timer Labels':
+                ChangeLabelsDisplay(item);
+                saveData();
+                break;
 			default:
 				break;
 		}
@@ -226,6 +230,7 @@ function resize(obj){
     	'font-size':parseInt($(".display").css('font-size').substr(0,$(".display").css('font-size').length-2))*0.8,
     	'margin-left':$(".third").width()/2-$(".displayInput").width()/2
     });
+    $("#snooze").css('margin-left',$("#display").width()/2-($("#snooze").width()+20)/2)
 
 }
 function saveData(){

@@ -109,6 +109,7 @@ UI.prototype.stopWatch = function(finish) {
         
         this.drawTimer(100);
         this.drawBar(100);
+
         startBtn.disabled = false;
         timer.isStarted = false;
         timer.isPaused = true;
@@ -228,6 +229,9 @@ Timer.prototype.startDown = function(e) {
             timer.pause();
             timer.isStarted = false;
             startBtn.disabled = false;
+            if (snoozeTrigger === false){
+                timer.snooze();
+            }
         }
     }, timer.interval);
 };
@@ -309,7 +313,34 @@ Timer.prototype.unpause = function() {
         this.startDown();
     }
 };
+
+Timer.prototype.snooze = function() {
+
+        var snoozeBtn = document.createElement("input"); 
+
+        snoozeBtn.type = "button";
+        snoozeBtn.value = "SNOOZE";
+        snoozeBtn.name = "snooze1";
+        snoozeBtn.className = "btnSnooze";
+        snoozeBtn.style.width = $(".btns").width()+20;
+        snoozeBtn.id = "sn";
+        snoozeTrigger = true;
+
+
+        $("#snooze").click(function() { 
+            timer.time = snoozeTime;
+            $("#snooze").addClass('invisible');
+            startBtn.click();
+        });
+
+        $("#snooze").toggleClass('invisible');
+        // foo.appendChild(snoozeBtn);
+
+};
+
 var timer1;
+var snoozeTrigger = false;
+var snoozeTime = 600;
 /**
  * init method
  */
@@ -337,6 +368,7 @@ function init() {
     var addAlertBtn = document.getElementById("addAlert");
 
     var isPaused = false;
+
 
     countUpTrigger = false;
     countDownTrigger = true;
@@ -393,6 +425,8 @@ function init() {
         timer1.stop();
         startBtn.disabled = false;
         $("#slice, #progressbar").remove();
+        document.getElementById("sn").remove();
+        snoozeTrigger = false;
     };
     
     addHourBtn.onclick = function() {
@@ -498,6 +532,7 @@ function init() {
         }
         startBtn.disabled = true;
     }
+
 
     // addAlertBtn.onclick = function() {
         
