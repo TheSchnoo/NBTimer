@@ -182,11 +182,11 @@ function resetBar(){
 
 // print time
 Timer.prototype.printTime = function() {
-    document.getElementById("timeSeconds").innerHTML = formatTimeFromSec(this.time, 'seconds')<10?"0"+formatTimeFromSec(this.time, 'seconds'):formatTimeFromSec(this.time, 'seconds');
+    $("#timeSeconds").text(formatTimeFromSec(this.time, 'seconds')<10?"0"+formatTimeFromSec(this.time, 'seconds'):formatTimeFromSec(this.time, 'seconds'));
     $("#timeSecondsInput").val(formatTimeFromSec(this.time, 'seconds')<10?"0"+formatTimeFromSec(this.time, 'seconds'):formatTimeFromSec(this.time, 'seconds'));
     document.getElementById("timeMinutes").innerHTML = formatTimeFromSec(this.time, 'minutes')<10?"0"+formatTimeFromSec(this.time, 'minutes'):formatTimeFromSec(this.time, 'minutes');
     $("#timeMinutesInput").val(formatTimeFromSec(this.time, 'minutes')<10?"0"+formatTimeFromSec(this.time, 'minutes'):formatTimeFromSec(this.time, 'minutes'));
-    document.getElementById("timeHours").innerHTML = formatTimeFromSec(this.time, 'hours')<10?"0"+formatTimeFromSec(this.time, 'hours'):formatTimeFromSec(this.time, 'hours');
+    $("#timeHours").text(formatTimeFromSec(this.time, 'hours')<10?"0"+formatTimeFromSec(this.time, 'hours'):formatTimeFromSec(this.time, 'hours'));
     $("#timeHoursInput").val(formatTimeFromSec(this.time, 'hours')<10?"0"+formatTimeFromSec(this.time, 'hours'):formatTimeFromSec(this.time, 'hours'));
 };
 
@@ -231,6 +231,9 @@ Timer.prototype.startDown = function(e) {
             startBtn.disabled = false;
             if (snoozeTrigger === false){
                 timer.snooze();
+            }
+            if(!hideSnooze){
+                $("#snooze").removeClass('invisible');
             }
         }
     }, timer.interval);
@@ -313,7 +316,7 @@ Timer.prototype.unpause = function() {
         this.startDown();
     }
 };
-
+var hideSnooze;
 Timer.prototype.snooze = function() {
 
         var snoozeBtn = document.createElement("input"); 
@@ -326,6 +329,9 @@ Timer.prototype.snooze = function() {
         snoozeBtn.id = "sn";
         snoozeTrigger = true;
 
+        if(hideSnooze){
+            return;
+        }
 
         $("#snooze").click(function() { 
             timer.time = snoozeTime;
@@ -340,7 +346,7 @@ Timer.prototype.snooze = function() {
 
 var timer1;
 var snoozeTrigger = false;
-var snoozeTime = 600;
+var snoozeTime;
 /**
  * init method
  */
@@ -529,6 +535,9 @@ function init() {
         if($(".display").hasClass('invisible')){
             $(".displayInput").toggleClass('invisible');
             $(".display").toggleClass('invisible');
+        }
+        if(!$("#snooze").hasClass('invisible')&&!hideSnooze){
+            $("#snooze").addClass('invisible');
         }
         startBtn.disabled = true;
     }

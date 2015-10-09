@@ -5,12 +5,12 @@
 //		- Text follows actual time
 //		- Count down or up
 //		- Pause, Reset, Start buttons
-//		- Choose b/w wheel or pointer
 //		- Change colour of progress bar
 //		- Change background colour
-//		- Change theme
-//		- Add event at the end
+//		- Change theme (themes: digital, default)
+//		- Add event at the end (next page, previous page, delete timer, lock page, add text annotation, add image annotation)
 //		- Ability to edit time with keyboard (only when is paused)
+//		- Snooze Button (easily add 1min, 5min or 10min)
 // Authors: 
 //------------------------------------------------------------------------------------
 	//used to check if the user is in menu mode or not
@@ -82,7 +82,7 @@
 				saveData();
 				break;
 			case 'Progress Bar Type':
-				var hai = changeProgressAnimation(item);
+				var hai = changeProgressAnimation(item.toLowerCase());
 				saveData();
 				break;
 			case 'Background':
@@ -102,9 +102,12 @@
 				saveData();
 				break;
             case 'Timer Labels':
-                ChangeLabelsDisplay(item);
+                changeLabelsDisplay(item.toLowerCase());
                 saveData();
                 break;
+            case 'Snooze Button Options':
+            	changeSnoozeTime(item.toLowerCase());
+            	saveData();
 			default:
 				break;
 		}
@@ -115,11 +118,7 @@ NB.ready(function(){
     toggleEditingMenu(false);
     diceThemer = new DiceThemer();
     loadData();
-    changeBackgroundColor(currentBackground);
-    changeButtonColor(currentButtonColor);
-    changeTimerColor(currentTimerColor);
-    changeTheme(currentTheme);
-    changeTimeColor(currentTimeColor);
+
 
     $("#controls-open").click(function() {
         toggleOptions(true);
@@ -175,6 +174,7 @@ NB.ready(function(){
     NB.addObserver('annotationResizedEvent',function(obj){
         console.log('a');
         resize(obj);
+        var timer = setTimeout(resize(),50);
     });
     resize();
     var timer = setTimeout(resize(),50);
@@ -241,6 +241,10 @@ function saveData(){
     hostobject.currentBackground = currentBackground;
     hostobject.currentTimeColor = currentTimeColor;
     hostobject.currentTheme = currentTheme;
+    hostobject.currentEvent = currentEvent;
+    hostobject.snoozeTime = snoozeTime;
+    hostobject.showLabels = showLabels;
+    hostobject.hideSnooze = hideSnooze;
     NB.persist.save("timer"+hostobject.guid, hostobject);
 }
 function loadData(){
@@ -252,13 +256,29 @@ function loadData(){
         currentBackground = loaded_data.currentBackground;
         currentTimeColor=loaded_data.currentTimeColor;
         currentTheme=loaded_data.currentTheme;
+        currentEvent = loaded_data.currentEvent;
+        snoozeTime = loaded_data.snoozeTime;
+        showLabels = loaded_data.showLabels;
+        hideSnooze = loaded_data.hideSnooze;
     } else {
+    	//defaults
         loaded_data = undefined;
+        showLabels = true;
         currentProgressAnimation = 'circle';
         currentTimerColor = 'blue';
         currentButtonColor = 'grey';
-        currentBackground = 'white';
+        currentBackground = 'transparent';
         currentTheme ='';
         currentTimeColor = 'black';
+        currentEvent = {};
+        snoozeTime=600;
+        hideSnooze = false;
     }
+    changeBackgroundColor(currentBackground);
+    changeButtonColor(currentButtonColor);
+    changeTimerColor(currentTimerColor);
+    changeTheme(currentTheme);
+    changeTimeColor(currentTimeColor);
+    chooseEvent(currentEvent);
+    changeLabelsDisplay(showLabels);
 }

@@ -8,7 +8,7 @@ var currentButtonColor;
 var ratio = NB.getHostObject().width/INITIAL_WIDTH;
 var currentProgressAnimation;
 var currentTheme;
-var startColor='black', endColor='red';
+var startColor, endColor;
 var currentTimeColor;
 function resetRotate(){
 	window.location.reload();
@@ -142,7 +142,7 @@ $(document).ready(function(){
     	// $("#slice, #progressbar").remove();
     	timer.time = parseInt($("#timeSecondsInput").val())+parseInt($("#timeMinutesInput").val()*60) + parseInt($("#timeHoursInput").val()*60*60);
     });
-    $("#save").click(function(){
+    $("#saveEvent").click(function(){
     	console.log('asdf');
 		chooseEvent($("#eventDropdown").val());
 		if($(".ui-dialog").is(":visible")){
@@ -159,39 +159,85 @@ $(document).ready(function(){
     } else {
     	$("#eventTextInput").addClass('invisible');}
     });
-    // $("#save").click(function(){
-    	
-    // });
-    // if($("#eventDropdown").val()=="Add Text"){
-    // 	$("#eventTextInput").attr('placeholder',"Add Text annotation");
-    // 	$("#eventTextInput").removeClass('invisible');
-    // } else if($("#eventDropdown").val()=="Add Image"){
-    // 	$("#eventTextInput").attr('placeholder',"Add Image annotation (filepath here)");
-    // 	$("#eventTextInput").removeClass('invisible');
-    // } else {
-    // 	$("#eventTextInput").addClass('invisible');}
+     $("#saveTheme").click(function(){
+    	console.log('asdf');
+		changeTheme($("#themeDropdown").val().toLowerCase());
+		if($(".ui-dialog").is(":visible")){
+			$("#dialog2").dialog("close");
+ 		}
+    });
 });
 
 var timeEdited;
-
+function themeDialog(){
+	$("#dialog2").removeClass('invisible').dialog();
+}
+var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.png'],["blue-up.png", 'blue-down.png'],["purple-up.png", 'purple-down.png'],["yellow-up.png", 'yellow-down.png'],["grey-up.png", 'grey-down.png']];
+function changeArrowColor(color){
+	if (color=="white"){
+		$(".add").attr('src', "src/arrows/white-up.png");
+		$(".sub").attr('src', "src/arrows/white-down.png");
+		return;
+	} else if(color=="black"){
+		$(".add").attr('src', "src/arrows/black-up.png");
+		$(".sub").attr('src', "src/arrows/black-down.png");
+		return;
+	}
+	color = getColorCode(color)
+	$(".add").attr('src', "src/arrows/"+ARROW_IMAGES[color][0]);
+	$(".sub").attr('src', "src/arrows/"+ARROW_IMAGES[color][1]);
+	resize();
+}
 function changeTheme(theme){
     currentTheme = theme;
-    if(theme=="digital"){
-        startColor = "white";
-        endColor = "red";
-        $("body").css({
-            'background': 'black',
-            'color':'#fff',
-            'font-family':'monospace'
-        });
-        $(".btns").css({
-            'font-family':'monospace'
-        });
-        currentTimerColor = 'white';
-        changeButtonColor('red');
-        resize();
+    switch(theme){
+    	case "none":
+    		break;
+    	case "digital":
+    		$("#gear").attr('src', 'img/gear-white.png');
+    		startColor = "white";
+	        endColor = "red";
+	        $("body").css({
+	            'background': 'black',
+	            'color':'#fff',
+	            'font-family':'monospace'
+	        });
+	        $(".btns").css({
+	            'font-family':'monospace'
+	        });
+	        currentTimerColor = 'white';
+	        currentTimeColor= 'white';
+	        changeButtonColor('red');
+	        changeTimeColor('white');
+	        changeArrowColor('white');
+	   		break;
+	    case "default":
+	    	$("#gear").attr('src', 'img/gear-black.png');
+	    	startColor = "black";
+	        endColor = "red";
+	        $("body").css({
+	            'background': 'white',
+	            'color':'#000',
+	            'font-family':'sans-serif'
+	        });
+	        $(".btns").css({
+	            'font-family':'sans-serif'
+	        });
+	        currentTimerColor = 'black';
+	        currentTimeColor= 'black';
+	        changeButtonColor('grey');
+	        changeTimeColor('black');
+	        changeArrowColor('black');
+	        break;
+
+	    default:
+	    	startColor = "black";
+	        endColor = "red";
+	    	break;
     }
     $("#slice, #progressbar").remove();
+    resize();
+    saveData();
 }
 
 function changeTimeColor(color){
@@ -205,8 +251,10 @@ function changeTimeColor(color){
     $(".colon").css('color', startColor);
     $(".display").css('color', startColor);
     $("body").css('color', startColor);
+   	saveData();
 }
-function editEvent(){
+function editEvent(event){
+
     console.log('asdffffff');
     $("#dialog").removeClass('invisible');
     if($(".ui-dialog").css('display')=="none"){
@@ -215,6 +263,7 @@ function editEvent(){
     $(function(){
         $("#dialog").dialog();
     });
+    saveData();
 }
 function lockAll(){
     var objects = Object.keys(NB.document.getPage(NB.document.getCurrentPageId()).getObjects());
@@ -224,12 +273,14 @@ function lockAll(){
 }
 var currentEvent={};
 function chooseEvent(chosenEvent){
-	if(!chosenEvent){
-		currentEvent = "None";
-		return;
-	}
-	currentEvent.event = chosenEvent;
+	// if(chosenEvent==''){
+	// 	currentEvent = "None";
+	// 	return;
+	// }
+	// console.log('choooseEvent');
+	currentEvent.event = $("#eventDropdown").val();
 	currentEvent.data = $("#eventTextInput").val();
+	saveData();
 }
 function runEvent(){
 	var properties = {

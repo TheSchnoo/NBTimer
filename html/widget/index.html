@@ -20,7 +20,7 @@
 <body>
 
     <div id="container" class="smart-nb-draggable smart-nb-clickable smart-nb-selectable">
-        <button id="controls-open"><img src="img/gear-black.png"></button>
+        <button id="controls-open"><img id="gear"src="img/gear-black.png"></button>
         <div id="controls-cont" class="smart-nb-draggable smart-nb-clickable smart-nb-selectable">
             <button id="controls-close"><img src="img/x.png"></button>
             <button id="controls-edit"><img src="img/wrench.png"></button>
@@ -28,6 +28,7 @@
             <button id="controls-add"><img src="img/plus.png"></button>
             <button id="controls-reset"><span class="glyphicon glyphicon-refresh"></span></button>
             <button id="event" onclick="editEvent()">Event</button>
+            <button id="theme" onclick="themeDialog()">Theme</button>
             <!-- <button id="controls-upon-stop">False</button> -->
         </div>
 
@@ -53,6 +54,9 @@
                 </li>
                 <li><span class="menu-option">Timer Labels</span>
                     <ul id="timer-labels-options"></ul>
+                </li>
+                <li><span class="menu-option">Snooze Button Options</span>
+                    <ul id="snooze-button-options"></ul>
                 </li>
             </ul>
         </div>
@@ -81,26 +85,26 @@
         <div id="display">
             <div id="hour" class="third">
                 <div id="hoursLabel" class="timerLabel">Hours</div>
-                <div id="addHourDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addHour"></image></div>
+                <div id="addHourDiv" class="arrowbtnsDiv"><img class="arrowbtns add" src="src/arrows/black-up.png" id="addHour"></image></div>
                 <span class="display" id="timeHours">00</span>
                 <input class="displayInput invisible"size="2" id="timeHoursInput"></input>
-                <div id="subHourDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png"id="subHour"></input></div>
+                <div id="subHourDiv" class="arrowbtnsDiv"><img class="arrowbtns sub" src="src/arrows/black-down.png"id="subHour"></input></div>
             </div>
             <span class="colon"id="colon1">:</span>
             <div id="minute"class="third">
                 <div id="minutesLabel" class="timerLabel">Minutes</div>
-                <div id="addMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addMinute"></image></div>
+                <div id="addMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns add" src="src/arrows/black-up.png" id="addMinute"></image></div>
                 <span class="display" id="timeMinutes">00</span>
                 <input class="displayInput invisible" size="2"id="timeMinutesInput"></input>
-                <div id="subMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png"id="subMinute"></input></div>
+                <div id="subMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns sub" src="src/arrows/black-down.png"id="subMinute"></input></div>
             </div>
             <span class="colon"id="colon2">:</span>
             <div id="second"class="third">
                 <div id="secondsLabel" class="timerLabel">Seconds</div>
-                <div id="addSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/up.png" id="addSecond"></image></div>
+                <div id="addSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns add" src="src/arrows/black-up.png" id="addSecond"></image></div>
                 <span class="display" id="timeSeconds">00</span>
                 <input class="displayInput invisible"size="2" id="timeSecondsInput"></input>
-                <div id="subSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns" src="src/down.png"id="subSecond"></input></div>
+                <div id="subSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns sub" src="src/arrows/black-down.png"id="subSecond"></input></div>
             </div>
             </br>
         </div>
@@ -129,10 +133,18 @@
             <option value="Add Text">Add Text</option>
             <option value="Add Image">Add Image</option>
         </select>
-        <input type="submit" id="save"></input>
+        <input type="submit" id="saveEvent"></input>
         <textarea type="text" id="eventTextInput" class="invisible"cols="30" rows="3" placeholder=""></textarea>
     </div>
-
+    <div id="dialog2"class="invisible">
+        Theme:
+        <select id="themeDropdown">
+            <option value="none">None</option>
+            <option value="Digital">Digital</option>
+            <option value="Default">Default</option>
+        </select>
+        <input type="submit" id="saveTheme"></input>
+    </div>
     <script type="text/javascript" src="scripts/diceThemes.js"></script>
     <script src="scripts/settings.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>

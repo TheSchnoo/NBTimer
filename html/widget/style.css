@@ -1,5 +1,6 @@
 html, body {
     margin: 0px;
+    font-family:sans-serif;
 /*    width: 100%;
     height: 100%;*/
 }
@@ -331,7 +332,12 @@ img {
     height: 30px;
     width: 20px;
 }
-
+#event{
+    width:50px;
+}
+#theme{
+    width:60px;
+}
 #timerAll{
     position:fixed;
     top: 80px;
@@ -342,7 +348,7 @@ img {
 #dialog{
     /*display:none;*/
 }
-#dialog input{
+#dialog input, #dialog2 input{
     color:black;
 }
 
@@ -353,12 +359,13 @@ img {
     font-size:40px;
     position:absolute;
 }
-#eventDropdown {
+#eventDropdown ,#themeDropdown{
     height:2em;
     color:black;
 }
 .displayInput{
     text-align:center;
+    color:black;
 }
 .invisible{
     display:none;

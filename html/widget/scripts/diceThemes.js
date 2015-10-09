@@ -13,10 +13,10 @@ function DiceThemer() {
 		addColorOption("Purple");
 		addColorOption("Yellow");
 		addColorOption("Grey");
-		addProgressBarOption("circle", {});
-		addProgressBarOption("pie", {});
-		addProgressBarOption("bar", {});
-		addProgressBarOption("none", {});
+		addProgressBarOption("Circle", {});
+		addProgressBarOption("Pie", {});
+		addProgressBarOption("Bar", {});
+		addProgressBarOption("None", {});
 		addAlertOption("Add", {});
 
 		// addThemeOption("Traditional", {content: diceContent.traditional, maxSides: 6});
@@ -48,8 +48,13 @@ function DiceThemer() {
 		addButtonColorOption("Blue");
 		addButtonColorOption("Purple");
 
-		addTimerLabelOption("on", {});
-		addTimerLabelOption("off", {});
+		addTimerLabelOption("Show", {});
+		addTimerLabelOption("Hide", {});
+
+		addSnoozeButtonOption("None");
+		addSnoozeButtonOption("1 Min");
+		addSnoozeButtonOption("5 Min");
+		addSnoozeButtonOption("10 Min");
 
 		//$("#remove-from-spin").append("<input type='radio' id='remove-from-spin-radio'>");
 	}
@@ -84,6 +89,10 @@ function DiceThemer() {
 	function addTimerLabelOption(name, theme) {
 		// backgroundColors[name] = color;
 		$('#timer-labels-options').append('<li><span class="menu-option">' + name + '</span></li>');
+	}
+	function addSnoozeButtonOption(name, theme) {
+		// backgroundColors[name] = color;
+		$('#snooze-button-options').append('<li><span class="menu-option">' + name + '</span></li>');
 	}
 
 
@@ -140,15 +149,52 @@ function changeProgressAnimation(type){
 	}
 
 }
-
-function ChangeLabelsDisplay(item){
-	if (item === "on"){
-		$(".timerLabel").show();
+var showLabels;
+function changeLabelsDisplay(item){
+	if (item === "show"){
+		$(".timerLabel").css('opacity',1);
+		showLabels = true;
 	}
-	else if (item === "off"){
-		$(".timerLabel").hide();
+	else if (item === "hide"){
+		$(".timerLabel").css('opacity',0);
+		showLabels=false;
+	} else if(item==true){
+		$(".timerLabel").css('opacity',1);
+	} else if(item==false){
+		$(".timerLabel").css('opacity',0);
 	}
 
+}
+
+function changeSnoozeTime(item){
+	switch(item){
+		case "none":
+			hideSnooze = true;
+			$("#snooze").addClass('invisible');
+			snoozeTime=0;
+			break;
+		case "1 min":
+			hideSnooze = false;
+			if(timer.isStarted==false){
+				$("#snooze").removeClass('invisible');
+			}
+			snoozeTime=60;
+			//add 1 min
+			break;
+		case "5 min":
+			hideSnooze = false;
+			snoozeTime=300;
+			//add 5 min
+			break;
+		case "10 min":
+			hideSnooze = false;
+			snoozeTime=600;
+			//add 10 min
+			break;
+		default:
+			break;
+	}
+	saveData();
 }
 
 function addAlert(item){
