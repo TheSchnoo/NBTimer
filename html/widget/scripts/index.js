@@ -268,7 +268,7 @@ function loadData(){
         currentTimerColor = 'blue';
         currentButtonColor = 'grey';
         currentBackground = 'transparent';
-        currentTheme ='';
+        currentTheme ='default';
         currentTimeColor = 'black';
         currentEvent = {};
         snoozeTime=600;
@@ -281,4 +281,5 @@ function loadData(){
     changeTimeColor(currentTimeColor);
     chooseEvent(currentEvent);
     changeLabelsDisplay(showLabels);
+    changeProgressAnimation(currentProgressAnimation);
 }

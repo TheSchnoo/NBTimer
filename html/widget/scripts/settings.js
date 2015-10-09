@@ -89,14 +89,24 @@ function changeBackgroundColor(color){
 
 function changeTimerColor(color){
     if(color=="white"){
-        $(".pie").css("border-color", "white");
-        return;
+    	if(currentProgressAnimation=="circle"){
+        	$(".pie").css("border-color", "white");
+        }
+        if(currentProgressAnimation=="pie"){
+        	$(".timer .fill >#slice >.pie").css("background-color", 'white');
+        } if(currentProgressAnimation == "bar"){
+    		$("#progressbar div").css('background-color', 'white');
+    }
     }
     currentTimerColor = color;
     color = getColorCode(color);
 
     $(".pie").css("border-color", TIMER_COLORS[color]);
-    $(".pie").css("background-color", TIMER_COLORS[color]);
+    if(currentProgressAnimation=="pie"){
+    	$(".timer .fill >#slice >.pie").css("background-color", TIMER_COLORS[color]);
+    } else if(currentProgressAnimation == "bar"){
+    	$("#progressbar div").css('background-color', TIMER_COLORS[color]);
+    }
 }
 
 function changeButtonColor(color){
@@ -145,9 +155,8 @@ $(document).ready(function(){
     $("#saveEvent").click(function(){
     	console.log('asdf');
 		chooseEvent($("#eventDropdown").val());
-		if($(".ui-dialog").is(":visible")){
-			$("#dialog").dialog("close");
- 		}
+		
+     	closeDialogs();
     });
     $("#eventDropdown").change(function(){
     	if($("#eventDropdown").val()=="Add Text"){
@@ -162,14 +171,30 @@ $(document).ready(function(){
      $("#saveTheme").click(function(){
     	console.log('asdf');
 		changeTheme($("#themeDropdown").val().toLowerCase());
-		if($(".ui-dialog").is(":visible")){
-			$("#dialog2").dialog("close");
- 		}
+		
+     	closeDialogs();
     });
+     $("#saveSound").click(function(){
+     	saveSound();
+     	closeDialogs();
+     });
 });
+
+function closeDialogs(){
+		if(!$("#dialog").hasClass('invisible')){
+			$("#dialog").dialog("close");
+		}if(!$("#dialog2").hasClass('invisible')){
+			$("#dialog2").dialog("close");
+		}if(!$("#dialog3").hasClass('invisible')){
+			$("#dialog3").dialog("close");
+		} 
+}
 
 var timeEdited;
 function themeDialog(){
+	if(!$("#dialog").hasClass('invisible')){
+    	$("#dialog").addClass('invisible');
+    }
 	$("#dialog2").removeClass('invisible').dialog();
 }
 var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.png'],["blue-up.png", 'blue-down.png'],["purple-up.png", 'purple-down.png'],["yellow-up.png", 'yellow-down.png'],["grey-up.png", 'grey-down.png']];
@@ -199,7 +224,6 @@ function changeTheme(theme){
 	        endColor = "red";
 	        $("body").css({
 	            'background': 'black',
-	            'color':'#fff',
 	            'font-family':'monospace'
 	        });
 	        $(".btns").css({
@@ -223,7 +247,7 @@ function changeTheme(theme){
 	        $(".btns").css({
 	            'font-family':'sans-serif'
 	        });
-	        currentTimerColor = 'black';
+	        currentTimerColor = 'grey';
 	        currentTimeColor= 'black';
 	        changeButtonColor('grey');
 	        changeTimeColor('black');
@@ -235,7 +259,7 @@ function changeTheme(theme){
 	        endColor = "red";
 	    	break;
     }
-    $("#slice, #progressbar").remove();
+    // $("#slice, #progressbar").remove();
     resize();
     saveData();
 }
@@ -253,12 +277,52 @@ function changeTimeColor(color){
     $("body").css('color', startColor);
    	saveData();
 }
+
+function soundDialog(){
+    $("#dialog3").removeClass('invisible');
+    if(!$("#dialog2").hasClass('invisible')){
+    	$("#dialog2").dialog("close");
+    }
+    if(!$("#dialog").hasClass('invisible')){
+    	$("#dialog").dialog("close");
+    }
+    $(function(){
+        $("#dialog3").dialog();
+    });
+}
+var currentSounds={};
+function saveSound(){
+	currentSounds.during = getAudioFile($("#soundDuringDropdown").val());
+	currentSounds.after = getAudioFile($("#soundAfterDropdown").val());
+	setupSounds();
+}
+var duringAudio, afterAudio;
+function getAudioFile(item){
+	switch(item){
+		case "Cena":
+			item = 'src/cena.mp3';
+			break;
+		default:
+			break;
+	}
+	return item;
+}
+function setupSounds(){
+	duringAudio = new Audio(currentSounds.during);
+	afterAudio = new Audio(currentSounds.after);
+}
 function editEvent(event){
 
     console.log('asdffffff');
     $("#dialog").removeClass('invisible');
-    if($(".ui-dialog").css('display')=="none"){
-    	$(".ui-dialog").css('display','block');
+    // if($(".ui-dialog").css('display')=="none"){
+    // 	$(".ui-dialog").css('display','block');
+    // }
+    if(!$("#dialog2").hasClass('invisible')){
+    	$("#dialog2").dialog("close");
+    }
+    if(!$("#dialog3").hasClass('invisible')){
+    	$("#dialog3").dialog("close");
     }
     $(function(){
         $("#dialog").dialog();
@@ -282,6 +346,7 @@ function chooseEvent(chosenEvent){
 	currentEvent.data = $("#eventTextInput").val();
 	saveData();
 }
+
 function runEvent(){
 	var properties = {
 		x: NB.getHostObject().x,

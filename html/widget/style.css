@@ -348,7 +348,7 @@ img {
 #dialog{
     /*display:none;*/
 }
-#dialog input, #dialog2 input{
+#dialog input, #dialog2 input, #dialog3 input{
     color:black;
 }
 
@@ -359,7 +359,7 @@ img {
     font-size:40px;
     position:absolute;
 }
-#eventDropdown ,#themeDropdown{
+#eventDropdown ,#themeDropdown, #soundDuringDropdown, #soundAfterDropdown{
     height:2em;
     color:black;
 }
@@ -376,6 +376,7 @@ img {
 #eventTextInput{
     color:black;
 }
+
 
 .timer {
 
@@ -448,9 +449,6 @@ img {
 
             .timer.fill > #slice > .pie {
 
-                border: transparent;
-
-                background-color: ;
 
                 width:0.96em;
 

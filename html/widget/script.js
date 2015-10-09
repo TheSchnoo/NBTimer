@@ -114,6 +114,9 @@ UI.prototype.stopWatch = function(finish) {
         timer.isStarted = false;
         timer.isPaused = true;
         console.log('end');
+        if(currentSounds.after!="None"&&currentSounds.after!=undefined){
+            afterAudio.play();
+        }
         runEvent();
         timer1.stop();   
     }
@@ -409,6 +412,9 @@ function init() {
     pauseBtn.onclick = function() {
         if (timer.isPaused === false) {
             timer.pause();
+            if(currentSounds.during!="None"&&currentSounds.during!=undefined){
+                duringAudio.pause();
+            }
             this.innerHTML = "Unpause";
             timer1.pause();
             timer2 = $.timer(function() {finish = finish+102;}); 
@@ -417,9 +423,13 @@ function init() {
         } else {
             timer.unpause();
             this.innerHTML = "Pause";
+            if(currentSounds.during!="None"&&currentSounds.during!=undefined){
+                duringAudio.play();
+            }
             timer2.stop();
             timer1.play();
         }
+        
     };
 
     resetBtn.onclick = function() {
@@ -500,7 +510,9 @@ function init() {
         if (timer.isStarted === false){
             timer.unpause();
         }
-
+        if(currentSounds.during!="None"&&currentSounds.during!=undefined){
+            duringAudio.play();
+        }
         if (timer.isPaused === false||timeEdited){
             if (countUpTrigger === false && countDownTrigger === true && isPaused ===false){
                 timer.total = timer.time;
