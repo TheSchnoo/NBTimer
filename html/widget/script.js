@@ -94,6 +94,7 @@ UI.prototype.stopWatch = function(finish) {
     this.timerFinish = finish;
 
     var seconds = (this.timerFinish-(new Date().getTime()))/1000;
+
     // if (seconds == 0){
     //     console.log('end');
     //     return;
