@@ -312,6 +312,11 @@ function autoTab(event){
 	var keyCode = event.which || event.keyCode;
 	console.log(keyCode);
 	console.log(keyCode>=48&&keyCode<=57,keyCode>=96&&keyCode<=105);
+    if(keyCode==13){
+        active_element = document.activeElement.id
+        switchSelection();
+        return;
+    }
 	if(!((keyCode>=48&&keyCode<=57)||(keyCode>=96&&keyCode<=105))){
 		console.log('not');
 		return;
@@ -323,26 +328,29 @@ function autoTab(event){
 		active_element = document.activeElement.id;
 		console.log(prev_active_element, active_element);
 		if (prev_active_element==active_element){
-			switch(active_element){
-				case "timeHoursInput":
-					document.getElementById("timeMinutesInput").select();
-					prev_active_element = undefined;
-					active_element = undefined;
-					checkTimeInput("#timeHoursInput");
-					break;
-				case "timeMinutesInput":
-					document.getElementById("timeSecondsInput").select();
-					prev_active_element = undefined;
-					active_element = undefined;
-					checkTimeInput("#timeMinutesInput");
-					break;
-                case "timeSecondsInput":
-                    prev_active_element = undefined;
-                    active_element = undefined;
-                    checkTimeInput("#timeSecondsInput");
-                    break;
-
-			}
+            switchSelection();
 		}
 	}
+}
+function switchSelection(){
+    switch(active_element){
+        case "timeHoursInput":
+            document.getElementById("timeMinutesInput").select();
+            prev_active_element = undefined;
+            active_element = undefined;
+            checkTimeInput("#timeHoursInput");
+            break;
+        case "timeMinutesInput":
+            document.getElementById("timeSecondsInput").select();
+            prev_active_element = undefined;
+            active_element = undefined;
+            checkTimeInput("#timeMinutesInput");
+            break;
+        case "timeSecondsInput":
+            prev_active_element = undefined;
+            active_element = undefined;
+            checkTimeInput("#timeSecondsInput");
+            break;
+
+    }
 }
