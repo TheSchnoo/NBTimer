@@ -128,12 +128,14 @@ $(document).ready(function(){
         $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
     });
 
-    $(".display").click(function(){
+    $(".display").click(function(event){
     	if(timer.isPaused||timer.time==0){
 	    	$(".displayInput").toggleClass('invisible');
 	    	$(".display").toggleClass('invisible');
 	    	timer.printTime();
 	    }
+	    console.log(event,event.currentTarget.id+"Input");
+	    $("#"+event.currentTarget.id+"Input").focus().select();
     });
     $(".displayInput").on('change keyup paste',function(){
     	timeEdited = true;
@@ -151,6 +153,7 @@ $(document).ready(function(){
     	}
     	// $("#slice, #progressbar").remove();
     	timer.time = parseInt($("#timeSecondsInput").val())+parseInt($("#timeMinutesInput").val()*60) + parseInt($("#timeHoursInput").val()*60*60);
+    	// checkTimeInput("#"+event.currentTarget.id);
     });
     $("#saveEvent").click(function(){
     	console.log('asdf');
@@ -294,28 +297,31 @@ function soundDialog(){
 }
 var currentSounds={};
 function saveSound(){
-	currentSounds.during = getAudioFile($("#soundDuringDropdown").val());
-	currentSounds.after = getAudioFile($("#soundAfterDropdown").val());
+	currentSounds.during = ($("#soundDuringDropdown").val());
+	currentSounds.after = ($("#soundAfterDropdown").val());
 	setupSounds();
 }
 var duringAudio, afterAudio;
-function getAudioFile(item){
-	switch(item){
-		case "Cena":
-			item = 'src/cena.mp3';
-			break;
-		default:
-			break;
-	}
-	return item;
-}
+// function getAudioFile(item){
+// 	switch(item){
+// 		case "Cena":
+// 			item = 'src/cena.mp3';
+// 			break;
+// 		default:
+// 			break;
+// 	}
+// 	return item;
+// }
 function setupSounds(){
+	$("#soundDuringDropdown").val(currentSounds.during);
+	$("#soundAfterDropdown").val(currentSounds.after);
 	duringAudio = new Audio(currentSounds.during);
 	afterAudio = new Audio(currentSounds.after);
+	saveData();
 }
 function editEvent(event){
 
-    console.log('asdffffff');
+    // console.log('asdffffff');
     $("#dialog").removeClass('invisible');
     // if($(".ui-dialog").css('display')=="none"){
     // 	$(".ui-dialog").css('display','block');
@@ -337,6 +343,48 @@ function lockAll(){
     for (var i = 0; i<objects.length; i++){
         NB.getObject(Object.keys(NB.document.getPage(NB.document.getCurrentPageId()).getObjects())[i]).lockType = "Lock In Place";
     }
+}
+function checkTimeInput(id){
+	var h = ($(id).val());
+	h = h.split("");
+
+	console.log(h);
+	for (var x=0; x<h.length; x++){
+		if (isNaN(parseInt(h[x]))){
+			h.splice(x,1);
+			x--;
+			// x--;
+			// console.log(h);
+		} else {
+			h[x] = parseInt(h[x]);
+			// console.log(h);
+		}
+	}
+	console.log(h);
+	if(h.length==0){
+		$(id).val("00");
+	}
+	if (h.length==1){
+		$(id).val(h[0]);
+	}
+	if(h.length==2){
+		checkMax(id, h);
+		$(id).val(h[0]*10+h[1]);
+
+	}
+	if(h.length >2){
+		checkMax(id, h);
+		$(id).val(h[h.length-2]*10+h[h.length-1]);
+	}
+}
+function checkMax(id,h){
+	if(id=="#timeHoursInput"){
+		return;
+	}
+	if (h[h.length-2]*10+h[h.length-1]>=60){
+		h[0]=5;
+		h[1]=9;
+	}
 }
 var currentEvent={};
 function chooseEvent(chosenEvent){

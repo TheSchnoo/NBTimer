@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="libs/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="shapes.css">
-    <script type="text/javascript" src="nb-2.7.0.js"></script>
+    <script type="text/javascript" src="nb-2.9.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="jquery.timer.js"></script>
@@ -88,7 +88,7 @@
                 <div id="hoursLabel" class="timerLabel">Hours</div>
                 <div id="addHourDiv" class="arrowbtnsDiv"><img class="arrowbtns add" src="src/arrows/black-up.png" id="addHour"></image></div>
                 <span class="display" id="timeHours">00</span>
-                <input class="displayInput invisible"size="2" id="timeHoursInput"></input>
+                <input class="displayInput invisible"onkeyup="autoTab(event)"size="2" id="timeHoursInput"></input>
                 <div id="subHourDiv" class="arrowbtnsDiv"><img class="arrowbtns sub" src="src/arrows/black-down.png"id="subHour"></input></div>
             </div>
             <span class="colon"id="colon1">:</span>
@@ -96,7 +96,7 @@
                 <div id="minutesLabel" class="timerLabel">Minutes</div>
                 <div id="addMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns add" src="src/arrows/black-up.png" id="addMinute"></image></div>
                 <span class="display" id="timeMinutes">00</span>
-                <input class="displayInput invisible" size="2"id="timeMinutesInput"></input>
+                <input class="displayInput invisible" onkeyup="autoTab(event)"size="2"id="timeMinutesInput"></input>
                 <div id="subMinuteDiv" class="arrowbtnsDiv"><img class="arrowbtns sub" src="src/arrows/black-down.png"id="subMinute"></input></div>
             </div>
             <span class="colon"id="colon2">:</span>
@@ -104,7 +104,7 @@
                 <div id="secondsLabel" class="timerLabel">Seconds</div>
                 <div id="addSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns add" src="src/arrows/black-up.png" id="addSecond"></image></div>
                 <span class="display" id="timeSeconds">00</span>
-                <input class="displayInput invisible"size="2" id="timeSecondsInput"></input>
+                <input class="displayInput invisible"onkeyup="autoTab(event)"size="2" id="timeSecondsInput"></input>
                 <div id="subSecondDiv" class="arrowbtnsDiv"><img class="arrowbtns sub" src="src/arrows/black-down.png"id="subSecond"></input></div>
             </div>
             </br>
@@ -149,12 +149,12 @@
         During:
         <select id="soundDuringDropdown">
             <option value="None">None</option>
-            <option value="Cena">Cena</option>
+            <option value="src/cena.mp3">Cena</option>
         </select>
         After:
         <select id="soundAfterDropdown">
             <option value="None">None</option>
-            <option value="Cena">Cena</option>
+            <option value="src/cena.mp3">Cena</option>
         </select>
         <input type="submit" id="saveSound"></input>
     </div>

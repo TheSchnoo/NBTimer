@@ -125,7 +125,7 @@ NB.ready(function(){
         //going into menu
         disableSpin = true;
         //
-        eventAddClickEffect();
+        // eventAddClickEffect();
     });
     $("#controls-close").click(function() {
         toggleOptions(false);
@@ -221,7 +221,7 @@ function resize(obj){
     	$("#colon1").css('left', $(".third").width()+$(".third").width()*0.03);
     	$("#colon2").css('left', $(".third").width()*2+$(".third").width()*0.165);
     }
-    if($("#container").width()<=350){
+    if($("#container").width()<350){
     	$(".ui-dialog").width($("#container").width());
     	$("#controls-cont img, #controls-cont span").css({
     		'width':'15px',
@@ -264,6 +264,7 @@ function saveData(){
     hostobject.snoozeTime = snoozeTime;
     hostobject.showLabels = showLabels;
     hostobject.hideSnooze = hideSnooze;
+    hostobject.currentSounds = currentSounds;
     NB.persist.save("timer"+hostobject.guid, hostobject);
 }
 function loadData(){
@@ -279,6 +280,8 @@ function loadData(){
         snoozeTime = loaded_data.snoozeTime;
         showLabels = loaded_data.showLabels;
         hideSnooze = loaded_data.hideSnooze;
+        currentSounds = loaded_data.currentSounds?loaded_data.currentSounds:{};
+        setupSounds();
     } else {
     	//defaults
         loaded_data = undefined;
@@ -290,8 +293,9 @@ function loadData(){
         currentTheme ='default';
         currentTimeColor = 'black';
         currentEvent = {};
-        snoozeTime=600;
+        snoozeTime=300;
         hideSnooze = false;
+        currentSounds = {};
     }
     changeBackgroundColor(currentBackground);
     changeButtonColor(currentButtonColor);
@@ -301,4 +305,44 @@ function loadData(){
     chooseEvent(currentEvent);
     changeLabelsDisplay(showLabels);
     changeProgressAnimation(currentProgressAnimation);
+}
+
+var prev_active_element, active_element;
+function autoTab(event){
+	var keyCode = event.which || event.keyCode;
+	console.log(keyCode);
+	console.log(keyCode>=48&&keyCode<=57,keyCode>=96&&keyCode<=105);
+	if(!((keyCode>=48&&keyCode<=57)||(keyCode>=96&&keyCode<=105))){
+		console.log('not');
+		return;
+	}
+	if(!document.activeElement.id.search("input")){
+		return;
+	} else {
+		prev_active_element = active_element;
+		active_element = document.activeElement.id;
+		console.log(prev_active_element, active_element);
+		if (prev_active_element==active_element){
+			switch(active_element){
+				case "timeHoursInput":
+					document.getElementById("timeMinutesInput").select();
+					prev_active_element = undefined;
+					active_element = undefined;
+					checkTimeInput("#timeHoursInput");
+					break;
+				case "timeMinutesInput":
+					document.getElementById("timeSecondsInput").select();
+					prev_active_element = undefined;
+					active_element = undefined;
+					checkTimeInput("#timeMinutesInput");
+					break;
+                case "timeSecondsInput":
+                    prev_active_element = undefined;
+                    active_element = undefined;
+                    checkTimeInput("#timeSecondsInput");
+                    break;
+
+			}
+		}
+	}
 }
