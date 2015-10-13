@@ -217,6 +217,24 @@ function resize(obj){
     $(".colon").css('font-size',INITIAL_COLON_SIZE*ratio+"px");
     $("#colon1").css('left', $(".third").width()+$(".third").width()*0.085);
     $("#colon2").css('left', $(".third").width()*2+$(".third").width()*0.155);
+    if(currentTheme=="digital"){
+    	$("#colon1").css('left', $(".third").width()+$(".third").width()*0.03);
+    	$("#colon2").css('left', $(".third").width()*2+$(".third").width()*0.165);
+    }
+    if($("#container").width()<=350){
+    	$(".ui-dialog").width($("#container").width());
+    	$("#controls-cont img, #controls-cont span").css({
+    		'width':'15px',
+    		'height':'15px'
+    	});
+    	$("#controls-cont button:nth-child(-n+5)").css('width','18px');
+    } else {
+    	$("#controls-cont img, #controls-cont span").css({
+    		'width':'20px',
+    		'height':'20px'
+    	});
+    	$("#controls-cont button:nth-child(-n+5)").css('width','35px');
+    }
     $(".colon").css('top', $(".timerLabel").height()+$(".arrowbtnsDiv").height()+$(".timerLabel").height()*0.2);
     $('#progressbar div').css({
 
@@ -230,7 +248,8 @@ function resize(obj){
     	'font-size':parseInt($(".display").css('font-size').substr(0,$(".display").css('font-size').length-2))*0.8,
     	'margin-left':$(".third").width()/2-$(".displayInput").width()/2
     });
-    $("#snooze").css('margin-left',$("#display").width()/2-($("#snooze").width()+20)/2)
+    $("#snooze").css('margin-left',$("#display").width()/2-($("#snooze").width()+20)/2);
+
 
 }
 function saveData(){

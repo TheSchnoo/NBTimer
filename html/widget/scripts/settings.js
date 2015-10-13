@@ -196,6 +196,7 @@ function themeDialog(){
     	$("#dialog").addClass('invisible');
     }
 	$("#dialog2").removeClass('invisible').dialog();
+	resize();
 }
 var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.png'],["blue-up.png", 'blue-down.png'],["purple-up.png", 'purple-down.png'],["yellow-up.png", 'yellow-down.png'],["grey-up.png", 'grey-down.png']];
 function changeArrowColor(color){
@@ -288,6 +289,7 @@ function soundDialog(){
     }
     $(function(){
         $("#dialog3").dialog();
+        resize();
     });
 }
 var currentSounds={};
@@ -326,6 +328,7 @@ function editEvent(event){
     }
     $(function(){
         $("#dialog").dialog();
+        resize();
     });
     saveData();
 }
