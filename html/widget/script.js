@@ -169,8 +169,24 @@ UI.prototype.updateTime = function(sec, resetTriggered) {
     this.startCircle(sec, resetTriggered);
 };
 
+UI.prototype.updateTimeAfterPause = function(sec, resetTriggered) {
+    this.resetWatchAfterPause();
+    this.startCircle(sec, resetTriggered);
+    timer1.stop();
+    timer1.play();
+    timer1.pause();
+};
+
+UI.prototype.resetWatchAfterPause = function() {
+    timer1.stop();
+    timer2.stop();
+    this.drawTimer(0);
+    this.drawBar(0);
+}
+
 UI.prototype.resetWatch = function() {
     clearInterval(this.timer);
+    timer1.stop();
     this.drawTimer(0);
     this.drawBar(0);
 }
@@ -354,6 +370,7 @@ Timer.prototype.snooze = function() {
 var timer1;
 var snoozeTrigger = false;
 var snoozeTime;
+var pauseTrigger = false;
 /**
  * init method
  */
@@ -421,11 +438,13 @@ function init() {
             }
             this.innerHTML = "Unpause";
             timer1.pause();
+            pauseTrigger = true;
             timer2 = $.timer(function() {finish = finish+102;}); 
             timer2.set({ time : 100, autostart : true });
             startBtn.disabled = false;
         } else {
             timer.unpause();
+            pauseTrigger = false;
             this.innerHTML = "Pause";
             if(currentSounds.during!="None"&&currentSounds.during!=undefined){
                 duringAudio.play();
@@ -502,10 +521,12 @@ function init() {
         timer.pause();
         timer.time = timer.time + 1;
         timer.printTime();
-        if (timer.isStarted === true) {
-            finish = finish + 1900
-            // timer.UI.updateTime(timer.time, timer.resetTriggered);
+        if (timer.isStarted === true && pauseTrigger === false) {
+            timer.UI.updateTime(timer.time, timer.resetTriggered);
             timer.unpause();
+        }
+        else if (timer.isStarted === true && pauseTrigger === true){
+            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
         }
     };
     
