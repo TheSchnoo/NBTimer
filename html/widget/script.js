@@ -116,6 +116,9 @@ UI.prototype.stopWatch = function(finish) {
         timer.isPaused = true;
         console.log('end');
         if(currentSounds.after!="None"&&currentSounds.after!=undefined){
+            if(!duringAudio.ended){
+                duringAudio.pause()
+            }
             afterAudio.play();
         }
         runEvent();
@@ -442,8 +445,17 @@ function init() {
         timer1.stop();
         startBtn.disabled = false;
         $("#slice, #progressbar").remove();
-        document.getElementById("sn").remove();
+        // document.getElementById("snooze").remove();
         snoozeTrigger = false;
+        if(currentSounds.after!="None"&&currentSounds.after!=undefined){
+            if(!afterAudio.ended){
+                afterAudio.pause();
+                afterAudio.currentTime = 0;
+            }
+        }
+        if(!$("#snooze").hasClass('invisible')){
+            $("#snooze").addClass('invisible');
+        }
     };
     
     addHourBtn.onclick = function() {
