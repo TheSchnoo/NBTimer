@@ -172,10 +172,11 @@ UI.prototype.updateTime = function(sec, resetTriggered) {
 UI.prototype.updateTimeAfterPause = function(sec, resetTriggered) {
     this.resetWatchAfterPause();
     this.startCircle(sec, resetTriggered);
-    timer1.stop();
-    timer1.play();
-    timer1.pause();
 };
+
+UI.prototype.pauseUI = function(){
+    timer1.pause();
+}
 
 UI.prototype.resetWatchAfterPause = function() {
     timer1.stop();
@@ -328,7 +329,7 @@ Timer.prototype.pause = function() {
 
 // unpause timer
 Timer.prototype.unpause = function() {
-    
+
     this.isPaused = false;
     isPaused = false;
     
@@ -481,9 +482,16 @@ function init() {
         timer.pause();
         timer.time = timer.time + 3600;
         timer.printTime();
-        if (timer.isStarted === true) {
+        if (timer.isStarted === true && pauseTrigger === false) {
             timer.UI.updateTime(timer.time, timer.resetTriggered);
             timer.unpause();
+        }
+        else if (timer.isStarted === true && pauseTrigger === true){
+            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+            timer.unpause();
+            timer.UI.pauseUI();
+            pauseTrigger = false;
+            pauseBtn.click();
         }
     };
     
@@ -494,16 +502,34 @@ function init() {
         else {
             timer.time = timer.time - 3600;
         }
-        timer.printTime();
+        
+        if (timer.isStarted === true && pauseTrigger === false) {
+            timer.UI.updateTime(timer.time, timer.resetTriggered);
+            timer.unpause();
+        }
+        else if (timer.isStarted === true && pauseTrigger === true){
+            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+            timer.unpause();
+            timer.UI.pauseUI();
+            pauseTrigger = false;
+            pauseBtn.click();
+        }
     };
     
     addMinuteBtn.onclick = function() { 
         timer.pause();
         timer.time = timer.time + 60;
         timer.printTime();
-        if (timer.isStarted === true) {
+        if (timer.isStarted === true && pauseTrigger === false) {
             timer.UI.updateTime(timer.time, timer.resetTriggered);
             timer.unpause();
+        }
+        else if (timer.isStarted === true && pauseTrigger === true){
+            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+            timer.unpause();
+            timer.UI.pauseUI();
+            pauseTrigger = false;
+            pauseBtn.click();
         }
     };
     
@@ -514,7 +540,18 @@ function init() {
         else {
             timer.time = timer.time - 60;
         }
-        timer.printTime();
+        
+        if (timer.isStarted === true && pauseTrigger === false) {
+            timer.UI.updateTime(timer.time, timer.resetTriggered);
+            timer.unpause();
+        }
+        else if (timer.isStarted === true && pauseTrigger === true){
+            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+            timer.unpause();
+            timer.UI.pauseUI();
+            pauseTrigger = false;
+            pauseBtn.click();
+        }
     };
     
     addSecondBtn.onclick = function() {
@@ -527,6 +564,10 @@ function init() {
         }
         else if (timer.isStarted === true && pauseTrigger === true){
             timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+            timer.unpause();
+            timer.UI.pauseUI();
+            pauseTrigger = false;
+            pauseBtn.click();
         }
     };
     
@@ -537,10 +578,22 @@ function init() {
         else {
             timer.time = timer.time - 1;
         }
-        timer.printTime();
+
+        if (timer.isStarted === true && pauseTrigger === false) {
+            timer.UI.updateTime(timer.time, timer.resetTriggered);
+            timer.unpause();
+        }
+        else if (timer.isStarted === true && pauseTrigger === true){
+            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+            timer.unpause();
+            timer.UI.pauseUI();
+            pauseTrigger = false;
+            pauseBtn.click();
+        }
     };
     
     startBtn.onclick = function(){
+
         if (timer.isStarted === false){
             timer.unpause();
         }
