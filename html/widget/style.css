@@ -393,7 +393,7 @@ img {
     color:black;
 }
 
-.alertListItem{
+#alertList li{
     list-style-type: none;
 }
 #alertList{

@@ -28,40 +28,57 @@
             <button id="controls-remove"><img src="img/minus.png"></button>
             <button id="controls-add"><img src="img/plus.png"></button>
             <button id="controls-reset"><span class="glyphicon glyphicon-refresh"></span></button>
-            <button id="event" onclick="editEvent()">Event</button>
+            <!-- <button id="event" onclick="editEvent()">Event</button>
             <button id="theme" onclick="themeDialog()">Theme</button>
-            <button id="theme" onclick="soundDialog()">Sounds</button>
+            <button id="theme" onclick="soundDialog()">Sounds</button> -->
             <!-- <button id="controls-upon-stop">False</button> -->
         </div>
 
         <div id="controls-dropdown">
             <ul id="menu">
-                <!-- <ul id="appearance-settings"> -->
-                    <li><span class="menu-option">Progress Bar Type</span>
-                        <ul id="progressbar-options"></ul>
-                    </li>
-                    <li><span class="menu-option">Add Alert</span>
-                        <ul id="addAlert-options"></ul>
-                    </li>
-                <!-- </ul> -->
+                <li>Appearance
+                    <ul>
+                        <li><span class="menu-option">Theme</span>
+                            <ul id="theme-options"></ul>
+                        </li>
+                        <li><span class="menu-option">Progress Bar Type</span>
+                            <ul id="progressbar-options"></ul>
+                        </li>
+                        <li><span class="menu-option">Background</span>
+                            <ul id="background-options"></ul>
+                        </li>
+                        <li><span class="menu-option">Progress Bar Color</span>
+                            <ul id="timer-color-options"></ul>
+                        </li>
+                        <li><span class="menu-option">Button Color</span>
+                            <ul id="button-color-options"></ul>
+                        </li>
+                        <li><span class="menu-option">Timer Labels</span>
+                            <ul id="timer-labels-options"></ul>
+                        </li>
+                        <li><span class="menu-option">Snooze Button Options</span>
+                            <ul id="snooze-button-options"></ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Alerts
+                    <ul>
+                        <li><span class="menu-option" onclick="alertDialog()">Add Alert</span>
+                        </li>
+                        <li><span class="menu-option"onclick="manageAlerts()">Manage Alerts</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>Event
+                    <ul>
+                        <li><span class="menu-option" onclick="editEvent()">Add Event</span></li>
+                    </ul>
+                </li>
+
             <!--    <li><span class="menu-option"> Themes</span>
                     <ul id="theme-options"></ul>
                 </li> -->
-                <li><span class="menu-option">Background</span>
-                    <ul id="background-options"></ul>
-                </li>
-                <li><span class="menu-option">Progress Bar Color</span>
-                    <ul id="timer-color-options"></ul>
-                </li>
-                <li><span class="menu-option">Button Color</span>
-                    <ul id="button-color-options"></ul>
-                </li>
-                <li><span class="menu-option">Timer Labels</span>
-                    <ul id="timer-labels-options"></ul>
-                </li>
-                <li><span class="menu-option">Snooze Button Options</span>
-                    <ul id="snooze-button-options"></ul>
-                </li>
+                
             </ul>
         </div>
 

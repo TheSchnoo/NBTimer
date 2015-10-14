@@ -56,6 +56,8 @@ function DiceThemer() {
 		addSnoozeButtonOption("5 Min");
 		addSnoozeButtonOption("10 Min");
 
+		addThemeOption("Default");
+		addThemeOption("Digital");
 		//$("#remove-from-spin").append("<input type='radio' id='remove-from-spin-radio'>");
 	}
 	function addProgressBarOption(name, theme){
@@ -94,7 +96,9 @@ function DiceThemer() {
 		// backgroundColors[name] = color;
 		$('#snooze-button-options').append('<li><span class="menu-option">' + name + '</span></li>');
 	}
-
+	function addThemeOption(name){
+		$("#theme-options").append('<li><span class="menu-option">' + name + '</span></li>');
+	}
 
 	this.getThemeOption = function(name) {
 		return $.extend(true, {}, diceThemes[name]);

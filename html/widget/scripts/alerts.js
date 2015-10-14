@@ -15,6 +15,11 @@ var Alert =function(time, text){
 	console.log(this);
 }
 function refreshAlertsList(){
+	if(alerts.length==0){
+		$("#alertList").append('<li>No Alerts to display</li>');
+    	
+    	return;
+	}
 	$("#alertList").empty();
 	for(var i =0; i<alerts.length;i++){
     		$("#alertList").append('<li id="alert'+i+'" class="alertListItem">'+formatTimeFromSec(alerts[i].time)+", "+alerts[i].text+'&nbsp;<span class="glyphicon glyphicon-remove" aria-hidden="true"onclick="removeAlert('+i+')"></li>');

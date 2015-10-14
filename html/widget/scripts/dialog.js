@@ -10,7 +10,7 @@ function soundDialog(){
         resize();
     });
 }
-function editEvent(event){
+function editEvent(){
 	closeDialogs();
     $(function(){
         $("#dialog").removeClass('invisible').dialog();

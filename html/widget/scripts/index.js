@@ -82,14 +82,10 @@ function toggleEditingMenu(state) {
 function setCustomizationOption(category, item) {
 	switch(category) {
 		case 'Themes':
-			// Set the dice content (theme)
-			var theme = diceThemer.getThemeOption(item);
-			saveData();
-			break;
-		case 'Add Alert':
-			var hai = addAlert(item);
-			saveData();
-			break;
+		case 'Theme':
+            changeTheme(item.toLowerCase());
+            saveData();
+            break;
 		case 'Progress Bar Type':
 			var hai = changeProgressAnimation(item.toLowerCase());
 			saveData();
@@ -194,7 +190,7 @@ $(document).ready(function(){
      $(".alertInput").focusout(function(){
         checkAll('alert');
      });
-     
+
 });
 
 NB.ready(function(){
