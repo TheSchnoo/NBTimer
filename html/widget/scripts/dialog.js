@@ -17,7 +17,7 @@ function editEvent(event){
         resize();
     });
 }
-function alarmDialog(){
+function alertDialog(){
 	closeDialogs();
     $(function(){
         $("#dialog4").removeClass('invisible').dialog();
