@@ -58,14 +58,14 @@ function checkTimeInput(id){
 		}
 	}
 	console.log(h);
-	if(h.length==0){
-		$(id).val("00");
-	}
-	if (h.length==1){
+	// if(h.length==0){
+	// 	$(id).val("00");
+	// }
+	// if (h.length==1){
 		
-		$(id).val(h[0]);
+	// 	$(id).val("0"+h[0]);
 
-	}
+	// }
 	if(h.length==2){
 		checkMax(id, h);
 		$(id).val(h[0]*10+h[1]);
@@ -80,6 +80,11 @@ function checkTimeInput(id){
 			$(id).val(h[0]+"0");
 		}
 	}
+}
+function checkAll(prefix){
+    checkTimeInput("#"+prefix+"HoursInput");
+    checkTimeInput("#"+prefix+"MinutesInput");
+    checkTimeInput("#"+prefix+"SecondsInput");
 }
 function checkMax(id,h){
 	if(id=="#timeHoursInput"){

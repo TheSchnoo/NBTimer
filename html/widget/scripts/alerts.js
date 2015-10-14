@@ -1,6 +1,6 @@
 var alerts = []
-var nextAlert=0;
-var timersLeft;
+var nextAlert;
+var alertsLeft;
 var Alert =function(time, text){
 	this.text = text?text:undefined;
 	this.time = time?time:0;
@@ -9,11 +9,12 @@ var Alert =function(time, text){
 	// console.log('a');
 	alerts.push(this);
 	reorderAlerts();
-	if(!timersLeft){ //if there is no timer left in the queue
-		timersLeft = time < timer.time; //check if this new one is in the queue
-	} //else keep it as true
+	// if(!timersLeft){ //if there is no timer left in the queue
+	// 	timersLeft = time < timer.time; //check if this new one is in the queue
+	// } //else keep it as true
 	console.log(this);
 }
+
 
 function saveAlert(){
 	var alert_time = parseInt($("#alertHoursInput").val())*60*60+parseInt($("#alertMinutesInput").val())*60+parseInt($("#alertSecondsInput").val());

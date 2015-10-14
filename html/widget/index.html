@@ -36,12 +36,14 @@
 
         <div id="controls-dropdown">
             <ul id="menu">
-                <li><span class="menu-option">Progress Bar Type</span>
-                    <ul id="progressbar-options"></ul>
-                </li>
-                <li><span class="menu-option">Add Alert</span>
-                    <ul id="addAlert-options"></ul>
-                </li>
+                <ul id="appearance-settings">
+                    <li><span class="menu-option">Progress Bar Type</span>
+                        <ul id="progressbar-options"></ul>
+                    </li>
+                    <li><span class="menu-option">Add Alert</span>
+                        <ul id="addAlert-options"></ul>
+                    </li>
+                </ul>
             <!--    <li><span class="menu-option"> Themes</span>
                     <ul id="theme-options"></ul>
                 </li> -->
@@ -165,6 +167,11 @@
         <input size="3" id="alertSecondsInput"class="alertInput"placeholder="SS"onkeyup="autoTab(event)"></input>
         <textarea type="text" id="alertTextInput" class=""cols="30" rows="3" placeholder="Alert Text"></textarea>
         <input type="submit" id="saveAlert"></input>
+    </div>
+    <div id="dialog5"class="invisible">
+        <ul id="alertList">
+
+        </ul>
     </div>
     <script type="text/javascript" src="scripts/diceThemes.js"></script>
     <script src="scripts/settings.js"></script>

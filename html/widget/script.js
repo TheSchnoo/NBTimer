@@ -314,12 +314,12 @@ Timer.prototype.startDown = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time -- ;
-        if(timersLeft&&timer.time==alerts[nextAlert].time){
+        if(alertsLeft&&timer.time==alerts[nextAlert].time){
             triggerAlert(alerts[nextAlert]);
             nextAlert++;
             if(typeof alerts[nextAlert]=='undefined'){
                 console.log('timers');
-                timersLeft = false;
+                alertsLeft = false;
             }
         }
         if (timer.time > 0) {
@@ -368,6 +368,14 @@ Timer.prototype.startUp = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time ++;
+        if(alertsLeft&&timer.time==alerts[nextAlert].time){
+            triggerAlert(alerts[nextAlert]);
+            nextAlert--;
+            if(typeof alerts[nextAlert]=='undefined'){
+                console.log('timers');
+                alertsLeft = false;
+            }
+        }
         if (timer.time == countTo) {
             // check if the thing is contained...
             timer.printTime();
@@ -718,6 +726,21 @@ function init() {
             $("#snooze").addClass('invisible');
         }
         startBtn.disabled = true;
+
+        //alert
+        if(countDownTrigger==true){
+            for (var i =0; i<alerts.length; i++){
+                if (alerts[i].time<timer.time){
+                    alertsLeft = true;
+                    nextAlert = i;
+                    break;
+                }
+            }
+        }
+        else{
+            nextAlert = alerts.length-1;
+            alertsLeft = true;
+        }
     }
 
 

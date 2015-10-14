@@ -188,6 +188,12 @@ $(document).ready(function(){
         saveSound();
         closeDialogs();
      });
+     $(".displayInput").focusout(function(){
+        checkAll('time');
+     });
+     $(".alertInput").focusout(function(){
+        checkAll('alert');
+     });
 });
 
 NB.ready(function(){
@@ -419,16 +425,16 @@ function switchSelection(){
     }
     switch(active_element){
         case prefix+"HoursInput":
-            document.getElementById(prefix+"MinutesInput").select();
             prev_active_element = undefined;
             active_element = undefined;
             checkTimeInput("#"+prefix+"HoursInput");
+            $("#"+prefix+"MinutesInput").select();
             break;
         case prefix+"MinutesInput":
-            document.getElementById(prefix+"SecondsInput").select();
             prev_active_element = undefined;
             active_element = undefined;
             checkTimeInput("#"+prefix+"MinutesInput");
+            $("#"+prefix+"SecondsInput").select();
             break;
         case prefix+"SecondsInput":
             prev_active_element = undefined;

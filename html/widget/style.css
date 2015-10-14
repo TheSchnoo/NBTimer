@@ -377,6 +377,14 @@ img {
     color:black;
 }
 
+.alertListItem{
+    list-style-type: none;
+}
+#alertList{
+    margin:0;
+    padding:0;
+}
+
 
 .timer {
 
