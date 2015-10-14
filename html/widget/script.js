@@ -469,6 +469,8 @@ var snoozeTrigger = false;
 var snoozeTime;
 var pauseTrigger = false;
 var alertDialogPopup = false;
+var countUpTrigger = false;
+var countDownTrigger = true;
 /**
  * init method
  */
@@ -497,9 +499,6 @@ function init() {
 
     var isPaused = false;
 
-
-    countUpTrigger = false;
-    countDownTrigger = true;
     $(".timer").show();
     $(".timer.fill").hide();
     $(".bar").hide();
@@ -727,6 +726,9 @@ function init() {
                 timer.startUp();
                 timer.resetTriggered = false;
                 timer.UI.startCircle("5", timer.resetTriggered);
+                if (timer.isPaused === true) {
+                    pauseBtn.innerHTML = "pause";
+                }
                 timer.isStarted = true;
             }
         }

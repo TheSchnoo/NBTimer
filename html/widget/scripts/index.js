@@ -235,13 +235,18 @@ NB.ready(function(){
     });
 
     $("#controls-add").click(function() {
+        this.time = 0;
+        resetBtn.click();
         countUpTrigger = true;
         countDownTrigger = false;
     });
 
     $("#controls-remove").click(function() {
+        this.time = 0;
+        resetBtn.click();
         countUpTrigger = false;
         countDownTrigger = true;
+
     });
 
     $("#remove-from-spin").click(function(){
