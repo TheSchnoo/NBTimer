@@ -244,6 +244,14 @@ Timer.prototype.startDown = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time -- ;
+        if(timersLeft&&timer.time==alerts[nextAlert].time){
+            triggerAlert(alerts[nextAlert]);
+            nextAlert++;
+            if(typeof alerts[nextAlert]=='undefined'){
+                console.log('timers');
+                timersLeft = false;
+            }
+        }
         if (timer.time > 0) {
             timer.printTime();
         } else {
@@ -299,6 +307,7 @@ Timer.prototype.startUp = function(e) {
         } else {
             timer.printTime();
         }
+        // console.log(timer.time);
     }, timer.interval);
 };
 
