@@ -132,34 +132,104 @@ UI.prototype.stopWatch = function(finish) {
         this.drawBar(percent);
     }
 };
-var the_timer;
-UI.prototype.startCircle = function(sec, resetTriggered) {
+var countUpUI;
+UI.prototype.stopWatchUp = function(finish) {
     
-    if (resetTriggered === false){
+    // this.timerFinish = finish;
 
-        timerSeconds = sec;
+    // var seconds = (this.timerFinish-(new Date().getTime()))/1000;
+
+    // // if (seconds == 0){
+    // //     console.log('end');
+    // //     return;
+    // // }
+    // // if (seconds <0){
+    // //     // do{
+    // //     //     clearInterval(the_timer);
+    // //     // }while(seconds==0)
+    // //     console.log('a');
+    // //     return;
+    // // }
+    //  if(seconds < 0){
         
-        finish = new Date().getTime()+(timerSeconds*1000);
+    //     this.drawTimer(100);
+    //     this.drawBar(100);
 
-        timer1 = $.timer(function() {
-        UI.prototype.stopWatch(finish);
-        });
+    //     startBtn.disabled = false;
+    //     timer.isStarted = false;
+    //     timer.isPaused = true;
+    //     console.log('end');
+    //     if(currentSounds.after!="None"&&currentSounds.after!=undefined){
+    //         if(!duringAudio.ended){
+    //             duringAudio.pause()
+    //         }
+    //         afterAudio.play();
+    //     }
+    //     runEvent();   
+    //     this.drawTimer(0);
+    //     this.drawBar(0);
+    //     finish = finish + 5000;
 
-        timer1.set({ time : 50, autostart : true });
-
-
-        // the_timer = setInterval(function(){
-
-        //     UI.prototype.stopWatch(finish);
-        // }, 50);
+    // }
+    // else {
         
+    //     var percent = 100-((seconds/timerSeconds)*100);
+
+    //     this.drawTimer(percent);
+    //     this.drawBar(percent);
+    // }
+    countUpUI = countUpUI - 1;
+    if (countUpUI > 0){
+        var percent = 100 - ((countUpUI/finish)*100);
+        this.drawTimer(percent);
+        this.drawBar(percent);
     }
-    else{
-        timer1.stop();
+    else if (countUpUI <= 0){
         this.drawTimer(0);
         this.drawBar(0);
-
+        countUpUI = finish;
     }
+};
+
+var the_timer;
+UI.prototype.startCircle = function(sec, resetTriggered) {
+
+
+        if (resetTriggered === false){
+
+            timerSeconds = sec;
+            
+            finish = new Date().getTime()+(timerSeconds*1000);
+
+            if (countDownTrigger === true && countUpTrigger ===false){
+                timer1 = $.timer(function() {
+                UI.prototype.stopWatch(finish);
+                });
+
+                timer1.set({ time : 50, autostart : true });
+            }   
+            else if (countDownTrigger === false && countUpTrigger === true){
+                countUpUI = 100;
+                timer1 = $.timer(function() {
+                UI.prototype.stopWatchUp(100);
+                });
+
+                timer1.set({ time : 50, autostart : true });
+            }
+
+
+            // the_timer = setInterval(function(){
+
+            //     UI.prototype.stopWatch(finish);
+            // }, 50);
+            
+        }
+        else{
+            timer1.stop();
+            this.drawTimer(0);
+            this.drawBar(0);
+
+        }
 };
 
 
@@ -628,7 +698,7 @@ function init() {
                 timer.interval = 1000;
                 timer.startUp();
                 timer.resetTriggered = false;
-                timer.UI.startCircle("60", timer.resetTriggered);
+                timer.UI.startCircle("5", timer.resetTriggered);
                 timer.isStarted = true;
             }
         }
