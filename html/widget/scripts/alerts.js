@@ -44,4 +44,14 @@ function reorderAlerts(){
 function triggerAlert(alert){
 	alert.triggered = true;
 	console.log(alert.text);
+	
+	alertDialogPopup = true;
+	
+	$("#alert-modal").css('display', 'block');
+
+	   //check whether the landed thing is a image type or not
+	   //let's clean it before doing anything
+	   $("#alert-modal-dialogue").text("");
+	   $("#alert-modal-dialogue").text(alert.text);    
+	  
 }
