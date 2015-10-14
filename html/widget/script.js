@@ -369,25 +369,32 @@ Timer.prototype.startUp = function(e) {
 
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
-        timer.time ++;
-        if(alertsLeft&&timer.time==alerts[nextAlert].time){
-            triggerAlert(alerts[nextAlert]);
-            nextAlert--;
-            if(typeof alerts[nextAlert]=='undefined'){
-                console.log('timers');
-                alertsLeft = false;
-            }
-        }
-        if (timer.time == countTo) {
-            // check if the thing is contained...
+        timer.time ++ ;
+        // if(alertsLeft&&timer.time==alerts[nextAlert].time){
+        //     triggerAlert(alerts[nextAlert]);
+        //     nextAlert--;
+        //     if(typeof alerts[nextAlert]=='undefined'){
+        //         console.log('timers');
+        //         alertsLeft = false;
+        //     }
+        // }
+        if (timer.time != countTo) {
             timer.printTime();
-            timer.pause();
+        } else {
             $(".display").css('color',endColor);
             $(".colon").css('color',endColor);
-        } else {
             timer.printTime();
+            timer.pause();
+            timer.isStarted = false;
+            startBtn.disabled = false;
+            if (snoozeTrigger === false){
+                timer.snooze();
+            }
+            if(!hideSnooze){
+                $("#snooze").removeClass('invisible');
+            }
+            timer1.stop();
         }
-        // console.log(timer.time);
     }, timer.interval);
 };
 
