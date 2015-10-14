@@ -271,6 +271,11 @@ NB.ready(function(){
     });
     resize();
     var timer = setTimeout(resize(),50);
+    document.getElementById('duringAudio').onended=function() {
+        console.log('endd');
+        duringAudio.currentTime = 0;
+        duringAudio.play();
+    };
     saveData();
 });
 function resize(obj){
