@@ -18,6 +18,7 @@ function editEvent(){
     });
 }
 function manageAlerts(){
+	console.log('a');
 	closeDialogs();
     $(function(){
     	refreshAlertsList();

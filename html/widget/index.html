@@ -36,46 +36,46 @@
 
         <div id="controls-dropdown">
             <ul id="menu">
-                <li>Appearance
+                <li class="has-submenu">Appearance
                     <ul>
-                        <li><span class="menu-option">Theme</span>
+                        <li class="has-submenu"><span class="menu-option">Theme</span>
                             <ul id="theme-options"></ul>
                         </li>
-                        <li><span class="menu-option">Progress Bar Type</span>
+                        <li class="has-submenu"><span class="menu-option">Progress Bar Type</span>
                             <ul id="progressbar-options"></ul>
                         </li>
-                        <li><span class="menu-option">Background</span>
+                        <li class="has-submenu"><span class="menu-option">Background</span>
                             <ul id="background-options"></ul>
                         </li>
-                        <li><span class="menu-option">Progress Bar Color</span>
+                        <li class="has-submenu"><span class="menu-option">Progress Bar Color</span>
                             <ul id="timer-color-options"></ul>
                         </li>
-                        <li><span class="menu-option">Button Color</span>
+                        <li class="has-submenu"><span class="menu-option">Button Color</span>
                             <ul id="button-color-options"></ul>
                         </li>
-                        <li><span class="menu-option">Timer Labels</span>
+                        <li class="has-submenu"><span class="menu-option">Timer Labels</span>
                             <ul id="timer-labels-options"></ul>
                         </li>
-                        <li><span class="menu-option">Snooze Button Options</span>
+                        <li class="has-submenu"><span class="menu-option">Snooze Button Options</span>
                             <ul id="snooze-button-options"></ul>
                         </li>
                     </ul>
                 </li>
-                <li>Alerts (<span id="alert-count"></span>)
+                <li class="has-submenu">Alerts (<span id="alert-count"></span>)
                     <ul>
                         <li><span class="menu-option" onclick="alertDialog()">Add Alert</span>
                         </li>
                         <li><span class="menu-option"onclick="manageAlerts()">Manage Alerts</span>
                         </li>
-                        <li><span class="menu-option">Alert Background Color</span>
+                        <li class="has-submenu"><span class="menu-option">Alert Background Color</span>
                             <ul id="alert-background-options"></ul>
                         </li>
-                        <li><span class="menu-option">Alert Text Color</span>
+                        <li class="has-submenu"><span class="menu-option">Alert Text Color</span>
                             <ul id="alert-text-options"></ul>
                         </li>
                     </ul>
                 </li>
-                <li>Event
+                <li class="has-submenu">Event
                     <ul>
                         <li><span class="menu-option" onclick="soundDialog()">Edit Sounds</span></li>
                         <li><span class="menu-option" onclick="editEvent()">Edit Event</span></li>
@@ -176,12 +176,17 @@
         During:
         <select id="soundDuringDropdown">
             <option value="None">None</option>
-            <option value="src/cena.mp3">Cena</option>
+            <!-- <option value="src/sounds/cena.mp3">Cena</option> -->
+            <option value="src/sounds/slow_tick.wav">Slow Tick</option>
+            <option value="src/sounds/fast_tick.wav">Fast Tick</option>
         </select>
         After:
         <select id="soundAfterDropdown">
             <option value="None">None</option>
-            <option value="src/cena.mp3">Cena</option>
+            <!-- <option value="src/sounds/cena.mp3">Cena</option> -->
+            <option value="src/sounds/school_bell.wav">School Bell</option>
+            <option value="src/sounds/boxing_bell.wav">Boxing Bell</option>
+            <option value="src/sounds/buzzer.mp3">Buzzer</option>
         </select>
         <input type="submit" id="saveSound"></input>
     </div>

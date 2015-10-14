@@ -157,7 +157,7 @@ function changeTimeColor(color){
 }
 
 function changeAlertBackgroundColor(color){
-    currentAlarmBackgroundColor = color;
+    currentAlertBackgroundColor = color;
     if(color=="white"){
         $("#alert-modal").css('background-color', 'white');
         return;
@@ -170,8 +170,9 @@ function changeAlertBackgroundColor(color){
     $("#alert-modal").css("background-color", BACKGROUND_COLORS[color]);
     saveData();
 }
+var currentAlertTextColor,currentAlertBackgroundColor;
 function changeAlertTextColor(color){
-    currentAlarmTextColor = color;
+    currentAlertTextColor = color;
     if(color=="white"){
         $("#alert-modal-dialogue").css('color', 'white');
         return;

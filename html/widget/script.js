@@ -618,6 +618,7 @@ function init() {
             pauseTrigger = false;
             pauseBtn.click();
         }
+        timer.printTime();
     };
     
     addMinuteBtn.onclick = function() { 
@@ -656,6 +657,7 @@ function init() {
             pauseTrigger = false;
             pauseBtn.click();
         }
+        timer.printTime();
     };
     
     addSecondBtn.onclick = function() {
@@ -694,6 +696,7 @@ function init() {
             pauseTrigger = false;
             pauseBtn.click();
         }
+        timer.printTime();
     };
     
     startBtn.onclick = function(){

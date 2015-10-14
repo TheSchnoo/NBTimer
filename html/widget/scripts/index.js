@@ -260,6 +260,10 @@ NB.ready(function(){
             setCustomizationOption(category, item);
         }
     });
+    // $('#menu').unbind('mouseenter mouseleave');
+    // $(".has-submenu").click(function(){
+    //     $(this).find('ul').toggle();
+    // }).
     NB.addObserver('annotationResizedEvent',function(obj){
         console.log('a');
         resize(obj);
@@ -355,6 +359,8 @@ function saveData(){
     hostobject.hideSnooze = hideSnooze;
     hostobject.currentSounds = currentSounds;
     hostobject.alerts = alerts;
+    hostobject.currentAlertBackgroundColor = currentAlertBackgroundColor;
+    hostobject.currentAlertTextColor = currentAlertTextColor;
     NB.persist.save("timer"+hostobject.guid, hostobject);
 }
 function loadData(){
@@ -373,6 +379,8 @@ function loadData(){
         alerts = loaded_data.alerts;
         currentSounds = loaded_data.currentSounds?loaded_data.currentSounds:{};
         setupSounds();
+        currentAlertTextColor = loaded_data.currentAlertTextColor;
+        currentAlertBackgroundColor = loaded_data.currentAlertBackgroundColor;
     } else {
     	//defaults
         alerts = [];
@@ -388,6 +396,8 @@ function loadData(){
         snoozeTime=300;
         hideSnooze = false;
         currentSounds = {};
+        currentAlertBackgroundColor = 'red';
+        currentAlertTextColor = 'black';
     }
     changeBackgroundColor(currentBackground);
     changeButtonColor(currentButtonColor);
@@ -397,6 +407,8 @@ function loadData(){
     chooseEvent(currentEvent);
     changeLabelsDisplay(showLabels);
     changeProgressAnimation(currentProgressAnimation);
+    changeAlertBackgroundColor(currentAlertBackgroundColor);
+    changeAlertTextColor(currentAlertTextColor);
 }
 
 var prev_active_element, active_element;
