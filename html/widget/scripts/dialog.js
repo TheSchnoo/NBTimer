@@ -20,9 +20,7 @@ function editEvent(event){
 function manageAlerts(){
 	closeDialogs();
     $(function(){
-    	for(var i =0; i<alerts.length;i++){
-    		$("#alertList").append('<li id="alert'+i+'" class="alertListItem">'+formatTimeFromSec(alerts[i].time)+", "+alerts[i].text+'</li>');
-    	}
+    	refreshAlertsList();
         $("#dialog5").removeClass('invisible').dialog();
         resize();
     });

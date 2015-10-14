@@ -194,6 +194,7 @@ $(document).ready(function(){
      $(".alertInput").focusout(function(){
         checkAll('alert');
      });
+     
 });
 
 NB.ready(function(){

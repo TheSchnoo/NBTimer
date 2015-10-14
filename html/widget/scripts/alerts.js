@@ -14,8 +14,16 @@ var Alert =function(time, text){
 	// } //else keep it as true
 	console.log(this);
 }
-
-
+function refreshAlertsList(){
+	$("#alertList").empty();
+	for(var i =0; i<alerts.length;i++){
+    		$("#alertList").append('<li id="alert'+i+'" class="alertListItem">'+formatTimeFromSec(alerts[i].time)+", "+alerts[i].text+'&nbsp;<span class="glyphicon glyphicon-remove" aria-hidden="true"onclick="removeAlert('+i+')"></li>');
+    	}
+}
+function removeAlert(i){
+	alerts.splice(i,1);
+	refreshAlertsList();
+}
 function saveAlert(){
 	var alert_time = parseInt($("#alertHoursInput").val())*60*60+parseInt($("#alertMinutesInput").val())*60+parseInt($("#alertSecondsInput").val());
 	var alert_text = $("#alertTextInput").val();
