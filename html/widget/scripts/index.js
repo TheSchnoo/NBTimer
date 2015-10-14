@@ -81,7 +81,6 @@ function toggleEditingMenu(state) {
 // Interact with the dice to change the customization options
 function setCustomizationOption(category, item) {
 	switch(category) {
-		case 'Themes':
 		case 'Theme':
             changeTheme(item.toLowerCase());
             saveData();
@@ -113,6 +112,15 @@ function setCustomizationOption(category, item) {
         case 'Snooze Button Options':
         	changeSnoozeTime(item.toLowerCase());
         	saveData();
+            break;
+        case 'Alert Background Color':
+            changeAlertBackgroundColor(item.toLowerCase());
+            saveData();
+            break;
+        case 'Alert Text Color':
+            changeAlertTextColor(item.toLowerCase());
+            saveData();
+            break;
 		default:
 			break;
 	}
@@ -199,7 +207,7 @@ NB.ready(function(){
     toggleEditingMenu(false);
     diceThemer = new DiceThemer();
     loadData();
-
+    $("#alert-count").text(alerts.length);
 
     $("#controls-open").click(function() {
         toggleOptions(true);
@@ -346,6 +354,7 @@ function saveData(){
     hostobject.showLabels = showLabels;
     hostobject.hideSnooze = hideSnooze;
     hostobject.currentSounds = currentSounds;
+    hostobject.alerts = alerts;
     NB.persist.save("timer"+hostobject.guid, hostobject);
 }
 function loadData(){
@@ -361,10 +370,12 @@ function loadData(){
         snoozeTime = loaded_data.snoozeTime;
         showLabels = loaded_data.showLabels;
         hideSnooze = loaded_data.hideSnooze;
+        alerts = loaded_data.alerts;
         currentSounds = loaded_data.currentSounds?loaded_data.currentSounds:{};
         setupSounds();
     } else {
     	//defaults
+        alerts = [];
         loaded_data = undefined;
         showLabels = true;
         currentProgressAnimation = 'circle';

@@ -61,17 +61,24 @@
                         </li>
                     </ul>
                 </li>
-                <li>Alerts
+                <li>Alerts (<span id="alert-count"></span>)
                     <ul>
                         <li><span class="menu-option" onclick="alertDialog()">Add Alert</span>
                         </li>
                         <li><span class="menu-option"onclick="manageAlerts()">Manage Alerts</span>
                         </li>
+                        <li><span class="menu-option">Alert Background Color</span>
+                            <ul id="alert-background-options"></ul>
+                        </li>
+                        <li><span class="menu-option">Alert Text Color</span>
+                            <ul id="alert-text-options"></ul>
+                        </li>
                     </ul>
                 </li>
                 <li>Event
                     <ul>
-                        <li><span class="menu-option" onclick="editEvent()">Add Event</span></li>
+                        <li><span class="menu-option" onclick="soundDialog()">Edit Sounds</span></li>
+                        <li><span class="menu-option" onclick="editEvent()">Edit Event</span></li>
                     </ul>
                 </li>
 

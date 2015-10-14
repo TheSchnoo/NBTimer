@@ -1,4 +1,4 @@
-var alerts = []
+var alerts;
 var nextAlert;
 var alertsLeft;
 var Alert =function(time, text){
@@ -15,12 +15,13 @@ var Alert =function(time, text){
 	console.log(this);
 }
 function refreshAlertsList(){
+	
+	$("#alertList").empty();
 	if(alerts.length==0){
 		$("#alertList").append('<li>No Alerts to display</li>');
     	
     	return;
 	}
-	$("#alertList").empty();
 	for(var i =0; i<alerts.length;i++){
     		$("#alertList").append('<li id="alert'+i+'" class="alertListItem">'+formatTimeFromSec(alerts[i].time)+", "+alerts[i].text+'&nbsp;<span class="glyphicon glyphicon-remove" aria-hidden="true"onclick="removeAlert('+i+')"></li>');
     	}
@@ -28,11 +29,15 @@ function refreshAlertsList(){
 function removeAlert(i){
 	alerts.splice(i,1);
 	refreshAlertsList();
+    $("#alert-count").text(alerts.length);
+	saveData();
 }
 function saveAlert(){
 	var alert_time = parseInt($("#alertHoursInput").val())*60*60+parseInt($("#alertMinutesInput").val())*60+parseInt($("#alertSecondsInput").val());
 	var alert_text = $("#alertTextInput").val();
 	var alert = new Alert(alert_time, alert_text);
+    $("#alert-count").text(alerts.length);
+	saveData();
 }
 
 function reorderAlerts(){

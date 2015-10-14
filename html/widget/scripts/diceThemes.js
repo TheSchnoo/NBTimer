@@ -7,22 +7,11 @@ function DiceThemer() {
 	var backgroundColors = {};
 	var textSizes = {};
 	function diceThemesInit() {
-		addColorOption("Red");
-		addColorOption("Green");
-		addColorOption("Blue");
-		addColorOption("Purple");
-		addColorOption("Yellow");
-		addColorOption("Grey");
+		//progressbar
 		addProgressBarOption("Circle", {});
 		addProgressBarOption("Pie", {});
 		addProgressBarOption("Bar", {});
 		addProgressBarOption("None", {});
-		addAlertOption("Add", {});
-
-		// addThemeOption("Traditional", {content: diceContent.traditional, maxSides: 6});
-		// addThemeOption("Letters", {content: diceContent.letters, maxSides: 10});
-		// addThemeOption("Heath", {content: diceContent.squirrel, maxSides: 10});
-		// addThemeOption("Custom", {content: diceContent.custom, maxSides: 6});
 		//background colours
 		addBackgroundOption("Transparent");
 		addBackgroundOption("White");
@@ -47,31 +36,35 @@ function DiceThemer() {
 		addButtonColorOption("Red");
 		addButtonColorOption("Blue");
 		addButtonColorOption("Purple");
-
+		//timer labels
 		addTimerLabelOption("Show", {});
 		addTimerLabelOption("Hide", {});
-
+		//snooze
 		addSnoozeButtonOption("None");
 		addSnoozeButtonOption("1 Min");
 		addSnoozeButtonOption("5 Min");
 		addSnoozeButtonOption("10 Min");
-
+		//theme
 		addThemeOption("Default");
 		addThemeOption("Digital");
-		//$("#remove-from-spin").append("<input type='radio' id='remove-from-spin-radio'>");
+		//alert color
+		addAlertBackgroundOption("Transparent");
+		addAlertBackgroundOption("White");
+		addAlertBackgroundOption("Grey");
+		addAlertBackgroundOption("Green");
+		addAlertBackgroundOption("Yellow");
+		addAlertBackgroundOption("Red");
+		addAlertBackgroundOption("Blue");
+		addAlertBackgroundOption("Purple");
+		//alert text
+		addAlertTextOption("Black");
+		addAlertTextOption("White");
 	}
 	function addProgressBarOption(name, theme){
 		spinnerOptions[name] = theme;
 		$('#progressbar-options').append('<li><span class="menu-option">' + name + '</span></li>');
 	}
-	function addAlertOption(name, theme) {
-		addAlertOptions[name] = theme;
-		$('#addAlert-options').append('<li><span class="menu-option">' + name + '</span></li>');
-	}
-	function addThemeOption(name, theme) {
-		diceThemes[name] = theme;
-		$('#theme-options').append('<li><span class="menu-option">' + name + '</span></li>');
-	}
+
 	function addColorOption(name, color) {
 		diceColors[name] = color;
 		$('#color-options').append('<li><span class="menu-option">' + name + '</span></li>');
@@ -98,6 +91,12 @@ function DiceThemer() {
 	}
 	function addThemeOption(name){
 		$("#theme-options").append('<li><span class="menu-option">' + name + '</span></li>');
+	}
+	function addAlertBackgroundOption(name){
+		$("#alert-background-options").append('<li><span class="menu-option">' + name + '</span></li>');
+	}
+	function addAlertTextOption(name){
+		$("#alert-text-options").append('<li><span class="menu-option">' + name + '</span></li>');
 	}
 
 	this.getThemeOption = function(name) {

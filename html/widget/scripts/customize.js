@@ -155,3 +155,28 @@ function changeTimeColor(color){
     $("body").css('color', startColor);
    	saveData();
 }
+
+function changeAlertBackgroundColor(color){
+    currentAlarmBackgroundColor = color;
+    if(color=="white"){
+        $("#alert-modal").css('background-color', 'white');
+        return;
+    } else if (color=="black"){
+        $("#alert-modal").css('background-color', 'black');
+        return;
+    }
+    color = getColorCode(color);
+
+    $("#alert-modal").css("background-color", BACKGROUND_COLORS[color]);
+    saveData();
+}
+function changeAlertTextColor(color){
+    currentAlarmTextColor = color;
+    if(color=="white"){
+        $("#alert-modal-dialogue").css('color', 'white');
+        return;
+    } else if (color=="black"){
+        $("#alert-modal-dialogue").css('color', 'black');
+        return;
+    }
+}
