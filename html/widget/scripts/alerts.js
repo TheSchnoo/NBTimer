@@ -1,0 +1,38 @@
+var alerts = []
+var nextAlert=0;
+var timersLeft;
+var Alert =function(time, text){
+	this.text = text?text:undefined;
+	this.time = time?time:0;
+	this.triggered = false;
+	this.pause = false;
+	// console.log('a');
+	alerts.push(this);
+	reorderAlerts();
+	if(!timersLeft){ //if there is no timer left in the queue
+		timersLeft = time < timer.time; //check if this new one is in the queue
+	} //else keep it as true
+	console.log(this);
+}
+
+function saveAlert(){
+	var alert_time = parseInt($("#alertHoursInput").val())*60*60+parseInt($("#alertMinutesInput").val())*60+parseInt($("#alertSecondsInput").val());
+	var alert_text = $("#alertTextInput").val();
+	var alert = new Alert(alert_time, alert_text);
+}
+
+function reorderAlerts(){
+	alerts.sort(function compare(a,b) {
+ 		if (a.time < b.time)
+		     return 1;
+		  if (a.time > b.time)
+		    return -1;
+		  return 0;
+		}
+	)
+}
+
+function triggerAlert(alert){
+	alert.triggered = true;
+	console.log(alert.text);
+}

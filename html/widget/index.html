@@ -6,11 +6,11 @@
     <link rel="stylesheet" type="text/css" href="libs/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="shapes.css">
-    <script type="text/javascript" src="nb-2.9.0.js"></script>
+    <script type="text/javascript" src="nb-2.7.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="jquery.timer.js"></script>
-        <script type="text/javascript" src="scripts/alerts.js"></script>
+    <script type="text/javascript" src="scripts/alerts.js"></script>
     <script src="script.js" type="text/javascript"></script>
     <meta name="smart-nb-viewport" content="width:350; height:400" />
     <meta name="smart-nb-enable-resize" content="true" />
@@ -159,12 +159,21 @@
         </select>
         <input type="submit" id="saveSound"></input>
     </div>
+    <div id="dialog4"class="invisible">
+        <input size="3" id="alertHoursInput"class="alertInput"placeholder="HH"onkeyup="autoTab(event)"></input>
+        <input size="3" id="alertMinutesInput"class="alertInput"placeholder="MM"onkeyup="autoTab(event)"></input>
+        <input size="3" id="alertSecondsInput"class="alertInput"placeholder="SS"onkeyup="autoTab(event)"></input>
+        <textarea type="text" id="alertTextInput" class=""cols="30" rows="3" placeholder="Alert Text"></textarea>
+        <input type="submit" id="saveAlert"></input>
+    </div>
     <script type="text/javascript" src="scripts/diceThemes.js"></script>
     <script src="scripts/settings.js"></script>
+    <script type="text/javascript" src="scripts/dialog.js"></script>
+
+    <script type="text/javascript" src="scripts/customize.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
 
 
-    <script type="text/javascript" src="customize.js"></script>
 
 </body>
 

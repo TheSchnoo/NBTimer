@@ -348,7 +348,7 @@ img {
 #dialog{
     /*display:none;*/
 }
-#dialog input, #dialog2 input, #dialog3 input{
+#dialog input, #dialog2 input, #dialog3 input, #dialog4 input{
     color:black;
 }
 
@@ -373,7 +373,7 @@ img {
 #time,#timeHours, #timeMinutes, #timeSeconds {
     font-size: 50px
 }
-#eventTextInput{
+#eventTextInput, #alertTextInput, .alertInput{
     color:black;
 }
 

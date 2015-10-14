@@ -13,105 +13,183 @@
 //		- Snooze Button (easily add 1min, 5min or 10min)
 // Authors: 
 //------------------------------------------------------------------------------------
+
+//FILE STRUCTURE:
+// - customize.js = appearance settings
+// - settings.js = event settings
+// - alerts.js = alerts settings
+// - index.js = initialization and all-purpose functions (NB.ready, document.ready, resize, save/load, autoTab)
+// - script.js = timer logic
+// - dialog.js = show/hide dialogs
+
 	//used to check if the user is in menu mode or not
-	var disableSpin = false;
-	var diceThemer;
-	var toggleEditState = false;
-	var elements = {
-		body: $("body"),
-		diceContainer: $("#dice-container"),
-		controls: {
-			cont: $("#controls-cont"),
-			dropdown: $("#controls-dropdown"),
-			add: $("#controls-add"),
-			remove: $("#controls-remove"),
-			reset: $("#controls-reset")
-		},
-		border: {
-			left: $("#border-left"),
-			right: $("#border-right"),
-			bottom: $("#border-bottom")
-		},
-		arrow: $("#arrow")
-	};
-	// Show or hide the extended options menu
-	function toggleOptions(state) {
-		if (state) {
-			elements.controls.cont.css("left", "0");
-			elements.border.left.css("background-color", "#555");
-			elements.border.right.css("background-color", "#555");
-			elements.border.bottom.css("background-color", "#555");
-			menuMode=true;
-		} else {
-			elements.controls.cont.css("left", "-1500px");
-			elements.border.left.css("background-color", "#fff");
-			elements.border.right.css("background-color", "#fff");
-			elements.border.bottom.css("background-color", "#fff");
-			menuMode=false;
-		}
+var disableSpin = false;
+var diceThemer;
+var toggleEditState = false;
+var elements = {
+	body: $("body"),
+	diceContainer: $("#dice-container"),
+	controls: {
+		cont: $("#controls-cont"),
+		dropdown: $("#controls-dropdown"),
+		add: $("#controls-add"),
+		remove: $("#controls-remove"),
+		reset: $("#controls-reset")
+	},
+	border: {
+		left: $("#border-left"),
+		right: $("#border-right"),
+		bottom: $("#border-bottom")
+	},
+	arrow: $("#arrow")
+};
+// Show or hide the extended options menu
+function toggleOptions(state) {
+	if (state) {
+		elements.controls.cont.css("left", "0");
+		elements.border.left.css("background-color", "#555");
+		elements.border.right.css("background-color", "#555");
+		elements.border.bottom.css("background-color", "#555");
+		menuMode=true;
+	} else {
+		elements.controls.cont.css("left", "-1500px");
+		elements.border.left.css("background-color", "#fff");
+		elements.border.right.css("background-color", "#fff");
+		elements.border.bottom.css("background-color", "#fff");
+		menuMode=false;
 	}
+}
 
-	// Show or hide the editing menu
-	// Show or hide the editing menu
-	function toggleEditingMenu(state) {
-		if (state) {
-			elements.controls.dropdown.show();
-			elements.controls.add.hide();
-			elements.controls.remove.hide();	
-			elements.controls.reset.hide();
-		} else {
-			elements.controls.dropdown.hide();
-			elements.controls.add.show();
-			elements.controls.remove.show();
-			elements.controls.reset.show();
-		}
+// Show or hide the editing menu
+// Show or hide the editing menu
+function toggleEditingMenu(state) {
+	if (state) {
+		elements.controls.dropdown.show();
+		elements.controls.add.hide();
+		elements.controls.remove.hide();	
+		elements.controls.reset.hide();
+	} else {
+		elements.controls.dropdown.hide();
+		elements.controls.add.show();
+		elements.controls.remove.show();
+		elements.controls.reset.show();
 	}
-	
-	
+}
 
-	// Interact with the dice to change the customization options
-	function setCustomizationOption(category, item) {
-		switch(category) {
-			case 'Themes':
-				// Set the dice content (theme)
-				var theme = diceThemer.getThemeOption(item);
-				saveData();
-				break;
-			case 'Add Alert':
-				var hai = addAlert(item);
-				saveData();
-				break;
-			case 'Progress Bar Type':
-				var hai = changeProgressAnimation(item.toLowerCase());
-				saveData();
-				break;
-			case 'Background':
-				changeBackgroundColor(item.toLowerCase());
-				saveData();
-				break;
-			case 'Progress Bar Color':
-				changeTimerColor(item.toLowerCase());
-				saveData();
-				break;
-			case 'Button Color':
-				changeButtonColor(item.toLowerCase());
-				saveData();
-				break;
-			case 'Font Size':
-				changeFontSize(item);
-				saveData();
-				break;
-            case 'Timer Labels':
-                changeLabelsDisplay(item.toLowerCase());
-                saveData();
-                break;
-            case 'Snooze Button Options':
-            	changeSnoozeTime(item.toLowerCase());
-            	saveData();
-			default:
-				break;
-		}
+
+
+// Interact with the dice to change the customization options
+function setCustomizationOption(category, item) {
+	switch(category) {
+		case 'Themes':
+			// Set the dice content (theme)
+			var theme = diceThemer.getThemeOption(item);
+			saveData();
+			break;
+		case 'Add Alert':
+			var hai = addAlert(item);
+			saveData();
+			break;
+		case 'Progress Bar Type':
+			var hai = changeProgressAnimation(item.toLowerCase());
+			saveData();
+			break;
+		case 'Background':
+			changeBackgroundColor(item.toLowerCase());
+			saveData();
+			break;
+		case 'Progress Bar Color':
+			changeTimerColor(item.toLowerCase());
+			saveData();
+			break;
+		case 'Button Color':
+			changeButtonColor(item.toLowerCase());
+			saveData();
+			break;
+		case 'Font Size':
+			changeFontSize(item);
+			saveData();
+			break;
+        case 'Timer Labels':
+            changeLabelsDisplay(item.toLowerCase());
+            saveData();
+            break;
+        case 'Snooze Button Options':
+        	changeSnoozeTime(item.toLowerCase());
+        	saveData();
+		default:
+			break;
 	}
+}
+
+$(document).ready(function(){
+    $(".btns").hover(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
+    });
+    $(".btns").mouseleave(function(){
+        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    });
+
+    $(".display").click(function(event){
+        if(timer.isPaused||timer.time==0){
+            $(".displayInput").toggleClass('invisible');
+            $(".display").toggleClass('invisible');
+            timer.printTime();
+        }
+        console.log(event,event.currentTarget.id+"Input");
+        $("#"+event.currentTarget.id+"Input").focus().select();
+    });
+    $(".displayInput").on('change keyup paste',function(){
+        timeEdited = true;
+        if(this.time!=0){
+            $(".colon").css('color',startColor);
+        } else {
+            // $("#slice, #progressbar").remove();
+            timer.reset();
+            timer.isPaused = true;
+            timer.isStarted = false;
+            timer.resetTriggered = true;
+            timer.UI.startCircle(timer.time, timer.resetTriggered);
+            timer1.stop();
+            startBtn.disabled = false;
+        }
+        // $("#slice, #progressbar").remove();
+        timer.time = parseInt($("#timeSecondsInput").val())+parseInt($("#timeMinutesInput").val()*60) + parseInt($("#timeHoursInput").val()*60*60);
+        // checkTimeInput("#"+event.currentTarget.id);
+    });
+    $("#saveEvent").click(function(){
+        console.log('asdf');
+        chooseEvent($("#eventDropdown").val());
+        
+        closeDialogs();
+    });
+    $("#saveAlert").click(function(){
+        saveAlert();
+        
+        closeDialogs();
+    });
+    $("#eventDropdown").change(function(){
+        if($("#eventDropdown").val()=="Add Text"){
+        $("#eventTextInput").attr('placeholder',"Add Text annotation");
+        $("#eventTextInput").removeClass('invisible');
+    } else if($("#eventDropdown").val()=="Add Image"){
+        $("#eventTextInput").attr('placeholder',"Add Image annotation (filepath here)");
+        $("#eventTextInput").removeClass('invisible');
+    } else {
+        $("#eventTextInput").addClass('invisible');}
+    });
+     $("#saveTheme").click(function(){
+        console.log('asdf');
+        changeTheme($("#themeDropdown").val().toLowerCase());
+        
+        closeDialogs();
+    });
+     $("#saveSound").click(function(){
+        saveSound();
+        closeDialogs();
+     });
+});
+
 NB.ready(function(){
     init();
     toggleOptions(false);
@@ -313,7 +391,7 @@ function autoTab(event){
 	console.log(keyCode);
 	console.log(keyCode>=48&&keyCode<=57,keyCode>=96&&keyCode<=105);
     if(keyCode==13){
-        active_element = document.activeElement.id
+        active_element = document.activeElement.id;
         switchSelection();
         return;
     }
@@ -333,23 +411,29 @@ function autoTab(event){
 	}
 }
 function switchSelection(){
+    var prefix = undefined;
+    if(active_element.split("")[0]=='t'){
+        prefix = "time";
+    } else if(active_element.split("")[0]=='a'){
+        prefix="alert";
+    }
     switch(active_element){
-        case "timeHoursInput":
-            document.getElementById("timeMinutesInput").select();
+        case prefix+"HoursInput":
+            document.getElementById(prefix+"MinutesInput").select();
             prev_active_element = undefined;
             active_element = undefined;
-            checkTimeInput("#timeHoursInput");
+            checkTimeInput("#"+prefix+"HoursInput");
             break;
-        case "timeMinutesInput":
-            document.getElementById("timeSecondsInput").select();
+        case prefix+"MinutesInput":
+            document.getElementById(prefix+"SecondsInput").select();
             prev_active_element = undefined;
             active_element = undefined;
-            checkTimeInput("#timeMinutesInput");
+            checkTimeInput("#"+prefix+"MinutesInput");
             break;
-        case "timeSecondsInput":
+        case prefix+"SecondsInput":
             prev_active_element = undefined;
             active_element = undefined;
-            checkTimeInput("#timeSecondsInput");
+            checkTimeInput("#"+prefix+"SecondsInput");
             break;
 
     }
