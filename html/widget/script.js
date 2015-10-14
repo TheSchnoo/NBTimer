@@ -1,3 +1,5 @@
+
+
 function UI() {
     this.timerFinish = 0;
     this.timer = 0;
@@ -459,6 +461,7 @@ var timer1;
 var snoozeTrigger = false;
 var snoozeTime;
 var pauseTrigger = false;
+var alertDialogPopup = false;
 /**
  * init method
  */
@@ -517,6 +520,13 @@ function init() {
     //     timer.UI.startCircle("60", timer.resetTriggered);
     //     timer.isStarted = true;
     // };
+
+    $('body').on("click", function(){
+       if(alertDialogPopup){
+           $("#alert-modal").css("display","none");
+           alertDialogPopup = false;
+        }
+    })
 
     pauseBtn.onclick = function() {
         if (timer.isPaused === false) {

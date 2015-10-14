@@ -10,7 +10,23 @@ div {
     -khtml-user-select: none; 
     -webkit-user-select: none; 
     -o-user-select: none; 
-} 
+}
+#alert-modal{
+    display: none;
+    width: 100%;
+    height: auto;
+
+    border: 1px solid black;
+    text-align: center;
+    font-family: Arial;
+    font-size: 250%;
+    color: #555555 ;
+    background: white;
+
+    position: absolute;
+    top: 30%;
+    padding: 10px;
+}
 
 .arrowbtns{
     width: 40px;
