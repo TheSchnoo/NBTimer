@@ -381,14 +381,14 @@ Timer.prototype.startUp = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time ++ ;
-        // if(alertsLeft&&timer.time==alerts[nextAlert].time){
-        //     triggerAlert(alerts[nextAlert]);
-        //     nextAlert--;
-        //     if(typeof alerts[nextAlert]=='undefined'){
-        //         console.log('timers');
-        //         alertsLeft = false;
-        //     }
-        // }
+        if(alertsLeft&&timer.time==alerts[nextAlert].time){
+            triggerAlert(alerts[nextAlert]);
+            nextAlert--;
+            if(typeof alerts[nextAlert]=='undefined'){
+                console.log('timers');
+                alertsLeft = false;
+            }
+        }
         if (timer.time != countTo) {
             timer.printTime();
         } else {
@@ -760,6 +760,9 @@ function init() {
         else{
             nextAlert = alerts.length-1;
             alertsLeft = true;
+            if(alerts.length==0){
+                alertsLeft = false;
+            }
         }
     }
 
