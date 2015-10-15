@@ -1,6 +1,3 @@
-var alerts;
-var nextAlert;
-var alertsLeft;
 var Alert =function(time, text){
 	this.text = text?text:undefined;
 	this.time = time?time:0;

@@ -176,7 +176,7 @@ img, .unselectable {
     transition: left .5s ease;
 }
 
-#dice-container {
+#timer-container {
     box-sizing: border-box;
     position: relative;
     /*background-color: #F5F6FA;*/
@@ -217,7 +217,7 @@ img, .unselectable {
     transition: background-color .5s linear;
 }
 
-#dice-container section {
+#timer-container section {
     transition: top .3s ease, left .3s ease;
 }
 

@@ -11,9 +11,12 @@
 //		- Add event at the end (next page, previous page, delete timer, lock page, add text annotation, add image annotation)
 //		- Ability to edit time with keyboard (only when is paused)
 //		- Snooze Button (easily add 1min, 5min or 10min)
-// Authors: 
+//      - Sounds during and after
+//      - Alert - adding, managing
+// Authors: Bhawandeep Kambo, Jacob Chan
 //------------------------------------------------------------------------------------
 
+//----------------------------------------------------
 //FILE STRUCTURE:
 // - customize.js = appearance settings
 // - settings.js = event settings
@@ -21,14 +24,16 @@
 // - index.js = initialization and all-purpose functions (NB.ready, document.ready, resize, save/load, autoTab)
 // - script.js = timer logic
 // - dialog.js = show/hide dialogs
+//----------------------------------------------------
 
-	//used to check if the user is in menu mode or not
-var disableSpin = false;
-var diceThemer;
+//----------------------------------------------------
+//Global menu related boolean variables
+//----------------------------------------------------
+var timerThemer;
 var toggleEditState = false;
 var elements = {
 	body: $("body"),
-	diceContainer: $("#dice-container"),
+	timerContainer: $("#timer-container"),
 	controls: {
 		cont: $("#controls-cont"),
 		dropdown: $("#controls-dropdown"),
@@ -43,6 +48,60 @@ var elements = {
 	},
 	arrow: $("#arrow")
 };
+
+//----------------------------------------------------
+//Timer options
+//----------------------------------------------------
+var timer1;
+var snoozeTrigger = false;
+var snoozeTime;
+var pauseTrigger = false;
+var alertDialogPopup = false;
+var countUpTrigger = false;
+var countDownTrigger = true;
+var timer = new Timer();
+var the_timer;
+var hideSnooze;
+var countUpUI;
+var timeEdited;
+
+//----------------------------------------------------
+//Color options
+//----------------------------------------------------
+var BACKGROUND_COLORS=["#FFAAAA","#CAEA9C", "#C1C6E0","#D3BDDF","#FFFAD6","#eeeeee"];
+var TIMER_COLORS = ["#901515","#4D7514","#404C88","#6A3985","#C7BA4F","#333333"];
+var BUTTON_COLORS=[["#AA3939","#901515"],["#729C34","#4D7514"],["#646EA4","#404C88"],["#885CA0","#6A3985"],["#F0E384","#C7BA4F"],["#777777","#333333"]];
+var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.png'],["blue-up.png", 'blue-down.png'],["purple-up.png", 'purple-down.png'],["yellow-up.png", 'yellow-down.png'],["grey-up.png", 'grey-down.png']];
+
+//----------------------------------------------------
+//Resize constants and variables
+//----------------------------------------------------
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40;
+var ratio = NB.getHostObject().width/INITIAL_WIDTH;
+
+
+//----------------------------------------------------
+//Current options
+//----------------------------------------------------
+var currentSounds;
+var currentAlertTextColor,currentAlertBackgroundColor;
+var currentTimerColor;
+var currentButtonColor;
+var currentProgressAnimation;
+var currentTheme;
+var currentTimeColor;
+var currentEvent;
+var duringAudio, afterAudio;
+var startColor, endColor;
+var prev_active_element, active_element;
+
+//----------------------------------------------------
+//alerts
+//----------------------------------------------------
+var alerts;
+var nextAlert;
+var alertsLeft;
+
 // Show or hide the extended options menu
 function toggleOptions(state) {
 	if (state) {
@@ -78,7 +137,7 @@ function toggleEditingMenu(state) {
 
 
 
-// Interact with the dice to change the customization options
+// Interact with the timer to change the customization options
 function setCustomizationOption(category, item) {
 	switch(category) {
 		case 'Theme':
@@ -205,7 +264,7 @@ NB.ready(function(){
     init();
     toggleOptions(false);
     toggleEditingMenu(false);
-    diceThemer = new DiceThemer();
+    timerThemer = new TimerThemer();
     loadData();
     $("#alert-count").text(alerts.length);
 
@@ -425,7 +484,7 @@ function loadData(){
     changeAlertTextColor(currentAlertTextColor);
 }
 
-var prev_active_element, active_element;
+
 function autoTab(event){
 	var keyCode = event.which || event.keyCode;
 	console.log(keyCode);

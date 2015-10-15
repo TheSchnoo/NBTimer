@@ -1,12 +1,10 @@
-function DiceThemer() {
+function TimerThemer() {
 	var self = this;
 	var spinnerOptions = {};
 	var addAlertOptions = {};
-	var diceThemes = {};
-	var diceColors = {};
 	var backgroundColors = {};
 	var textSizes = {};
-	function diceThemesInit() {
+	function timerThemesInit() {
 		//progressbar
 		addProgressBarOption("Circle", {});
 		addProgressBarOption("Pie", {});
@@ -66,7 +64,6 @@ function DiceThemer() {
 	}
 
 	function addColorOption(name, color) {
-		diceColors[name] = color;
 		$('#color-options').append('<li><span class="menu-option">' + name + '</span></li>');
 	}
 	function addBackgroundOption(name, color) {
@@ -99,25 +96,8 @@ function DiceThemer() {
 		$("#alert-text-options").append('<li><span class="menu-option">' + name + '</span></li>');
 	}
 
-	this.getThemeOption = function(name) {
-		return $.extend(true, {}, diceThemes[name]);
-	};
-	this.getColorOption = function(name) {
-		return $.extend(true, {}, diceColors[name]);
-	};
-	this.getBackgroundOption = function(name) {
-		return backgroundColors[name];
-	};
-	function getDuplicate(theme) {
-		return JSON.parse(JSON.stringify(theme));
-	}
-	function getImageHTML(imageURL, width, height) {
-		width = width ? width : "100%";
-		height = height ? height : "auto";
-		return '<img class="smart-nb-clickable smart-nb-draggable" src="' + imageURL + '" style="max-width:' + width + ';max-height:' + height + ';">';
-	}
 
-	diceThemesInit();
+	timerThemesInit();
 
 }
 

@@ -1,4 +1,3 @@
-
 function getColorCode(color){
     switch(color){
         case("red"):
@@ -170,7 +169,6 @@ function changeAlertBackgroundColor(color){
     $("#alert-modal").css("background-color", BACKGROUND_COLORS[color]);
     saveData();
 }
-var currentAlertTextColor,currentAlertBackgroundColor;
 function changeAlertTextColor(color){
     currentAlertTextColor = color;
     if(color=="white"){

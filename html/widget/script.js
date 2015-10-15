@@ -138,7 +138,6 @@ UI.prototype.stopWatch = function(finish) {
         this.drawBar(percent);
     }
 };
-var countUpUI;
 UI.prototype.stopWatchUp = function(finish) {
     
     // this.timerFinish = finish;
@@ -197,7 +196,6 @@ UI.prototype.stopWatchUp = function(finish) {
     }
 };
 
-var the_timer;
 UI.prototype.startCircle = function(sec, resetTriggered) {
 
 
@@ -320,10 +318,10 @@ Timer.prototype.startDown = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time -- ;
-        // if (timer.time%1==0){
+        if (currentSounds.during){
             duringAudio.currentTime = 0;
             duringAudio.play();
-        // }
+        }
         
         if(alertsLeft&&timer.time==alerts[nextAlert].time){
             triggerAlert(alerts[nextAlert]);
@@ -348,8 +346,10 @@ Timer.prototype.startDown = function(e) {
             if(!hideSnooze){
                 $("#snooze").removeClass('invisible');
             }
-            duringAudio.pause();
-            duringAudio.currentTime = 0;
+            if (currentSounds.during){
+                duringAudio.pause();
+                duringAudio.currentTime = 0;
+            }
         }
     }, timer.interval);
 };
@@ -447,7 +447,6 @@ Timer.prototype.unpause = function() {
         this.startDown();
     }
 };
-var hideSnooze;
 Timer.prototype.snooze = function() {
 
         var snoozeBtn = document.createElement("input"); 
@@ -475,18 +474,6 @@ Timer.prototype.snooze = function() {
 
 };
 
-var timer1;
-var snoozeTrigger = false;
-var snoozeTime;
-var pauseTrigger = false;
-var alertDialogPopup = false;
-var countUpTrigger = false;
-var countDownTrigger = true;
-/**
- * init method
- */
-
-    var timer = new Timer();
 
 function init() {
 
