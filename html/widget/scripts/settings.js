@@ -32,6 +32,7 @@ function setupSounds(){
 	$("#soundAfterDropdown").val(currentSounds.after);
 	duringAudio = new Audio(currentSounds.during);
 	duringAudio.id = 'duringAudio';
+	// duringAudio.onended= replay();
 	afterAudio = new Audio(currentSounds.after);
 	duringAudio.id = 'afterAudio';
 

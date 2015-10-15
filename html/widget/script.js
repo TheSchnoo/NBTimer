@@ -63,8 +63,12 @@ UI.prototype.drawTimer = function(percent) {
 
     $('div.timer').html('<div class="percent"></div><div id="slice"'+(percent > 50?' class="gt50"':'')+'style="left:'+parseInt($("#container").width()/2-$(".timer").width()/2)+'px"><div class="pie"></div>'+(percent > 50?'<div class="pie fill"></div>':'')+'</div>');
 
-    console.log("Asdf");
+    // console.log(duringAudio.currentTime);
     var deg = 360/100*percent;
+    // if(duringAudio.currentTime>=2){
+    //         duringAudio.currentTime = 0;
+    //         duringAudio.play();
+    //     }
 
     $('#slice .pie').css({
 
@@ -316,6 +320,11 @@ Timer.prototype.startDown = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time -- ;
+        // if (timer.time%1==0){
+            duringAudio.currentTime = 0;
+            duringAudio.play();
+        // }
+        
         if(alertsLeft&&timer.time==alerts[nextAlert].time){
             triggerAlert(alerts[nextAlert]);
             nextAlert++;
@@ -339,6 +348,8 @@ Timer.prototype.startDown = function(e) {
             if(!hideSnooze){
                 $("#snooze").removeClass('invisible');
             }
+            duringAudio.pause();
+            duringAudio.currentTime = 0;
         }
     }, timer.interval);
 };
