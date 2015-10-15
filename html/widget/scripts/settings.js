@@ -45,23 +45,26 @@ function checkTimeInput(id){
 	// if(h.length==0){
 	// 	$(id).val("00");
 	// }
-	// if (h.length==1){
+	if (h.length==1){
 		
-	// 	$(id).val("0"+h[0]);
+		$(id).val("0"+h[0]);
 
-	// }
+	}
 	if(h.length==2){
 		checkMax(id, h);
 		$(id).val(h[0]*10+h[1]);
 		if(h[0]*10+h[1]==0){
-			$(id).val(h[0]+"0");
+			$(id).val("00");
+		}
+		if(h[0]*10+h[1]<=9){
+			$(id).val("0"+h[1]);
 		}
 	}
 	if(h.length >2){
 		checkMax(id, h);
 		$(id).val(h[h.length-2]*10+h[h.length-1]);
 		if(h[h.length-2]*10+h[h.length-1]==0){
-			$(id).val(h[0]+"0");
+			$(id).val("00");
 		}
 	}
 }

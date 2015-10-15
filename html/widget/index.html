@@ -21,27 +21,27 @@
 <body>
 
     <div id="container" class="smart-nb-draggable smart-nb-clickable smart-nb-selectable">
-        <button id="controls-open"><img id="gear"src="img/gear-black.png"></button>
-        <div id="controls-cont" class="smart-nb-draggable smart-nb-clickable smart-nb-selectable">
-            <button id="controls-close"><img src="img/x.png"></button>
-            <button id="controls-edit"><img src="img/wrench.png"></button>
+        <button id="controls-open"class="menuComponent"><img id="gear"src="img/gear-black.png"></button>
+        <div id="controls-cont" class="smart-nb-draggable smart-nb-clickable smart-nb-selectable menuComponent">
+            <button id="controls-close"class="menuComponent"><img src="img/x.png"></button>
+            <button id="controls-edit"class="menuComponent"><img src="img/wrench.png"></button>
             <!-- <button id="controls-remove"><img src="img/minus.png"></button>
             <button id="controls-add"><img src="img/plus.png"></button> -->
-            <button id="controls-reset"><span class="glyphicon glyphicon-refresh"></span></button>
+            <button id="controls-reset"class="menuComponent"><span class="glyphicon glyphicon-refresh"></span></button>
             <!-- <button id="event" onclick="editEvent()">Event</button>
             <button id="theme" onclick="themeDialog()">Theme</button>
             <button id="theme" onclick="soundDialog()">Sounds</button> -->
             <!-- <button id="controls-upon-stop">False</button> -->
         </div>
 
-        <div id="controls-dropdown">
+        <div id="controls-dropdown"class="menuComponent">
             <ul id="menu">
                 <li class="has-submenu"><span class="menu-option">Count Type</span>
-                    <ul id="count-type-options">
+                    <ul id="count-type-options" class="subMenu">
                     </ul>
                 </li>
                 <li class="has-submenu">Appearance
-                    <ul>
+                    <ul class="subMenu">
                         <li class="has-submenu"><span class="menu-option">Theme</span>
                             <ul id="theme-options"></ul>
                         </li>
@@ -66,7 +66,7 @@
                     </ul>
                 </li>
                 <li class="has-submenu">Alerts (<span id="alert-count"></span>)
-                    <ul>
+                    <ul class="subMenu">
                         <li><span class="menu-option" onclick="alertDialog()">Add Alert</span>
                         </li>
                         <li><span class="menu-option"onclick="manageAlerts()">Manage Alerts</span>
@@ -80,7 +80,7 @@
                     </ul>
                 </li>
                 <li class="has-submenu">Event
-                    <ul>
+                    <ul class="subMenu">
                         <li><span class="menu-option" onclick="soundDialog()">Edit Sounds</span></li>
                         <li><span class="menu-option" onclick="editEvent()">Edit Event</span></li>
                     </ul>

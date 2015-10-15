@@ -121,12 +121,7 @@ UI.prototype.stopWatch = function(finish) {
         timer.isStarted = false;
         timer.isPaused = true;
         console.log('end');
-        if(currentSounds.after!="None"&&currentSounds.after!=undefined){
-            if(!duringAudio.ended){
-                duringAudio.pause()
-            }
-            afterAudio.play();
-        }
+        
         runEvent();
         timer1.stop();   
     }
@@ -290,7 +285,10 @@ Timer.prototype.printTime = function() {
 
 // start the timer
 Timer.prototype.startDown = function(e) {
-    
+    if(currentSounds.during!="None"&&currentSounds.during!=undefined){
+        duringAudio.currentTime =0;
+        duringAudio.play();
+    }
     this.type = "down";
     this.isPaused = false;
     isPaused = false;
@@ -318,7 +316,7 @@ Timer.prototype.startDown = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time -- ;
-        if (currentSounds.during){
+        if (currentSounds.during!="None"&&currentSounds.during!=undefined){
             duringAudio.currentTime = 0;
             duringAudio.play();
         }
@@ -346,16 +344,26 @@ Timer.prototype.startDown = function(e) {
             if(!hideSnooze){
                 $("#snooze").removeClass('invisible');
             }
-            if (currentSounds.during){
+            if (currentSounds.during!="None"&&currentSounds.during!=undefined){
                 duringAudio.pause();
                 duringAudio.currentTime = 0;
+            }
+            if(currentSounds.after!="None"&&currentSounds.after!=undefined){
+                if(!duringAudio.ended){
+                    duringAudio.pause()
+                }
+                afterAudio.play();
             }
         }
     }, timer.interval);
 };
 
 Timer.prototype.startUp = function(e) {
-    
+    if(currentSounds.during){
+        // duringAudio.currentTime =0;
+        duringAudio.play();
+        // duringAudio.loop = true;
+    }
     var countTo = [this.time];
     
     if (e == null) {
@@ -381,6 +389,7 @@ Timer.prototype.startUp = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time ++ ;
+        
         if(alertsLeft&&timer.time==alerts[nextAlert].time){
             triggerAlert(alerts[nextAlert]);
             nextAlert--;
@@ -404,8 +413,22 @@ Timer.prototype.startUp = function(e) {
             if(!hideSnooze){
                 $("#snooze").removeClass('invisible');
             }
+            // if(currentSounds.after){
+            //     if(!duringAudio.ended){
+            //         duringAudio.pause()
+            //     }
+            //     afterAudio.play();
+            // }
+            // if (currentSounds.during){
+            //     duringAudio.currentTime = 0;
+            //     duringAudio.pause();
+            // }
             timer1.stop();
         }
+        // if (currentSounds.during){
+        //     duringAudio.currentTime = 0;
+        //     duringAudio.play();
+        // }
     }, timer.interval);
 };
 
@@ -486,12 +509,12 @@ function init() {
     var pauseBtn = document.getElementById("pauseBtn");
     var resetBtn = document.getElementById("resetBtn");
     
-    var addHourBtn = document.getElementById("addHour");
-    var subHourBtn = document.getElementById("subHour");
-    var addMinuteBtn = document.getElementById("addMinute");
-    var subMinuteBtn = document.getElementById("subMinute");
-    var addSecondBtn = document.getElementById("addSecond");
-    var subSecondBtn = document.getElementById("subSecond");
+    var addHourBtn = document.getElementById("addHourDiv");
+    var subHourBtn = document.getElementById("subHourDiv");
+    var addMinuteBtn = document.getElementById("addMinuteDiv");
+    var subMinuteBtn = document.getElementById("subMinuteDiv");
+    var addSecondBtn = document.getElementById("addSecondDiv");
+    var subSecondBtn = document.getElementById("subSecondDiv");
     
     var addAlertBtn = document.getElementById("addAlert");
 
@@ -697,13 +720,11 @@ function init() {
     };
     
     startBtn.onclick = function(){
-
+        
         if (timer.isStarted === false){
             timer.unpause();
         }
-        if(currentSounds.during!="None"&&currentSounds.during!=undefined){
-            duringAudio.play();
-        }
+        
         if (timer.isPaused === false||timeEdited){
             if (countUpTrigger === false && countDownTrigger === true && isPaused ===false){
                 timer.total = timer.time;
@@ -746,7 +767,7 @@ function init() {
             $("#snooze").addClass('invisible');
         }
         startBtn.disabled = true;
-
+        
         //alert
         if(countDownTrigger==true){
             for (var i =0; i<alerts.length; i++){

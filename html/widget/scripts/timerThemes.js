@@ -62,7 +62,7 @@ function TimerThemer() {
 		addAlertTextOption("White");
 	}
 	function addCountType(name){
-		$('#count-type-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible" id="'+name+'check"aria-hidden="true"></li>');
+		$('#count-type-options').append('<li><span class="menu-option ">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible" id="'+name+'check"aria-hidden="true"></li>');
 	}
 	function addProgressBarOption(name, theme){
 		$('#progressbar-options').append('<li><span class="menu-option">' + name + '</span></li>');

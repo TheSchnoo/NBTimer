@@ -12,7 +12,7 @@ div {
     -o-user-select: none; 
 }
 #count-type-options{
-    width:150px;
+    /*width:150px;*/
 }
 #alert-modal{
     display: none;
@@ -385,6 +385,7 @@ img {
 .displayInput{
     text-align:center;
     color:black;
+    width:1.4em;
 }
 .invisible{
     display:none;
@@ -404,7 +405,13 @@ img {
     padding:0;
 }
 
-
+#menu{
+    font-size:1em;
+    width:110px;
+}
+.subMenu{
+    width:110px;
+}
 .timer {
 
                 position:absolute;

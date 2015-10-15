@@ -76,7 +76,7 @@ var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.
 //----------------------------------------------------
 //Resize constants and variables
 //----------------------------------------------------
-var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40;
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 1, INITIAL_MENU_WIDTH = 110, INITIAL_SUBMENU_WIDTH = 110;
 var ratio = NB.getHostObject().width/INITIAL_WIDTH;
 
 
@@ -198,7 +198,8 @@ function setCustomizationOption(category, item) {
 	}
 }
 
-$(document).ready(function(){
+$(document).ready(function(e){
+
     $(".btns").hover(function(){
         $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
     });
@@ -214,6 +215,7 @@ $(document).ready(function(){
         }
         console.log(event,event.currentTarget.id+"Input");
         $("#"+event.currentTarget.id+"Input").focus().select();
+        resize();
     });
     $(".displayInput").on('change keyup paste',function(){
         timeEdited = true;
@@ -340,9 +342,26 @@ NB.ready(function(){
         resize(obj);
         var timer = setTimeout(resize(),50);
     });
+    duringAudio.addEventListener('ended', function(){
+        console.log('asdfasdfasdf');
+        duringAudio.currentTime =0;
+        duringAudio.play();
+    });
     resize();
     var timer = setTimeout(resize(),50);
-    
+    // $("body").click(function(e){
+    //     if(!menuMode){
+    //         console.log('first');
+            
+    //     }
+    //     else if(String(e.srcElement).search('menuComponent')==-1){
+    //         console.log(menuMode);
+    //         else{
+    //             toggleOptions(false);
+    //         }
+    //         // if(!menuMode)
+    //     }
+    // });
     saveData();
 });
 function replay(){
@@ -426,20 +445,7 @@ function resize(obj){
     	$("#colon1").css('left', $(".third").width()+$(".third").width()*0.03);
     	$("#colon2").css('left', $(".third").width()*2+$(".third").width()*0.165);
     }
-    if($("#container").width()<350){
-    	$(".ui-dialog").width($("#container").width());
-    	$("#controls-cont img, #controls-cont span").css({
-    		'width':'15px',
-    		'height':'15px'
-    	});
-    	$("#controls-cont button:nth-child(-n+5)").css('width','18px');
-    } else {
-    	$("#controls-cont img, #controls-cont span").css({
-    		'width':'20px',
-    		'height':'20px'
-    	});
-    	$("#controls-cont button:nth-child(-n+5)").css('width','35px');
-    }
+
     $(".colon").css('top', $(".timerLabel").height()+$(".arrowbtnsDiv").height()+$(".timerLabel").height()*0.2);
     $('#progressbar div').css({
 
@@ -454,7 +460,12 @@ function resize(obj){
     	'margin-left':$(".third").width()/2-$(".displayInput").width()/2
     });
     $("#snooze").css('margin-left',$("#display").width()/2-($("#snooze").width()+20)/2);
-
+    $("#menu").css({
+        'font-size':INITIAL_MENU_FONT_SIZE*ratio+"em",
+        'width':INITIAL_MENU_WIDTH*ratio+"px"
+    });
+    $(".subMenu").width(INITIAL_SUBMENU_WIDTH*ratio+"px");
+    $("#controls-dropdown").width(INITIAL_MENU_WIDTH*ratio+"px");
 
 }
 function saveData(){
@@ -532,6 +543,35 @@ function autoTab(event){
 	var keyCode = event.which || event.keyCode;
 	console.log(keyCode);
 	console.log(keyCode>=48&&keyCode<=57,keyCode>=96&&keyCode<=105);
+    if(keyCode == 38){
+        console.log('up');
+        var suffix = document.activeElement.id.search('alert')!=-1?'alert':'';
+        if(document.activeElement.id.search('Hour')!=-1){
+            $("#addHourDiv"+suffix).click();
+        } else if(document.activeElement.id.search('Minute')!=-1){
+            $("#addMinuteDiv"+suffix).click();
+        } else if(document.activeElement.id.search('Second')!=-1){
+            $("#addSecondDiv"+suffix).click();
+        }
+        checkAll(suffix=="alert"? 'alert':'time');
+        return;
+    }
+    if(keyCode == 40){
+        var suffix = document.activeElement.id.search('alert')!=-1?'alert':'';
+        if(document.activeElement.id.search('Hour')!=-1){
+            $("#subHourDiv"+suffix).click();
+        } else if(document.activeElement.id.search('Minute')!=-1){
+            $("#subMinuteDiv"+suffix).click();
+        } else if(document.activeElement.id.search('Second')!=-1){
+            $("#subSecondDiv"+suffix).click();
+        }
+        checkAll(suffix=="alert"? 'alert':'time');
+        return;
+    }
+    if(keyCode==9){
+        var suffix = document.activeElement.id.search('alert')!=-1?'alert':'';
+        checkAll(suffix=="alert"? 'alert':'time');
+    }
     if(keyCode==13){
         active_element = document.activeElement.id;
         switchSelection();
@@ -548,6 +588,7 @@ function autoTab(event){
 		active_element = document.activeElement.id;
 		console.log(prev_active_element, active_element);
 		if (prev_active_element==active_element){
+            console.log('a');
             switchSelection();
 		}
 	}
@@ -561,21 +602,31 @@ function switchSelection(){
     }
     switch(active_element){
         case prefix+"HoursInput":
-            prev_active_element = undefined;
-            active_element = undefined;
+            // prev_active_element = undefined;
+            // active_element = undefined;
             checkTimeInput("#"+prefix+"HoursInput");
+            if(parseInt($("#"+prefix+"MinutesInput").val())==0){
+                $("#"+prefix+"MinutesInput").val('');
+            }
             $("#"+prefix+"MinutesInput").select();
             break;
         case prefix+"MinutesInput":
-            prev_active_element = undefined;
-            active_element = undefined;
+            // prev_active_element = undefined;
+            // active_element = undefined;
             checkTimeInput("#"+prefix+"MinutesInput");
+            if(parseInt($("#"+prefix+"SecondsInput").val())==0){
+                $("#"+prefix+"SecondsInput").val('');
+            }
             $("#"+prefix+"SecondsInput").select();
             break;
         case prefix+"SecondsInput":
-            prev_active_element = undefined;
-            active_element = undefined;
+            // prev_active_element = undefined;
+            // active_element = undefined;
             checkTimeInput("#"+prefix+"SecondsInput");
+            $("#"+prefix+"SecondsInput").focusout();
+            if(prefix=="alert"){
+                $("#alertTextInput").select().focus();
+            }
             break;
 
     }
