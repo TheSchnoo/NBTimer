@@ -11,6 +11,9 @@ div {
     -webkit-user-select: none; 
     -o-user-select: none; 
 }
+#count-type-options{
+    width:150px;
+}
 #alert-modal{
     display: none;
     width: 100%;

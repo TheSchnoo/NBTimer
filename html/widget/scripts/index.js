@@ -83,6 +83,7 @@ var ratio = NB.getHostObject().width/INITIAL_WIDTH;
 //----------------------------------------------------
 //Current options
 //----------------------------------------------------
+var currentCountType;
 var currentSounds;
 var currentAlertTextColor,currentAlertBackgroundColor;
 var currentTimerColor;
@@ -140,6 +141,18 @@ function toggleEditingMenu(state) {
 // Interact with the timer to change the customization options
 function setCustomizationOption(category, item) {
 	switch(category) {
+        case 'Count Type':
+            switch(item){
+                case 'Stopwatch':
+                    triggerCountUp();
+                    break;
+                case 'Timer':
+                    triggerCountDown();
+                    break;
+                default:
+                    break;
+            }
+            break;
 		case 'Theme':
             changeTheme(item.toLowerCase());
             saveData();
@@ -293,20 +306,14 @@ NB.ready(function(){
         resetRotate();
     });
 
-    $("#controls-add").click(function() {
-        this.time = 0;
-        resetBtn.click();
-        countUpTrigger = true;
-        countDownTrigger = false;
-    });
+    // $("#controls-add").click(function() {
+    //     triggerCountUp();
+    // });
 
-    $("#controls-remove").click(function() {
-        this.time = 0;
-        resetBtn.click();
-        countUpTrigger = false;
-        countDownTrigger = true;
+    // $("#controls-remove").click(function() {
+        
 
-    });
+    // });
 
     $("#remove-from-spin").click(function(){
         toggleRemoveUponStop();
@@ -345,6 +352,38 @@ function replay(){
         duringAudio.play();
     }
     
+}
+function triggerCountUp(){
+    currentCountType = 'up';
+    $("#Stopwatchcheck").removeClass('invisible');
+    $("#Timercheck").addClass('invisible');
+    console.log('triggerCountUp');
+    this.time = 0;
+    resetBtn.click();
+    countUpTrigger = true;
+    countDownTrigger = false;
+}
+function triggerCountDown(){
+    currentCountType = 'down';
+    $("#Stopwatchcheck").addClass('invisible');
+    $("#Timercheck").removeClass('invisible');
+    console.log('triggerCountDown');
+    this.time = 0;
+    resetBtn.click();
+    countUpTrigger = false;
+    countDownTrigger = true;
+}
+function changeCountType(type){
+    switch(type){
+        case'up':
+            triggerCountUp();
+            break;
+        case 'down':
+            triggerCountDown();
+            break;
+        default:
+            break;
+    }
 }
 function resize(obj){
 
@@ -434,6 +473,7 @@ function saveData(){
     hostobject.alerts = alerts;
     hostobject.currentAlertBackgroundColor = currentAlertBackgroundColor;
     hostobject.currentAlertTextColor = currentAlertTextColor;
+    hostobject.currentCountType = currentCountType;
     NB.persist.save("timer"+hostobject.guid, hostobject);
 }
 function loadData(){
@@ -454,11 +494,13 @@ function loadData(){
         setupSounds();
         currentAlertTextColor = loaded_data.currentAlertTextColor;
         currentAlertBackgroundColor = loaded_data.currentAlertBackgroundColor;
+        currentCountType = loaded_data.currentCountType;
     } else {
     	//defaults
         alerts = [];
         loaded_data = undefined;
         showLabels = true;
+        currentCountType = 'down';
         currentProgressAnimation = 'circle';
         currentTimerColor = 'blue';
         currentButtonColor = 'grey';
@@ -472,6 +514,7 @@ function loadData(){
         currentAlertBackgroundColor = 'red';
         currentAlertTextColor = 'black';
     }
+    changeCountType(currentCountType);
     changeBackgroundColor(currentBackground);
     changeButtonColor(currentButtonColor);
     changeTimerColor(currentTimerColor);
