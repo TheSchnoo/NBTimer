@@ -609,8 +609,8 @@ function init() {
             toggleOptions(false);
         }
     };
-    
-    addHourBtn.onclick = function() {
+    $(addHourBtn).mousehold(200, function(i){  
+    // addHourBtn.onclick = function() {
         timer.pause();
         timer.time = timer.time + 3600;
         timer.printTime();
@@ -625,9 +625,9 @@ function init() {
             pauseTrigger = false;
             pauseBtn.click();
         }
-    };
-    
-    subHourBtn.onclick = function() {
+    })
+    $(subHourBtn).mousehold(200, function(i){  
+    // subHourBtn.onclick = function() {
         if (timer.time - 3600 <= 0) {
             timer.time = 0;
         }
@@ -647,9 +647,9 @@ function init() {
             pauseBtn.click();
         }
         timer.printTime();
-    };
-    
-    addMinuteBtn.onclick = function() { 
+    })
+    $(addMinuteBtn).mousehold(200, function(i){  
+    // addMinuteBtn.onclick = function() { 
         timer.pause();
         timer.time = timer.time + 60;
         timer.printTime();
@@ -664,9 +664,9 @@ function init() {
             pauseTrigger = false;
             pauseBtn.click();
         }
-    };
-    
-    subMinuteBtn.onclick = function() {
+    })
+    $(subMinuteBtn).mousehold(200, function(i){  
+    // subMinuteBtn.onclick = function() {
         if (timer.time - 60 <= 0) {
             timer.time = 0;
         }
@@ -686,9 +686,8 @@ function init() {
             pauseBtn.click();
         }
         timer.printTime();
-    };
-    
-    addSecondBtn.onclick = function() {
+    })
+    $(addSecondBtn).mousehold(200, function(i){  
         timer.pause();
         timer.time = timer.time + 1;
         timer.printTime();
@@ -703,9 +702,26 @@ function init() {
             pauseTrigger = false;
             pauseBtn.click();
         }
-    };
+
+    })
+    // addSecondBtn.onclick = function() {
+    //     timer.pause();
+    //     timer.time = timer.time + 1;
+    //     timer.printTime();
+    //     if (timer.isStarted === true && pauseTrigger === false) {
+    //         timer.UI.updateTime(timer.time, timer.resetTriggered);
+    //         timer.unpause();
+    //     }
+    //     else if (timer.isStarted === true && pauseTrigger === true){
+    //         timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+    //         timer.unpause();
+    //         timer.UI.pauseUI();
+    //         pauseTrigger = false;
+    //         pauseBtn.click();
+    //     }
+    // };
     
-    subSecondBtn.onclick = function() {
+    $(subSecondBtn).mousehold(200, function(i){  
         if (timer.time - 1 <= 0) {
             timer.time = 0;
         }
@@ -725,7 +741,7 @@ function init() {
             pauseBtn.click();
         }
         timer.printTime();
-    };
+    })
     
     startBtn.onclick = function(){
         
