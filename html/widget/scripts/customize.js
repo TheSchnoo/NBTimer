@@ -68,12 +68,12 @@ function changeButtonColor(color){
     currentButtonColor = color;
     color = getColorCode(color);
     $(".btns").css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
-    $(".btns").hover(function(){
-        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
-    });
-    $(".btns").mouseleave(function(){
-        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
-    });
+    // $(".btns").hover(function(){
+    //     $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
+    // });
+    // $(".btns").mouseleave(function(){
+    //     $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    // });
 }
 function changeArrowColor(color){
 	if (color=="white"){

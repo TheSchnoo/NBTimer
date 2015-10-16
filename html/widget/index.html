@@ -36,10 +36,6 @@
 
         <div id="controls-dropdown"class="menuComponent">
             <ul id="menu">
-                <li class="has-submenu"><span class="menu-option">Count Type</span>
-                    <ul id="count-type-options" class="subMenu">
-                    </ul>
-                </li>
                 <li class="has-submenu">Appearance
                     <ul class="subMenu">
                         <li class="has-submenu"><span class="menu-option">Theme</span>
@@ -60,26 +56,31 @@
                         <li class="has-submenu"><span class="menu-option">Timer Labels</span>
                             <ul id="timer-labels-options"></ul>
                         </li>
-                        
-                    </ul>
-                </li>
-                <li class="has-submenu"><span class="menu-option">Snooze Button Options</span>
-                    <ul id="snooze-button-options"class="subMenu"></ul>
-                </li>
-                <li class="has-submenu">Alerts (<span class="alert-count"></span>)
-                    <ul class="subMenu">
-                        <li><span class="menu-option" onclick="alertDialog()">Add Alert</span>
-                        </li>
-                        <li><span class="menu-option"onclick="manageAlerts()">Manage Alerts</span>
-                        </li>
                         <li class="has-submenu"><span class="menu-option">Alert Background Color</span>
                             <ul id="alert-background-options"></ul>
                         </li>
                         <li class="has-submenu"><span class="menu-option">Alert Text Color</span>
                             <ul id="alert-text-options"></ul>
                         </li>
+                        
                     </ul>
                 </li>
+                <li class="has-submenu"><span class="menu-option">Count Type</span>
+                    <ul id="count-type-options" class="subMenu">
+                    </ul>
+                </li>
+                <li class="has-submenu"><span class="menu-option">Snooze Button Options</span>
+                    <ul id="snooze-button-options"class="subMenu"></ul>
+                </li>
+                <!-- <li class="has-submenu">Alerts (<span class="alert-count"></span>)
+                    <ul class="subMenu">
+                        <li><span class="menu-option" onclick="alertDialog()">Add Alert</span>
+                        </li>
+                        <li><span class="menu-option"onclick="manageAlerts()">Manage Alerts</span>
+                        </li>
+                        
+                    </ul>
+                </li> -->
                 <li class="has-submenu">Event
                     <ul class="subMenu">
                         <li><span class="menu-option" onclick="soundDialog()">Edit Sounds</span></li>
@@ -166,7 +167,7 @@
             <option value="Add Text">Add Text</option>
             <option value="Add Image">Add Image</option>
         </select>
-        <input type="submit" id="saveEvent"></input>
+        <button type="submit" id="saveEvent" class="saveButton">Submit</button>
         <textarea type="text" id="eventTextInput" class="invisible"cols="30" rows="3" placeholder=""></textarea>
     </div>
     <div id="dialog2"class="invisible">
@@ -175,7 +176,7 @@
             <option value="Default">Default</option>
             <option value="Digital">Digital</option>
         </select>
-        <input type="submit" id="saveTheme"></input>
+        <button type="submit" id="saveTheme" class="saveButton">Submit</button>
     </div>
     <div id="dialog3"class="invisible">
         During:
@@ -193,7 +194,7 @@
             <option value="src/sounds/boxing_bell.mp3">Boxing Bell</option>
             <option value="src/sounds/buzzer.mp3">Buzzer</option>
         </select>
-        <input type="submit" id="saveSound"></input>
+        <button type="submit" id="saveSound" class="saveButton">Submit</button>
     </div>
 
     <!-- Alert Module -->
@@ -209,13 +210,16 @@
         <input size="3" id="alertMinutesInput"class="alertInput"placeholder="MM"onkeyup="autoTab(event)"></input>
         <input size="3" id="alertSecondsInput"class="alertInput"placeholder="SS"onkeyup="autoTab(event)"></input>
         <textarea type="text" id="alertTextInput" class=""cols="30" rows="3" placeholder="Alert Text"></textarea>
-        <button type="submit" id="saveAlert">Submit</button>
+        <button type="submit" id="saveAlert"  class="saveButton">Submit</button>
     </div>
     <div id="dialog5"class="invisible">
         <ul id="alertList">
 
         </ul>
         Add New Alert <span class="glyphicon glyphicon-plus" onclick="alertDialog()"></span>
+    </div>
+</div>
+    <div id="rest">
     </div>
     <script type="text/javascript" src="scripts/timerThemes.js"></script>
     <script src="scripts/settings.js"></script>

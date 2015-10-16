@@ -201,13 +201,19 @@ function setCustomizationOption(category, item) {
 $(document).ready(function(e){
     $("#alertSign").click(function(){
         manageAlerts();
+    });
+    $("#rest").click(function(){
+        if(menuMode){
+            toggleEditingMenu(false);
+            toggleOptions(false);
+        }
     })
-    $(".btns").hover(function(){
-        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
-    });
-    $(".btns").mouseleave(function(){
-        $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
-    });
+    // $(".btns").hover(function(){
+    //     $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][0]);
+    // });
+    // $(".btns").mouseleave(function(){
+    //     $(this).css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
+    // });
 
     $(".display").click(function(event){
         if(timer.isPaused||timer.time==0){
@@ -331,18 +337,6 @@ NB.ready(function(){
         resetRotate();
     });
 
-    // $("#controls-add").click(function() {
-    //     triggerCountUp();
-    // });
-
-    // $("#controls-remove").click(function() {
-        
-
-    // });
-
-    $("#remove-from-spin").click(function(){
-        toggleRemoveUponStop();
-    });
 
     $('div#dialog').on('dialogclose',function(){
         // resetSpinnerStyling();
@@ -357,9 +351,13 @@ NB.ready(function(){
         }
     });
     // $('#menu').unbind('mouseenter mouseleave');
+
+    // $('#menu li').unbind('mouseenter mouseleave');
     // $(".has-submenu").click(function(){
-    //     $(this).find('ul').toggle();
-    // }).
+    //     $(this).find('ul.subMenu').toggle();
+    // });
+
+
     NB.addObserver('annotationResizedEvent',function(obj){
         console.log('a');
         resize(obj);
@@ -493,6 +491,11 @@ function resize(obj){
     $("#alertSign").css({
         'top': (NB.getHostObject().height)-20-$("#alertSign").height()+"px",
         'font-size':INITIAL_GLYPH_SIZE*ratio+"px"
+    });
+    $("#rest").css({
+        'width':$("#container").width(),
+        'height':NB.getHostObject().height-$("#container").height(),
+        'top':$("#container").height()
     });
 }
 function saveData(){

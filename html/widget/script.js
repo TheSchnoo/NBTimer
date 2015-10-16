@@ -577,6 +577,10 @@ function init() {
             timer2.stop();
             timer1.play();
         }
+        if(menuMode){
+            toggleEditingMenu(false);
+            toggleOptions(false);
+        }
         
     };
 
@@ -599,6 +603,10 @@ function init() {
         }
         if(!$("#snooze").hasClass('invisible')){
             $("#snooze").addClass('invisible');
+        }
+        if(menuMode){
+            toggleEditingMenu(false);
+            toggleOptions(false);
         }
     };
     
@@ -784,6 +792,10 @@ function init() {
             if(alerts.length==0){
                 alertsLeft = false;
             }
+        }
+        if(menuMode){
+            toggleEditingMenu(false);
+            toggleOptions(false);
         }
     }
 
