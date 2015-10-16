@@ -433,6 +433,10 @@ button.saveButton{
     height: initial;
     border-radius:5px;
 }
+#countModeNotif{
+    position:fixed;
+    font-size:0.8em;
+}
 .timer {
 
                 position:absolute;

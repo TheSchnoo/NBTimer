@@ -76,7 +76,7 @@ var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.
 //----------------------------------------------------
 //Resize constants and variables
 //----------------------------------------------------
-var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 1, INITIAL_MENU_WIDTH = 130, INITIAL_SUBMENU_WIDTH = 110, INITIAL_GLYPH_SIZE = 14;
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 1, INITIAL_MENU_WIDTH = 130, INITIAL_SUBMENU_WIDTH = 110, INITIAL_GLYPH_SIZE = 14, INITIAL_COUNTMODENOTIF_SIZE = 0.8;
 var ratio = NB.getHostObject().width/INITIAL_WIDTH;
 
 
@@ -141,7 +141,7 @@ function toggleEditingMenu(state) {
 // Interact with the timer to change the customization options
 function setCustomizationOption(category, item) {
 	switch(category) {
-        case 'Count Type':
+        case 'Count Mode':
             switch(item){
                 case 'Stopwatch':
                     triggerCountUp();
@@ -350,10 +350,11 @@ NB.ready(function(){
             setCustomizationOption(category, item);
         }
     });
-    // $('#menu').unbind('mouseenter mouseleave');
+    // $('#menu').unbind('mouseenter mouseleave mouseover click');
 
-    // $('#menu li').unbind('mouseenter mouseleave');
+    // $('#menu li').unbind('mouseenter mouseleave mouseover click');
     // $(".has-submenu").click(function(){
+    //     $(".subMenu").
     //     $(this).find('ul.subMenu').toggle();
     // });
 
@@ -403,6 +404,7 @@ function triggerCountUp(){
     resetBtn.click();
     countUpTrigger = true;
     countDownTrigger = false;
+    $("#countMode").text('Stopwatch');
 }
 function triggerCountDown(){
     currentCountType = 'down';
@@ -413,6 +415,7 @@ function triggerCountDown(){
     resetBtn.click();
     countUpTrigger = false;
     countDownTrigger = true;
+    $("#countMode").text('Timer');
 }
 function changeCountType(type){
     switch(type){
@@ -491,6 +494,11 @@ function resize(obj){
     $("#alertSign").css({
         'top': (NB.getHostObject().height)-20-$("#alertSign").height()+"px",
         'font-size':INITIAL_GLYPH_SIZE*ratio+"px"
+    });
+    $("#countModeNotif").css({
+        'top': (NB.getHostObject().height)-22-$("#countModeNotif").height()+"px",
+        'font-size':INITIAL_COUNTMODENOTIF_SIZE*ratio+"em",
+        'right':$("#alertSign").width()*1.5+"px"
     });
     $("#rest").css({
         'width':$("#container").width(),

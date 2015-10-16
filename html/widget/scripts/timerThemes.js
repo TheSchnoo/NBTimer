@@ -6,8 +6,8 @@ function TimerThemer() {
 	var textSizes = {};
 	function timerThemesInit() {
 		//count type
-		addCountType("Stopwatch");
-		addCountType("Timer");
+		addCountMode("Stopwatch");
+		addCountMode("Timer");
 		//progressbar
 		addProgressBarOption("Circle", {});
 		addProgressBarOption("Pie", {});
@@ -61,8 +61,8 @@ function TimerThemer() {
 		addAlertTextOption("Black");
 		addAlertTextOption("White");
 	}
-	function addCountType(name){
-		$('#count-type-options').append('<li><span class="menu-option ">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible" id="'+name+'check"aria-hidden="true"></li>');
+	function addCountMode(name){
+		$('#count-mode-options').append('<li><span class="menu-option ">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible" id="'+name+'check"aria-hidden="true"></li>');
 	}
 	function addProgressBarOption(name, theme){
 		$('#progressbar-options').append('<li><span class="menu-option">' + name + '</span></li>');
