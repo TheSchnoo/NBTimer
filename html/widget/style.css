@@ -111,6 +111,8 @@ img, .unselectable {
 
 #startreset{
     width: 70vw;
+    padding-left: 30px;
+
 }
 #display{
     font-size: 14px;

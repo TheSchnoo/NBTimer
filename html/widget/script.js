@@ -523,6 +523,7 @@ function init() {
     $(".timer").show();
     $(".timer.fill").hide();
     $(".bar").hide();
+    $("#pauseBtn").addClass('invisible')
 
     // startDownBtn.onclick = function() {
     //     timer.total = timer.time;
@@ -604,6 +605,12 @@ function init() {
         if(!$("#snooze").hasClass('invisible')){
             $("#snooze").addClass('invisible');
         }
+        if($("#startBtn").hasClass('invisible')){
+            $("#startBtn").removeClass('invisible');
+        }
+        
+        $("#pauseBtn").addClass('invisible');
+
         if(menuMode){
             toggleEditingMenu(false);
             toggleOptions(false);
@@ -703,6 +710,11 @@ function init() {
             toggleEditingMenu(false);
             toggleOptions(false);
         }
+
+        $("#startBtn").addClass('invisible');
+
+        $("#pauseBtn").removeClass('invisible');
+
     }
 
 
