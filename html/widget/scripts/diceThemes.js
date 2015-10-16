@@ -56,7 +56,7 @@ function DiceThemer() {
 		addSnoozeButtonOption("5 Min");
 		addSnoozeButtonOption("10 Min");
 
-		addThemeOption("Default");
+		addThemeOption("Simple");
 		addThemeOption("Digital");
 		//$("#remove-from-spin").append("<input type='radio' id='remove-from-spin-radio'>");
 	}

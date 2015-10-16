@@ -609,101 +609,11 @@ function init() {
             toggleOptions(false);
         }
     };
-    $(addHourBtn).mousehold(200, function(i){  
-    // addHourBtn.onclick = function() {
-        timer.pause();
-        timer.time = timer.time + 3600;
-        timer.printTime();
-        if (timer.isStarted === true && pauseTrigger === false) {
-            timer.UI.updateTime(timer.time, timer.resetTriggered);
-            timer.unpause();
-        }
-        else if (timer.isStarted === true && pauseTrigger === true){
-            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
-            timer.unpause();
-            timer.UI.pauseUI();
-            pauseTrigger = false;
-            pauseBtn.click();
-        }
-    })
-    $(subHourBtn).mousehold(200, function(i){  
-    // subHourBtn.onclick = function() {
-        if (timer.time - 3600 <= 0) {
-            timer.time = 0;
-        }
-        else {
-            timer.time = timer.time - 3600;
-        }
-        
-        if (timer.isStarted === true && pauseTrigger === false) {
-            timer.UI.updateTime(timer.time, timer.resetTriggered);
-            timer.unpause();
-        }
-        else if (timer.isStarted === true && pauseTrigger === true){
-            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
-            timer.unpause();
-            timer.UI.pauseUI();
-            pauseTrigger = false;
-            pauseBtn.click();
-        }
-        timer.printTime();
-    })
-    $(addMinuteBtn).mousehold(200, function(i){  
-    // addMinuteBtn.onclick = function() { 
-        timer.pause();
-        timer.time = timer.time + 60;
-        timer.printTime();
-        if (timer.isStarted === true && pauseTrigger === false) {
-            timer.UI.updateTime(timer.time, timer.resetTriggered);
-            timer.unpause();
-        }
-        else if (timer.isStarted === true && pauseTrigger === true){
-            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
-            timer.unpause();
-            timer.UI.pauseUI();
-            pauseTrigger = false;
-            pauseBtn.click();
-        }
-    })
-    $(subMinuteBtn).mousehold(200, function(i){  
-    // subMinuteBtn.onclick = function() {
-        if (timer.time - 60 <= 0) {
-            timer.time = 0;
-        }
-        else {
-            timer.time = timer.time - 60;
-        }
-        
-        if (timer.isStarted === true && pauseTrigger === false) {
-            timer.UI.updateTime(timer.time, timer.resetTriggered);
-            timer.unpause();
-        }
-        else if (timer.isStarted === true && pauseTrigger === true){
-            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
-            timer.unpause();
-            timer.UI.pauseUI();
-            pauseTrigger = false;
-            pauseBtn.click();
-        }
-        timer.printTime();
-    })
-    $(addSecondBtn).mousehold(200, function(i){  
-        timer.pause();
-        timer.time = timer.time + 1;
-        timer.printTime();
-        if (timer.isStarted === true && pauseTrigger === false) {
-            timer.UI.updateTime(timer.time, timer.resetTriggered);
-            timer.unpause();
-        }
-        else if (timer.isStarted === true && pauseTrigger === true){
-            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
-            timer.unpause();
-            timer.UI.pauseUI();
-            pauseTrigger = false;
-            pauseBtn.click();
-        }
-
-    })
+    $(addHourBtn).mousehold(200, addHour)
+    $(subHourBtn).mousehold(200, subHour)
+    $(addMinuteBtn).mousehold(200, addMinute)
+    $(subMinuteBtn).mousehold(200, subMinute)
+    $(addSecondBtn).mousehold(200,addSecond);
     // addSecondBtn.onclick = function() {
     //     timer.pause();
     //     timer.time = timer.time + 1;
@@ -720,28 +630,8 @@ function init() {
     //         pauseBtn.click();
     //     }
     // };
-    
-    $(subSecondBtn).mousehold(200, function(i){  
-        if (timer.time - 1 <= 0) {
-            timer.time = 0;
-        }
-        else {
-            timer.time = timer.time - 1;
-        }
-
-        if (timer.isStarted === true && pauseTrigger === false) {
-            timer.UI.updateTime(timer.time, timer.resetTriggered);
-            timer.unpause();
-        }
-        else if (timer.isStarted === true && pauseTrigger === true){
-            timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
-            timer.unpause();
-            timer.UI.pauseUI();
-            pauseTrigger = false;
-            pauseBtn.click();
-        }
-        timer.printTime();
-    })
+    // $(subSecondBtn).click(subSecond);
+    $(subSecondBtn).mousehold(200, subSecond);
     
     startBtn.onclick = function(){
         
@@ -846,4 +736,123 @@ function init() {
     //     newBreak.id = "break" + idNum;
 
     // };
+}
+function addHour(){  
+    // addHourBtn.onclick = function() {
+    timer.pause();
+    timer.time = timer.time + 3600;
+    timer.printTime();
+    if (timer.isStarted === true && pauseTrigger === false) {
+        timer.UI.updateTime(timer.time, timer.resetTriggered);
+        timer.unpause();
+    }
+    else if (timer.isStarted === true && pauseTrigger === true){
+        timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+        timer.unpause();
+        timer.UI.pauseUI();
+        pauseTrigger = false;
+        pauseBtn.click();
+    }
+}
+function subHour(){  
+    // subHourBtn.onclick = function() {
+    if (timer.time - 3600 <= 0) {
+        timer.time = 0;
+    }
+    else {
+        timer.time = timer.time - 3600;
+    }
+    
+    if (timer.isStarted === true && pauseTrigger === false) {
+        timer.UI.updateTime(timer.time, timer.resetTriggered);
+        timer.unpause();
+    }
+    else if (timer.isStarted === true && pauseTrigger === true){
+        timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+        timer.unpause();
+        timer.UI.pauseUI();
+        pauseTrigger = false;
+        pauseBtn.click();
+    }
+    timer.printTime();
+}
+function addMinute(){
+    // addMinuteBtn.onclick = function() { 
+    timer.pause();
+    timer.time = timer.time + 60;
+    timer.printTime();
+    if (timer.isStarted === true && pauseTrigger === false) {
+        timer.UI.updateTime(timer.time, timer.resetTriggered);
+        timer.unpause();
+    }
+    else if (timer.isStarted === true && pauseTrigger === true){
+        timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+        timer.unpause();
+        timer.UI.pauseUI();
+        pauseTrigger = false;
+        pauseBtn.click();
+    }
+    
+}
+
+function subMinute(){  
+    // subMinuteBtn.onclick = function() {
+    if (timer.time - 60 <= 0) {
+        timer.time = 0;
+    }
+    else {
+        timer.time = timer.time - 60;
+    }
+    
+    if (timer.isStarted === true && pauseTrigger === false) {
+        timer.UI.updateTime(timer.time, timer.resetTriggered);
+        timer.unpause();
+    }
+    else if (timer.isStarted === true && pauseTrigger === true){
+        timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+        timer.unpause();
+        timer.UI.pauseUI();
+        pauseTrigger = false;
+        pauseBtn.click();
+    }
+    timer.printTime();
+}
+
+function addSecond(){  
+    timer.pause();
+    timer.time = timer.time + 1;
+    timer.printTime();
+    if (timer.isStarted === true && pauseTrigger === false) {
+        timer.UI.updateTime(timer.time, timer.resetTriggered);
+        timer.unpause();
+    }
+    else if (timer.isStarted === true && pauseTrigger === true){
+        timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+        timer.unpause();
+        timer.UI.pauseUI();
+        pauseTrigger = false;
+        pauseBtn.click();
+    }
+}
+function subSecond(){
+    console.log('as');
+    if (timer.time - 1 <= 0) {
+        timer.time = 0;
+    }
+    else {
+        timer.time = timer.time - 1;
+    }
+
+    if (timer.isStarted === true && pauseTrigger === false) {
+        timer.UI.updateTime(timer.time, timer.resetTriggered);
+        timer.unpause();
+    }
+    else if (timer.isStarted === true && pauseTrigger === true){
+        timer.UI.updateTimeAfterPause(timer.time, timer.resetTriggered);
+        timer.unpause();
+        timer.UI.pauseUI();
+        pauseTrigger = false;
+        pauseBtn.click();
+    }
+    timer.printTime();
 }

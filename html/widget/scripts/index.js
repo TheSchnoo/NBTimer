@@ -12,7 +12,9 @@
 //		- Ability to edit time with keyboard (only when is paused)
 //		- Snooze Button (easily add 1min, 5min or 10min)
 //      - Sounds during and after
-//      - Alert - adding, managing
+//      - Alert: text pops up at given time. Interface allows you to CRUD
+//      - Menu has checkmarks
+//      - Hold the arrows up/down
 // Authors: Bhawandeep Kambo, Jacob Chan
 //------------------------------------------------------------------------------------
 
@@ -141,6 +143,9 @@ function checkCheckmark(category, item){
     item = item.toLowerCase();
     switch(category) {
         case 'Count Mode':
+            if(item=="none"){
+                $(".countCheckmark").addClass('invisible');
+            }
             $(".countCheckmark").addClass('invisible');
             $("#"+item+"CountCheckmark").removeClass('invisible');
             break;
@@ -191,8 +196,15 @@ function checkCheckmark(category, item){
 
 // Interact with the timer to change the customization options
 function setCustomizationOption(category, item) {
+    console.log(arguments.callee.caller.name.toString());
+    var fromLoad = arguments.callee.caller.name.toString()=='loadData';
+    var fromTheme = arguments.callee.caller.name.toString()=='changeTheme';
+    console.log(fromLoad);
 	switch(category) {
         case 'Count Mode':
+            if(item.toLowerCase()==currentCountType&&!fromLoad&&!fromTheme){
+                return;
+            }
             switch(item){
                 case 'Stopwatch':
                     triggerCountUp();
@@ -205,33 +217,50 @@ function setCustomizationOption(category, item) {
             }
             break;
         case 'Time Color':
+            if(item.toLowerCase()==currentTimeColor&&!fromLoad&&!fromTheme){
+                return;
+            }
             changeTimeColor(item.toLowerCase());
             break;
 		case 'Theme':
+            if(item.toLowerCase()==currentTheme&&!fromLoad&&!fromTheme){
+                return;
+            }
             changeTheme(item.toLowerCase());
             saveData();
             break;
 		case 'Progress Bar Type':
+            if(item.toLowerCase()==currentProgressAnimation&&!fromLoad&&!fromTheme){
+                return;
+            }
 			var hai = changeProgressAnimation(item.toLowerCase());
 			saveData();
 			break;
 		case 'Background':
+            if(item.toLowerCase()==currentBackground&&!fromLoad&&!fromTheme){
+                return;
+            }
 			changeBackgroundColor(item.toLowerCase());
 			saveData();
 			break;
 		case 'Progress Bar Color':
+            if(item.toLowerCase()==currentTimerColor&&!fromLoad&&!fromTheme){
+                return;
+            }
 			changeTimerColor(item.toLowerCase());
 			saveData();
 			break;
 		case 'Button Color':
+            if(item.toLowerCase()==currentButtonColor&&!fromLoad&&!fromTheme){
+                return;
+            }
 			changeButtonColor(item.toLowerCase());
 			saveData();
 			break;
-		case 'Font Size':
-			changeFontSize(item);
-			saveData();
-			break;
         case 'Timer Labels':
+            if(item.toLowerCase()=="hide"?true:false==showLabels&&!fromLoad&&!fromTheme){
+                return;
+            }
             changeLabelsDisplay(item.toLowerCase());
             saveData();
             break;
@@ -240,16 +269,23 @@ function setCustomizationOption(category, item) {
         	saveData();
             break;
         case 'Alert Background Color':
+            if(item.toLowerCase()==currentAlertBackgroundColor&&!fromLoad&&!fromTheme){
+                return;
+            }
             changeAlertBackgroundColor(item.toLowerCase());
             saveData();
             break;
         case 'Alert Text Color':
+            if(item.toLowerCase()==currentAlertTextColor&&!fromLoad&&!fromTheme){
+                return;
+            }
             changeAlertTextColor(item.toLowerCase());
             saveData();
             break;
 		default:
 			break;
 	}
+    checkNotifs();
     checkCheckmark(category, item);
 }
 
@@ -622,7 +658,7 @@ function loadData(){
         currentTimerColor = 'blue';
         currentButtonColor = 'grey';
         currentBackground = 'transparent';
-        currentTheme ='default';
+        currentTheme ='simple';
         currentTimeColor = 'black';
         currentEvent = {};
         snoozeTime=300;
@@ -631,28 +667,25 @@ function loadData(){
         currentAlertBackgroundColor = 'red';
         currentAlertTextColor = 'black';
     }
-    // changeTheme(currentTheme);
-    setCustomizationOption('Theme', currentTheme);
+    //settings that don't mess with themes
+    chooseEvent(currentEvent);
+    setupSounds();
+    //settings not included in theme
     setCustomizationOption('Count Mode', currentCountType);
+    setCustomizationOption('Timer Labels', showLabels?"Show":"Hide");
+    setCustomizationOption('Progress Bar Type', currentProgressAnimation);
+    //if there is a theme, apply it, ignore the rest of the things.
+    if(currentTheme!="none"){
+        setCustomizationOption('Theme', currentTheme);
+        return;
+    }
+    //settings included in theme.
     setCustomizationOption('Background', currentBackground);
     setCustomizationOption('Button Color', currentButtonColor);
     setCustomizationOption('Progress Bar Color', currentTimerColor);
     setCustomizationOption('Time Color', currentTimeColor);
-    setCustomizationOption('Timer Labels', showLabels?"Show":"Hide");
-    setCustomizationOption('Progress Bar Type', currentProgressAnimation);
     setCustomizationOption('Alert Background Color', currentAlertBackgroundColor);
     setCustomizationOption('Alert Text Color', currentAlertTextColor);
-    setupSounds();
-    // changeCountType(currentCountType);
-    // changeBackgroundColor(currentBackground);
-    // changeButtonColor(currentButtonColor);
-    // changeTimerColor(currentTimerColor);
-    // changeTimeColor(currentTimeColor);
-    chooseEvent(currentEvent);
-    // changeLabelsDisplay(showLabels);
-    // changeProgressAnimation(currentProgressAnimation);
-    // changeAlertBackgroundColor(currentAlertBackgroundColor);
-    // changeAlertTextColor(currentAlertTextColor);
 
 }
 
@@ -661,34 +694,87 @@ function autoTab(event){
 	var keyCode = event.which || event.keyCode;
 	console.log(keyCode);
 	console.log(keyCode>=48&&keyCode<=57,keyCode>=96&&keyCode<=105);
+    var alertTimer = undefined;
+    var type = document.activeElement.id.search('alert')!=-1?'alert':'time';
+    console.log(type);
+    if(type=='alert'){
+        alertTimer = parseInt($("#alertHoursInput").val())*60*60+parseInt($("#alertMinutesInput").val())*60+parseInt($("#alertSecondsInput").val());
+        console.log(alertTimer);
+
+    }
     if(keyCode == 38){
         console.log('up');
-        var suffix = document.activeElement.id.search('alert')!=-1?'alert':'';
-        if(document.activeElement.id.search('Hour')!=-1){
-            $("#addHourDiv"+suffix).click();
-        } else if(document.activeElement.id.search('Minute')!=-1){
-            $("#addMinuteDiv"+suffix).click();
-        } else if(document.activeElement.id.search('Second')!=-1){
-            $("#addSecondDiv"+suffix).click();
+        if(type=="time"){
+            if(document.activeElement.id.search('Hour')!=-1){
+                addHour();
+            } else if(document.activeElement.id.search('Minute')!=-1){
+                addMinute();
+            } else if(document.activeElement.id.search('Second')!=-1){
+                addSecond();
+            }
+        } else {
+            if(document.activeElement.id.search('Hour')!=-1){
+                alertTimer+=60*60;
+            } else if(document.activeElement.id.search('Minute')!=-1){
+                alertTimer+=60;
+            } else if(document.activeElement.id.search('Second')!=-1){
+                alertTimer+=1;
+            }
         }
-        checkAll(suffix=="alert"? 'alert':'time');
+        if(type=="alert"){
+            var time = formatTimeFromSec(alertTimer);
+            // console.log(time);
+            var time = String(time).split(":");
+            // console.log(time);
+            var h = time[0];
+            // time[0]=time[0].split(":");
+            var m = time[1];
+            var s = time[2];
+            console.log(h,m,s);
+            $("#alertHoursInput").val(h);
+            $("#alertMinutesInput").val(m);
+            $("#alertSecondsInput").val(s);
+        }
+        checkAll(type=="alert"? 'alert':'time');
         return;
     }
     if(keyCode == 40){
-        var suffix = document.activeElement.id.search('alert')!=-1?'alert':'';
-        if(document.activeElement.id.search('Hour')!=-1){
-            $("#subHourDiv"+suffix).click();
-        } else if(document.activeElement.id.search('Minute')!=-1){
-            $("#subMinuteDiv"+suffix).click();
-        } else if(document.activeElement.id.search('Second')!=-1){
-            $("#subSecondDiv"+suffix).click();
+        if(type=="time"){
+            if(document.activeElement.id.search('Hour')!=-1){
+                subHour();
+            } else if(document.activeElement.id.search('Minute')!=-1){
+                subMinute();
+            } else if(document.activeElement.id.search('Second')!=-1){
+                subSecond();
+            }
+        } else {
+            if(document.activeElement.id.search('Hour')!=-1){
+                alertTimer-=60*60;
+            } else if(document.activeElement.id.search('Minute')!=-1){
+                alertTimer-=60;
+            } else if(document.activeElement.id.search('Second')!=-1){
+                alertTimer-=1;
+            }
         }
-        checkAll(suffix=="alert"? 'alert':'time');
+        if(type=="alert"){
+            var time = formatTimeFromSec(alertTimer);
+            // console.log(time);
+            var time = String(time).split(":");
+            // console.log(time);
+            var h = time[0];
+            // time[0]=time[0].split(":");
+            var m = time[1];
+            var s = time[2];
+            console.log(h,m,s);
+            $("#alertHoursInput").val(h);
+            $("#alertMinutesInput").val(m);
+            $("#alertSecondsInput").val(s);
+        }
+        checkAll(type=="alert"? 'alert':'time');
         return;
     }
     if(keyCode==9){
-        var suffix = document.activeElement.id.search('alert')!=-1?'alert':'';
-        checkAll(suffix=="alert"? 'alert':'time');
+        checkAll(type=="alert"? 'alert':'time');
     }
     if(keyCode==13){
         active_element = document.activeElement.id;

@@ -24,7 +24,9 @@ function getColorCode(color){
     return color;
 }
 function changeBackgroundColor(color){
-    
+    changeTheme('none');
+    // $("#countModeNotif").css('color', 'black');
+    // $("#alertNotif").css('color', 'black');
     if(color=="transparent"){
         $("body").css("background-color", "transparent");
 
@@ -35,6 +37,11 @@ function changeBackgroundColor(color){
 
         return;
     }
+    if(color=="black"){
+        console.log('a');
+        $("body").css("background-color", "black");
+        return;
+    }
     currentBackground = color;
     color = getColorCode(color);
 
@@ -43,6 +50,7 @@ function changeBackgroundColor(color){
 }
 
 function changeTimerColor(color){
+    changeTheme('none');
     if(color=="white"){
     	if(currentProgressAnimation=="circle"){
         	$(".pie").css("border-color", "white");
@@ -65,6 +73,7 @@ function changeTimerColor(color){
 }
 
 function changeButtonColor(color){
+    changeTheme('none');
     currentButtonColor = color;
     color = getColorCode(color);
     $(".btns").css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
@@ -76,6 +85,7 @@ function changeButtonColor(color){
     // });
 }
 function changeArrowColor(color){
+    changeTheme('none');
 	if (color=="white"){
 		$(".add").attr('src', "src/arrows/white-up.png");
 		$(".sub").attr('src', "src/arrows/white-down.png");
@@ -92,15 +102,15 @@ function changeArrowColor(color){
 }
 function changeTheme(theme){
     currentTheme = theme;
+    checkCheckmark('Theme',theme);
     switch(theme){
     	case "none":
+            return;
     		break;
     	case "digital":
-    		$("#gear").attr('src', 'img/gear-white.png');
     		startColor = "white";
 	        endColor = "red";
 	        $("body").css({
-	            'background': 'black',
 	            'font-family':'monospace'
 	        });
 	        $(".btns").css({
@@ -108,17 +118,15 @@ function changeTheme(theme){
 	        });
 	        currentTimerColor = 'white';
 	        currentTimeColor= 'white';
-	        changeButtonColor('red');
-	        changeTimeColor('white');
-	        changeArrowColor('white');
+            currentButtonColor = 'red';
+            currentBackground = 'black';
+            currentAlertBackgroundColor = 'red';
+            currentAlertTextColor = 'white'
 	   		break;
-	    case "default":
-	    	$("#gear").attr('src', 'img/gear-black.png');
+	    case "simple":
 	    	startColor = "black";
 	        endColor = "red";
 	        $("body").css({
-	            'background': 'white',
-	            'color':'#000',
 	            'font-family':'sans-serif'
 	        });
 	        $(".btns").css({
@@ -126,9 +134,10 @@ function changeTheme(theme){
 	        });
 	        currentTimerColor = 'grey';
 	        currentTimeColor= 'black';
-	        changeButtonColor('grey');
-	        changeTimeColor('black');
-	        changeArrowColor('black');
+            currentBackground = 'white';
+            currentButtonColor = 'grey';
+            currentAlertBackgroundColor = 'grey';
+            currentAlertTextColor = 'black';
 	        break;
 
 	    default:
@@ -136,12 +145,19 @@ function changeTheme(theme){
 	        endColor = "red";
 	    	break;
     }
+    setCustomizationOption('Time Color', currentTimeColor);
+    setCustomizationOption('Button Color', currentButtonColor);
+    setCustomizationOption('Background', currentBackground);
+    setCustomizationOption('Alert Background Color', currentAlertBackgroundColor);
+    setCustomizationOption('Alert Text Color', currentAlertTextColor);
     // $("#slice, #progressbar").remove();
+    currentTheme = theme;
     resize();
     saveData();
 }
 
 function changeTimeColor(color){
+    changeTheme('none');
     currentTimeColor = color;
     if(color=="white"){
         startColor = "white";
@@ -149,14 +165,18 @@ function changeTimeColor(color){
     } else if (color=="black"){
         startColor = "black";
     }
+    changeArrowColor(color);
     $(".colon").css('color', startColor);
     $(".display").css('color', startColor);
+    $(".timerLabel").css('color', startColor);
     // $(".display").css('color', startColor);
    	saveData();
 }
 
 function changeAlertBackgroundColor(color){
+    changeTheme('none');
     currentAlertBackgroundColor = color;
+    $("#countModeNotif").css('color', 'black');
     if(color=="white"){
         $("#alert-modal").css('background-color', 'white');
         return;
@@ -170,6 +190,7 @@ function changeAlertBackgroundColor(color){
     saveData();
 }
 function changeAlertTextColor(color){
+    changeTheme('none');
     currentAlertTextColor = color;
     if(color=="white"){
         $("#alert-modal-dialogue").css('color', 'white');
@@ -177,5 +198,18 @@ function changeAlertTextColor(color){
     } else if (color=="black"){
         $("#alert-modal-dialogue").css('color', 'black');
         return;
+    }
+}
+function checkNotifs(){
+    if(currentBackground =='black'){
+        $("#gear").attr('src', 'img/gear-white.png');
+        $("#countModeNotif").css('color', 'white');
+        $("#alert-count-super").css('color', 'white');
+        $("#alertNotif").css('color', 'white');
+    } else{
+        $("#gear").attr('src', 'img/gear-black.png');
+        $("#countModeNotif").css('color', 'black');
+        $("#alert-count-super").css('color', 'black');
+        $("#alertNotif").css('color', 'black');
     }
 }

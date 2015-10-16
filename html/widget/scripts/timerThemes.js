@@ -16,6 +16,7 @@ function TimerThemer() {
 		//background colours
 		addBackgroundOption("Transparent");
 		addBackgroundOption("White");
+		addBackgroundOption("Black");
 		addBackgroundOption("Grey");
 		addBackgroundOption("Green");
 		addBackgroundOption("Yellow");
@@ -46,7 +47,7 @@ function TimerThemer() {
 		addSnoozeButtonOption("5 Min");
 		addSnoozeButtonOption("10 Min");
 		//theme
-		addThemeOption("Default");
+		addThemeOption("Simple");
 		addThemeOption("Digital");
 		//alert color
 		addAlertBackgroundOption("Transparent");
