@@ -39,28 +39,31 @@
                 <li class="has-submenu">Appearance
                     <ul class="subMenu">
                         <li class="has-submenu"><span class="menu-option">Theme</span>
-                            <ul id="theme-options"></ul>
+                            <ul id="theme-options"class="subsubMenu"></ul>
                         </li>
                         <li class="has-submenu"><span class="menu-option">Progress Bar Type</span>
-                            <ul id="progressbar-options"></ul>
+                            <ul id="progressbar-options" class="subsubMenu"></ul>
                         </li>
                         <li class="has-submenu"><span class="menu-option">Background</span>
-                            <ul id="background-options"></ul>
+                            <ul id="background-options" class="subsubMenu"></ul>
                         </li>
                         <li class="has-submenu"><span class="menu-option">Progress Bar Color</span>
-                            <ul id="timer-color-options"></ul>
+                            <ul id="timer-color-options" class="subsubMenu"></ul>
+                        </li>
+                        <li class="has-submenu"><span class="menu-option">Time Color</span>
+                            <ul id="time-color-options" class="subsubMenu"></ul>
                         </li>
                         <li class="has-submenu"><span class="menu-option">Button Color</span>
-                            <ul id="button-color-options"></ul>
+                            <ul id="button-color-options" class="subsubMenu"></ul>
                         </li>
                         <li class="has-submenu"><span class="menu-option">Timer Labels</span>
-                            <ul id="timer-labels-options"></ul>
+                            <ul id="timer-labels-options" class="subsubMenu"></ul>
                         </li>
                         <li class="has-submenu"><span class="menu-option">Alert Background Color</span>
-                            <ul id="alert-background-options"></ul>
+                            <ul id="alert-background-options" class="subsubMenu"></ul>
                         </li>
                         <li class="has-submenu"><span class="menu-option">Alert Text Color</span>
-                            <ul id="alert-text-options"></ul>
+                            <ul id="alert-text-options" class="subsubMenu"></ul>
                         </li>
                         
                     </ul>
@@ -143,9 +146,9 @@
             </br>
         </div>
         <div id = "startreset">
-        <button type="button" class="btns" id="pauseBtn">Pause</button>
-        <button type="button" class="btns" id="resetBtn">Reset</button>
-        <button type="button" class="btns" id="startBtn">Start</button>
+        <button type="button" class="btns" id="pauseBtn"><span class="glyphicon glyphicon-pause"></span></button>
+        <button type="button" class="btns" id="resetBtn"><span class="glyphicon glyphicon-refresh"></span></button>
+        <button type="button" class="btns" id="startBtn"><span class="glyphicon glyphicon-play"></span></button>
         <button type="button" class="btns invisible" id="snooze" >Snooze</button>
         </div>
 <!--         <button type="button" id="addAlert">Add Alert</button> -->
@@ -203,7 +206,7 @@
        </div>
    </div>   
    <div id="countModeNotif"><span id="countMode"></span> Mode</div>
-   <div id="alertSign"><sup><sup><span class="alert-count"></span></sup></sup><span class="glyphicon glyphicon-alert"></span></div>
+   <div id="alertSign"><sup><sup><span class="alert-count"></span></sup></sup><span class="glyphicon glyphicon-exclamation-sign"></span></div>
 
 
     <div id="dialog4"class="invisible">

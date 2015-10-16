@@ -60,45 +60,49 @@ function TimerThemer() {
 		//alert text
 		addAlertTextOption("Black");
 		addAlertTextOption("White");
+		//time color
+		addTimeColor("Black");
+		addTimeColor("White");
 	}
 	function addCountMode(name){
-		$('#count-mode-options').append('<li><span class="menu-option ">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible" id="'+name+'check"aria-hidden="true"></li>');
+		$('#count-mode-options').append('<li><span class="menu-option ">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible countCheckmark" id="'+name.toLowerCase()+'CountCheckmark"aria-hidden="true"></li>');
 	}
 	function addProgressBarOption(name, theme){
-		$('#progressbar-options').append('<li><span class="menu-option">' + name + '</span></li>');
+		$('#progressbar-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible progressBarCheckmark" id="'+name.toLowerCase()+'BarCheckmark"aria-hidden="true"></li>');
 	}
 
-	function addColorOption(name, color) {
-		$('#color-options').append('<li><span class="menu-option">' + name + '</span></li>');
-	}
+
 	function addBackgroundOption(name, color) {
 		// backgroundColors[name] = color;
-		$('#background-options').append('<li><span class="menu-option">' + name + '</span></li>');
+		$('#background-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible backgroundCheckmark" id="'+name.toLowerCase()+'BackgroundColorCheckmark"aria-hidden="true"></li>');
 	}
 	function addTimerColorOption(name, color) {
 		// backgroundColors[name] = color;
-		$('#timer-color-options').append('<li><span class="menu-option">' + name + '</span></li>');
+		$('#timer-color-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible timerColorCheckmark" id="'+name.toLowerCase()+'TimerColorCheckmark"aria-hidden="true"></li>');
 	}
 	function addButtonColorOption(name, color) {
 		// backgroundColors[name] = color;
-		$('#button-color-options').append('<li><span class="menu-option">' + name + '</span></li>');
+		$('#button-color-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible buttonColorCheckmark" id="'+name.toLowerCase()+'ButtonColorCheckmark"aria-hidden="true"></li>');
 	}
 	function addTimerLabelOption(name, theme) {
 		// backgroundColors[name] = color;
-		$('#timer-labels-options').append('<li><span class="menu-option">' + name + '</span></li>');
+		$('#timer-labels-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible timerLabelCheckmark" id="'+name.toLowerCase()+'TimerLabelCheckmark"aria-hidden="true"></li>');
 	}
 	function addSnoozeButtonOption(name, theme) {
 		// backgroundColors[name] = color;
-		$('#snooze-button-options').append('<li><span class="menu-option">' + name + '</span></li>');
+		$('#snooze-button-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible snoozeButtonCheckmark" id="'+name.toLowerCase()+'SnoozeButtonCheckmark"aria-hidden="true"></li>');
 	}
 	function addThemeOption(name){
-		$("#theme-options").append('<li><span class="menu-option">' + name + '</span></li>');
+		$("#theme-options").append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible themeCheckmark" id="'+name.toLowerCase()+'ThemeCheckmark"aria-hidden="true"></li>');
 	}
 	function addAlertBackgroundOption(name){
-		$("#alert-background-options").append('<li><span class="menu-option">' + name + '</span></li>');
+		$("#alert-background-options").append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible alertBackgroundColorCheckmark" id="'+name.toLowerCase()+'AlertBackgroundColorCheckmark"aria-hidden="true"></li>');
 	}
 	function addAlertTextOption(name){
-		$("#alert-text-options").append('<li><span class="menu-option">' + name + '</span></li>');
+		$("#alert-text-options").append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible alertTextColorCheckmark" id="'+name.toLowerCase()+'AlertTextColorCheckmark"aria-hidden="true"></li>');
+	}
+	function addTimeColor(name){
+		$("#time-color-options").append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible timeColorCheckmark" id="'+name.toLowerCase()+'TimeColorCheckmark"aria-hidden="true"></li>');
 	}
 
 

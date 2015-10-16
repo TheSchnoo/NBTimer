@@ -76,13 +76,14 @@ var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.
 //----------------------------------------------------
 //Resize constants and variables
 //----------------------------------------------------
-var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 1, INITIAL_MENU_WIDTH = 130, INITIAL_SUBMENU_WIDTH = 110, INITIAL_GLYPH_SIZE = 14, INITIAL_COUNTMODENOTIF_SIZE = 0.8;
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 1, INITIAL_MENU_WIDTH = 130, INITIAL_SUBMENU_WIDTH = 110,INITIAL_SUBSUBMENU_WIDTH = 120, INITIAL_GLYPH_SIZE = 14, INITIAL_COUNTMODENOTIF_SIZE = 0.8;
 var ratio = NB.getHostObject().width/INITIAL_WIDTH;
 
 
 //----------------------------------------------------
 //Current options
 //----------------------------------------------------
+var currentOptions={}
 var currentCountType;
 var currentSounds;
 var currentAlertTextColor,currentAlertBackgroundColor;
@@ -136,7 +137,57 @@ function toggleEditingMenu(state) {
 	}
 }
 
-
+function checkCheckmark(category, item){
+    item = item.toLowerCase();
+    switch(category) {
+        case 'Count Mode':
+            $(".countCheckmark").addClass('invisible');
+            $("#"+item+"CountCheckmark").removeClass('invisible');
+            break;
+        case 'Time Color':
+            $(".timeColorCheckmark").addClass('invisible');
+            $("#"+item+"TimeColorCheckmark").removeClass('invisible');
+            break;
+        case 'Theme':
+            $(".themeCheckmark").addClass('invisible');
+            $("#"+item+"ThemeCheckmark").removeClass('invisible');
+            break;
+        case 'Progress Bar Type':
+            $(".progressBarCheckmark").addClass('invisible');
+            $("#"+item+"BarCheckmark").removeClass('invisible');
+            break;
+        case 'Background':
+            $(".backgroundCheckmark").addClass('invisible');
+            $("#"+item+"BackgroundColorCheckmark").removeClass('invisible');
+            break;
+        case 'Progress Bar Color':
+            $(".timerColorCheckmark").addClass('invisible');
+            $("#"+item+"TimerColorCheckmark").removeClass('invisible');
+            break;
+        case 'Button Color':
+            $(".buttonColorCheckmark").addClass('invisible');
+            $("#"+item+"ButtonColorCheckmark").removeClass('invisible');
+            break;
+        case 'Timer Labels':
+            $(".timerLabelCheckmark").addClass('invisible');
+            $("#"+item+"TimerLabelCheckmark").removeClass('invisible');
+            break;
+        case 'Snooze Button Options':
+            $(".snoozeButtonCheckmark").addClass('invisible');
+            $("#"+item+"SnoozeButtonCheckmark").removeClass('invisible');
+            break;
+        case 'Alert Background Color':
+            $(".alertBackgroundColorCheckmark").addClass('invisible');
+            $("#"+item+"AlertBackgroundColorCheckmark").removeClass('invisible');
+            break;
+        case 'Alert Text Color':
+            $(".alertTextColorCheckmark").addClass('invisible');
+            $("#"+item+"AlertTextColorCheckmark").removeClass('invisible');
+            break;
+        default:
+            break;
+    }
+}
 
 // Interact with the timer to change the customization options
 function setCustomizationOption(category, item) {
@@ -152,6 +203,9 @@ function setCustomizationOption(category, item) {
                 default:
                     break;
             }
+            break;
+        case 'Time Color':
+            changeTimeColor(item.toLowerCase());
             break;
 		case 'Theme':
             changeTheme(item.toLowerCase());
@@ -196,6 +250,7 @@ function setCustomizationOption(category, item) {
 		default:
 			break;
 	}
+    checkCheckmark(category, item);
 }
 
 $(document).ready(function(e){
@@ -396,9 +451,7 @@ function replay(){
     
 }
 function triggerCountUp(){
-    currentCountType = 'up';
-    $("#Stopwatchcheck").removeClass('invisible');
-    $("#Timercheck").addClass('invisible');
+    currentCountType = 'Stopwatch';
     console.log('triggerCountUp');
     this.time = 0;
     resetBtn.click();
@@ -407,9 +460,7 @@ function triggerCountUp(){
     $("#countMode").text('Stopwatch');
 }
 function triggerCountDown(){
-    currentCountType = 'down';
-    $("#Stopwatchcheck").addClass('invisible');
-    $("#Timercheck").removeClass('invisible');
+    currentCountType = 'Timer';
     console.log('triggerCountDown');
     this.time = 0;
     resetBtn.click();
@@ -490,6 +541,7 @@ function resize(obj){
         'width':INITIAL_MENU_WIDTH*ratio+"px"
     });
     $(".subMenu").width(INITIAL_SUBMENU_WIDTH*ratio+"px");
+    $(".subsubMenu").width(INITIAL_SUBSUBMENU_WIDTH*ratio+"px");
     $("#controls-dropdown").width(INITIAL_MENU_WIDTH*ratio+"px");
     $("#alertSign").css({
         'top': (NB.getHostObject().height)-20-$("#alertSign").height()+"px",
@@ -528,6 +580,23 @@ function saveData(){
 function loadData(){
     if(NB.persist.load('timer'+NB.getHostObject().guid)!=undefined){
         var loaded_data = JSON.parse(NB.persist.load('timer'+NB.getHostObject().guid));
+        // currentOptions={
+        //     currentProgressAnimation : loaded_data.currentProgressAnimation,
+        //     currentTimerColor : loaded_data.currentTimerColor,
+        //     currentButtonColor : loaded_data.currentButtonColor,
+        //     currentBackground : loaded_data.currentBackground,
+        //     currentTimeColor:loaded_data.currentTimeColor,
+        //     currentTheme:loaded_data.currentTheme,
+        //     currentEvent : loaded_data.currentEvent,
+        //     snoozeTime : loaded_data.snoozeTime,
+        //     showLabels : loaded_data.showLabels,
+        //     hideSnooze : loaded_data.hideSnooze,
+        //     alerts : loaded_data.alerts,
+        //     currentSounds : loaded_data.currentSounds?loaded_data.currentSounds:{},
+        //     currentAlertTextColor : loaded_data.currentAlertTextColor,
+        //     currentAlertBackgroundColor : loaded_data.currentAlertBackgroundColor,
+        //     currentCountType : loaded_data.currentCountType
+        // }
         currentProgressAnimation = loaded_data.currentProgressAnimation;
         currentTimerColor = loaded_data.currentTimerColor;
         currentButtonColor = loaded_data.currentButtonColor;
@@ -540,7 +609,6 @@ function loadData(){
         hideSnooze = loaded_data.hideSnooze;
         alerts = loaded_data.alerts;
         currentSounds = loaded_data.currentSounds?loaded_data.currentSounds:{};
-        setupSounds();
         currentAlertTextColor = loaded_data.currentAlertTextColor;
         currentAlertBackgroundColor = loaded_data.currentAlertBackgroundColor;
         currentCountType = loaded_data.currentCountType;
@@ -549,7 +617,7 @@ function loadData(){
         alerts = [];
         loaded_data = undefined;
         showLabels = true;
-        currentCountType = 'down';
+        currentCountType = 'Timer';
         currentProgressAnimation = 'circle';
         currentTimerColor = 'blue';
         currentButtonColor = 'grey';
@@ -563,17 +631,29 @@ function loadData(){
         currentAlertBackgroundColor = 'red';
         currentAlertTextColor = 'black';
     }
-    changeCountType(currentCountType);
-    changeBackgroundColor(currentBackground);
-    changeButtonColor(currentButtonColor);
-    changeTimerColor(currentTimerColor);
-    changeTheme(currentTheme);
-    changeTimeColor(currentTimeColor);
+    // changeTheme(currentTheme);
+    setCustomizationOption('Theme', currentTheme);
+    setCustomizationOption('Count Mode', currentCountType);
+    setCustomizationOption('Background', currentBackground);
+    setCustomizationOption('Button Color', currentButtonColor);
+    setCustomizationOption('Progress Bar Color', currentTimerColor);
+    setCustomizationOption('Time Color', currentTimeColor);
+    setCustomizationOption('Timer Labels', showLabels?"Show":"Hide");
+    setCustomizationOption('Progress Bar Type', currentProgressAnimation);
+    setCustomizationOption('Alert Background Color', currentAlertBackgroundColor);
+    setCustomizationOption('Alert Text Color', currentAlertTextColor);
+    setupSounds();
+    // changeCountType(currentCountType);
+    // changeBackgroundColor(currentBackground);
+    // changeButtonColor(currentButtonColor);
+    // changeTimerColor(currentTimerColor);
+    // changeTimeColor(currentTimeColor);
     chooseEvent(currentEvent);
-    changeLabelsDisplay(showLabels);
-    changeProgressAnimation(currentProgressAnimation);
-    changeAlertBackgroundColor(currentAlertBackgroundColor);
-    changeAlertTextColor(currentAlertTextColor);
+    // changeLabelsDisplay(showLabels);
+    // changeProgressAnimation(currentProgressAnimation);
+    // changeAlertBackgroundColor(currentAlertBackgroundColor);
+    // changeAlertTextColor(currentAlertTextColor);
+
 }
 
 

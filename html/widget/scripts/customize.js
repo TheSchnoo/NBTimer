@@ -142,7 +142,7 @@ function changeTheme(theme){
 }
 
 function changeTimeColor(color){
-    currenTimeColor = color;
+    currentTimeColor = color;
     if(color=="white"){
         startColor = "white";
         endColor = "red";
@@ -151,7 +151,7 @@ function changeTimeColor(color){
     }
     $(".colon").css('color', startColor);
     $(".display").css('color', startColor);
-    $("body").css('color', startColor);
+    // $(".display").css('color', startColor);
    	saveData();
 }
 
