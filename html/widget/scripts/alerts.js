@@ -20,20 +20,27 @@ function refreshAlertsList(){
     	return;
 	}
 	for(var i =0; i<alerts.length;i++){
-    		$("#alertList").append('<li id="alert'+i+'" class="alertListItem">'+formatTimeFromSec(alerts[i].time)+", "+alerts[i].text+'&nbsp;<span class="glyphicon glyphicon-remove" aria-hidden="true"onclick="removeAlert('+i+')"></li>');
-    	}
+    	$("#alertList").append('<li id="alert'+i+'" class="alertListItem">'+formatTimeFromSec(alerts[i].time)+", "+alerts[i].text+'&nbsp;<span class="glyphicon glyphicon-pencil"aria-hidden="true" onclick="alertDialog('+i+')"></span>&nbsp;<span class="glyphicon glyphicon-remove" aria-hidden="true"onclick="removeAlert('+i+')"></li>');
+    }
 }
 function removeAlert(i){
 	alerts.splice(i,1);
 	refreshAlertsList();
-    $("#alert-count").text(alerts.length);
+    $(".alert-count").text(alerts.length);
+    reorderAlerts();
 	saveData();
 }
-function saveAlert(){
+function saveAlert(i){
+	if(i!=undefined){
+		removeAlert(i);
+	}
+	console.log(i);
 	var alert_time = parseInt($("#alertHoursInput").val())*60*60+parseInt($("#alertMinutesInput").val())*60+parseInt($("#alertSecondsInput").val());
 	var alert_text = $("#alertTextInput").val();
 	var alert = new Alert(alert_time, alert_text);
-    $("#alert-count").text(alerts.length);
+    $(".alert-count").text(alerts.length);
+    refreshAlertsList();
+	reorderAlerts();
 	saveData();
 }
 

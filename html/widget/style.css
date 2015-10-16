@@ -407,10 +407,14 @@ img {
 
 #menu{
     font-size:1em;
-    width:110px;
+    width:130px;
 }
 .subMenu{
     width:110px;
+}
+#alertSign{
+    position:fixed;
+    right:5px;
 }
 .timer {
 
