@@ -297,6 +297,8 @@ Timer.prototype.startDown = function(e) {
     if (this.time == 0){
         $(".display").css('color',endColor);
         $(".colon").css('color',endColor);
+        $("#pauseBtn").addClass('invisible');
+        $("#startBtn").removeClass('invisible');
         timer.printTime();
         timer.pause();
     }
@@ -336,6 +338,8 @@ Timer.prototype.startDown = function(e) {
         } else {
             $(".display").css('color',endColor);
             $(".colon").css('color',endColor);
+            $("#pauseBtn").addClass('invisible');
+            $("#startBtn").removeClass('invisible');
             timer.printTime();
             timer.pause();
             timer.isStarted = false;

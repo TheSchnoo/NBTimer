@@ -242,8 +242,8 @@ function addImage(theme){
             break;
     }
     var randSize = Math.random()*100+100;
-    var randPosition_top = Math.random()*$("#rest").height()-20;
-    var randPosition_left = Math.random()*$("#rest").width()-20;
+    var randPosition_top = Math.random()*$("#rest").height()-100;
+    var randPosition_left = Math.random()*$("#rest").width()-100;
     var randDegree = Math.random()*360;
     $("#rest").append('<img class="themeImg"src="src/'+img+'.png"style="position:fixed;width:'+randSize+'px;height:'+randSize+'px;top:'+randPosition_top+'px;left:'+randPosition_left+'px;z-index:-1;-webkit-transform:rotate('+randDegree+'deg)"/>');
 }
