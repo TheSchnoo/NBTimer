@@ -293,6 +293,7 @@ Timer.prototype.startDown = function(e) {
     this.isPaused = false;
     isPaused = false;
     
+    addImage(currentTheme);
     if (this.time == 0){
         $(".display").css('color',endColor);
         $(".colon").css('color',endColor);
@@ -320,6 +321,7 @@ Timer.prototype.startDown = function(e) {
             duringAudio.currentTime = 0;
             duringAudio.play();
         }
+        addImage(currentTheme);
         
         if(alertsLeft&&timer.time==alerts[nextAlert].time){
             triggerAlert(alerts[nextAlert]);
@@ -364,6 +366,8 @@ Timer.prototype.startUp = function(e) {
         duringAudio.play();
         // duringAudio.loop = true;
     }
+
+    addImage(currentTheme);
     var countTo = [this.time];
     
     if (e == null) {
@@ -389,7 +393,7 @@ Timer.prototype.startUp = function(e) {
     //setInterval method sets the interval for repeating the function
     this.intervalID = setInterval(function() {
         timer.time ++ ;
-        
+        addImage(currentTheme);
         if(alertsLeft&&timer.time==alerts[nextAlert].time){
             triggerAlert(alerts[nextAlert]);
             nextAlert--;
@@ -445,7 +449,7 @@ Timer.prototype.reset = function() {
     this.minutes = 0;
     this.hours = 0;
     this.isPaused = false;
-    pauseBtn.innerHTML = "Pause"
+    // pauseBtn.innerHTML = "Pause"
     this.printTime();
 };
 
@@ -562,7 +566,10 @@ function init() {
             if(currentSounds.during!="None"&&currentSounds.during!=undefined){
                 duringAudio.pause();
             }
-            this.innerHTML = "Unpause";
+            // this.innerHTML = "Unpause";
+            $("#startBtn").removeClass('invisible');
+
+            $("#pauseBtn").addClass('invisible');
             timer1.pause();
             pauseTrigger = true;
             timer2 = $.timer(function() {finish = finish+102;}); 
@@ -571,7 +578,7 @@ function init() {
         } else {
             timer.unpause();
             pauseTrigger = false;
-            this.innerHTML = "Pause";
+            // this.innerHTML = "Pause";
             if(currentSounds.during!="None"&&currentSounds.during!=undefined){
                 duringAudio.play();
             }
@@ -602,6 +609,7 @@ function init() {
                 afterAudio.currentTime = 0;
             }
         }
+        clearImage();
         if(!$("#snooze").hasClass('invisible')){
             $("#snooze").addClass('invisible');
         }
@@ -649,25 +657,25 @@ function init() {
         if (timer.isPaused === false||timeEdited){
             if (countUpTrigger === false && countDownTrigger === true && isPaused ===false){
                 timer.total = timer.time;
-                pauseBtn.innerHTML = "Pause";
+                // pauseBtn.innerHTML = "Pause";
                 timer.interval = 1000;
                 timer.startDown();
                 timer.resetTriggered = false;
                 timer.UI.startCircle(timer.time, timer.resetTriggered);
                 if (timer.isPaused === true) {
-                    pauseBtn.innerHTML = "pause";
+                    // pauseBtn.innerHTML = "pause";
                 }
                 timer.isStarted = true;
             }
             else if (countUpTrigger === true && countDownTrigger === false && isPaused === false){
                 timer.total = timer.time;
-                pauseBtn.innerHTML = "Pause";
+                // pauseBtn.innerHTML = "Pause";
                 timer.interval = 1000;
                 timer.startUp();
                 timer.resetTriggered = false;
                 timer.UI.startCircle("5", timer.resetTriggered);
                 if (timer.isPaused === true) {
-                    pauseBtn.innerHTML = "pause";
+                    // pauseBtn.innerHTML = "pause";
                 }
                 timer.isStarted = true;
             }
@@ -676,7 +684,7 @@ function init() {
             timer.unpause();
             timer2.stop();
             timer1.play();
-            pauseBtn.innerHTML = "Pause";
+            // pauseBtn.innerHTML = "Pause";
             timer.isStarted = true;
             startBtn.disabled = true;
         }

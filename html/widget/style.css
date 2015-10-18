@@ -111,7 +111,7 @@ img, .unselectable {
 
 #startreset{
     width: 70vw;
-    padding-left: 30px;
+    /*padding-left: 30px;*/
 
 }
 #display{
@@ -441,6 +441,9 @@ button.saveButton{
 #countModeNotif{
     position:fixed;
     font-size:0.8em;
+}
+#alertSettings{
+    border-top:1px solid white;
 }
 .timer {
 

@@ -30,12 +30,28 @@ function removeAlert(i){
     reorderAlerts();
 	saveData();
 }
+function clearAlerts(){
+	alerts = [];
+    $(".alert-count").text(alerts.length);
+	refreshAlertsList();
+	saveData();
+}
 function saveAlert(i){
 	if(i!=undefined){
 		removeAlert(i);
 	}
 	console.log(i);
+	if(isNaN(parseInt($("#alertHoursInput").val()))||$("#alertHoursInput").val()==''){
+		$("#alertHoursInput").val(0);
+	}
+	if( isNaN(parseInt($("#alertMinutesInput").val()))||$("#alertMinutesInput").val()==''){
+		$("#alertMinutesInput").val(0);
+	}
+	if( isNaN(parseInt($("#alertSecondsInput").val()))||$("#alertSecondsInput").val()==''){
+		$("#alertSecondsInput").val(0);
+	}
 	var alert_time = parseInt($("#alertHoursInput").val())*60*60+parseInt($("#alertMinutesInput").val())*60+parseInt($("#alertSecondsInput").val());
+
 	var alert_text = $("#alertTextInput").val();
 	var alert = new Alert(alert_time, alert_text);
     $(".alert-count").text(alerts.length);

@@ -49,6 +49,7 @@ function TimerThemer() {
 		//theme
 		addThemeOption("Simple");
 		addThemeOption("Digital");
+		addThemeOption("Autumn");
 		//alert color
 		addAlertBackgroundOption("Transparent");
 		addAlertBackgroundOption("White");

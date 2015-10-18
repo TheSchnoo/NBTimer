@@ -58,6 +58,7 @@ function DiceThemer() {
 
 		addThemeOption("Simple");
 		addThemeOption("Digital");
+		addThemeOption("Autumn");
 		//$("#remove-from-spin").append("<input type='radio' id='remove-from-spin-radio'>");
 	}
 	function addProgressBarOption(name, theme){

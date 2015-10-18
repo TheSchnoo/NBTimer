@@ -392,6 +392,20 @@ $(document).ready(function(e){
      $(".alertInput").focusout(function(){
         checkAll('alert');
      });
+     $("#countModeNotif").click(function(){
+        console.log('asdf');
+        if(!timer.isPaused){
+            $("#resetBtn").click()
+            console.log('asdfffff');
+        }
+        if (currentCountType =='Timer'){
+            currentCountType = 'Stopwatch';
+            setCustomizationOption('Count Mode', 'Stopwatch');
+        } else if(currentCountType =='Stopwatch'){
+            currentCountType = 'Timer';
+            setCustomizationOption('Count Mode', 'Timer');
+        }
+     });
 
 });
 
@@ -541,7 +555,7 @@ function resize(obj){
         "border-radius":INITIAL_BUTTON_BORDERRADIUS*ratio+"px"
     });
     $(".third:first-child").css('margin-left',($("#display").width()/2-$(".third").width()*3/2)/2);
-    $(".btns:first-child").css('margin-left',($("#display").width()-3*($(".btns").width()+20))/2);
+    $(".btns:first-child").css('margin-left',($("#timerAll").width()-($(".btns").width()+20)*2)/2);
     $(".arrowbtns").css('margin-left', $(".arrowbtnsDiv").width()*0.5-$(".arrowbtns").width()/2);
     $(".display").css('margin-left',$(".arrowbtnsDiv").width()/2-$(".display").width()/2);
     $("#progressbar").css('left', $("#container").width()/2 - $("#progressbar").width()/2)
@@ -692,7 +706,10 @@ function loadData(){
 
 function autoTab(event){
 	var keyCode = event.which || event.keyCode;
-	console.log(keyCode);
+	console.log(keyCode, event.which, event.keyCode);
+    if(keyCode==0&&event.which==0&&event.keyCode==0){
+        keyCode = 48;
+    }
 	console.log(keyCode>=48&&keyCode<=57,keyCode>=96&&keyCode<=105);
     var alertTimer = undefined;
     var type = document.activeElement.id.search('alert')!=-1?'alert':'time';

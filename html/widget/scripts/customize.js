@@ -25,8 +25,6 @@ function getColorCode(color){
 }
 function changeBackgroundColor(color){
     changeTheme('none');
-    // $("#countModeNotif").css('color', 'black');
-    // $("#alertNotif").css('color', 'black');
     if(color=="transparent"){
         $("body").css("background-color", "transparent");
 
@@ -105,8 +103,25 @@ function changeTheme(theme){
     checkCheckmark('Theme',theme);
     switch(theme){
     	case "none":
+            clearImage();
             return;
     		break;
+        case 'autumn':
+            startColor = "black";
+            endColor = "red";
+            $("body").css({
+                'font-family':'sans-serif'
+            });
+            $(".btns").css({
+                'font-family':'sans-serif'
+            });
+            currentTimerColor = 'red';
+            currentTimeColor= 'black';
+            currentButtonColor = 'red';
+            currentBackground = 'yellow';
+            currentAlertBackgroundColor = 'red';
+            currentAlertTextColor = 'black';
+            break;
     	case "digital":
     		startColor = "white";
 	        endColor = "red";
@@ -121,7 +136,7 @@ function changeTheme(theme){
             currentButtonColor = 'red';
             currentBackground = 'black';
             currentAlertBackgroundColor = 'red';
-            currentAlertTextColor = 'white'
+            currentAlertTextColor = 'black';
 	   		break;
 	    case "simple":
 	    	startColor = "black";
@@ -212,4 +227,23 @@ function checkNotifs(){
         $("#alert-count-super").css('color', 'black');
         $("#alertNotif").css('color', 'black');
     }
+}
+function clearImage(){
+    $(".themeImg").remove();
+}
+function addImage(theme){
+    var img = undefined;
+    switch(theme){
+        case 'autumn':
+            img = 'leaf';
+            break;
+        default:
+            return;
+            break;
+    }
+    var randSize = Math.random()*100+100;
+    var randPosition_top = Math.random()*$("#rest").height()-20;
+    var randPosition_left = Math.random()*$("#rest").width()-20;
+    var randDegree = Math.random()*360;
+    $("#rest").append('<img class="themeImg"src="src/'+img+'.png"style="position:fixed;width:'+randSize+'px;height:'+randSize+'px;top:'+randPosition_top+'px;left:'+randPosition_left+'px;z-index:-1;-webkit-transform:rotate('+randDegree+'deg)"/>');
 }
