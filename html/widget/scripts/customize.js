@@ -104,6 +104,7 @@ function changeTheme(theme){
     switch(theme){
     	case "none":
             clearImage();
+
             return;
     		break;
         case 'autumn':
@@ -121,6 +122,7 @@ function changeTheme(theme){
             currentBackground = 'yellow';
             currentAlertBackgroundColor = 'red';
             currentAlertTextColor = 'black';
+            currentTimerBackdropColor = 'yellow';
             break;
     	case "digital":
     		startColor = "white";
@@ -135,6 +137,7 @@ function changeTheme(theme){
 	        currentTimeColor= 'white';
             currentButtonColor = 'red';
             currentBackground = 'black';
+            currentTimerBackdropColor = 'transparent';
             currentAlertBackgroundColor = 'red';
             currentAlertTextColor = 'black';
 	   		break;
@@ -149,6 +152,7 @@ function changeTheme(theme){
 	        });
 	        currentTimerColor = 'grey';
 	        currentTimeColor= 'black';
+            currentTimerBackdropColor = 'transparent';
             currentBackground = 'white';
             currentButtonColor = 'grey';
             currentAlertBackgroundColor = 'grey';
@@ -165,6 +169,7 @@ function changeTheme(theme){
     setCustomizationOption('Background', currentBackground);
     setCustomizationOption('Alert Background Color', currentAlertBackgroundColor);
     setCustomizationOption('Alert Text Color', currentAlertTextColor);
+    setCustomizationOption('Timer Backdrop Color', currentTimerBackdropColor);
     // $("#slice, #progressbar").remove();
     currentTheme = theme;
     resize();
@@ -228,6 +233,24 @@ function checkNotifs(){
         $("#alertNotif").css('color', 'black');
     }
 }
+function changeTimerBackdropColor(color){
+    changeTheme('none');
+    currentTimerBackdropColor = color;
+    if(color=="white"){
+        $("#backdrop").css('background-color', 'white');
+        return;
+    } else if (color=="black"){
+        $("#backdrop").css('background-color', 'black');
+        return;
+    } else if (color=="transparent"){
+        $("#backdrop").css('background-color', 'transparent');
+        return;
+    }
+    color = getColorCode(color);
+
+    $("#backdrop").css("background-color", BACKGROUND_COLORS[color]);
+    saveData();
+}
 function clearImage(){
     $(".themeImg").remove();
 }
@@ -245,5 +268,5 @@ function addImage(theme){
     var randPosition_top = Math.random()*$("#rest").height()-100;
     var randPosition_left = Math.random()*$("#rest").width()-100;
     var randDegree = Math.random()*360;
-    $("#rest").append('<img class="themeImg"src="src/'+img+'.png"style="position:fixed;width:'+randSize+'px;height:'+randSize+'px;top:'+randPosition_top+'px;left:'+randPosition_left+'px;z-index:-1;-webkit-transform:rotate('+randDegree+'deg)"/>');
+    $("#rest").append('<img class="themeImg"src="src/'+img+'.png"style="position:fixed;width:'+randSize+'px;height:'+randSize+'px;top:'+randPosition_top+'px;left:'+randPosition_left+'px;z-index:-100;-webkit-transform:rotate('+randDegree+'deg)"/>');
 }

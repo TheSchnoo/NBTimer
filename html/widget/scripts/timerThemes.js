@@ -23,6 +23,16 @@ function TimerThemer() {
 		addBackgroundOption("Red");
 		addBackgroundOption("Blue");
 		addBackgroundOption("Purple");
+		//timer backdrop color colours
+		addTimerBackdropColorOption("Transparent");
+		addTimerBackdropColorOption("White");
+		addTimerBackdropColorOption("Black");
+		addTimerBackdropColorOption("Grey");
+		addTimerBackdropColorOption("Green");
+		addTimerBackdropColorOption("Yellow");
+		addTimerBackdropColorOption("Red");
+		addTimerBackdropColorOption("Blue");
+		addTimerBackdropColorOption("Purple");
 		//timer colours
 		addTimerColorOption("White");
 		addTimerColorOption("Grey");
@@ -73,6 +83,10 @@ function TimerThemer() {
 		$('#progressbar-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible progressBarCheckmark" id="'+name.toLowerCase()+'BarCheckmark"aria-hidden="true"></li>');
 	}
 
+	function addTimerBackdropColorOption(name){
+		$('#timer-backdrop-color-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible timerBackdropColorCheckmark" id="'+name.toLowerCase()+'TimerBackdropColorCheckmark"aria-hidden="true"></li>');
+
+	}
 
 	function addBackgroundOption(name, color) {
 		// backgroundColors[name] = color;

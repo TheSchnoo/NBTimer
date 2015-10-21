@@ -722,7 +722,7 @@ function init() {
             toggleEditingMenu(false);
             toggleOptions(false);
         }
-
+        clearImage();
         $("#startBtn").addClass('invisible');
 
         $("#pauseBtn").removeClass('invisible');

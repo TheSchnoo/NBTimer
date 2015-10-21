@@ -78,14 +78,14 @@ var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.
 //----------------------------------------------------
 //Resize constants and variables
 //----------------------------------------------------
-var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 1, INITIAL_MENU_WIDTH = 130, INITIAL_SUBMENU_WIDTH = 110,INITIAL_SUBSUBMENU_WIDTH = 120, INITIAL_GLYPH_SIZE = 14, INITIAL_COUNTMODENOTIF_SIZE = 0.8;
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 1, INITIAL_MENU_WIDTH = 130, INITIAL_SUBMENU_WIDTH = 110,INITIAL_SUBSUBMENU_WIDTH = 120, INITIAL_GLYPH_SIZE = 14, INITIAL_COUNTMODENOTIF_SIZE = 0.8, INITIAL_BACKDROP_BORDERRADIUS = 30;
 var ratio = NB.getHostObject().width/INITIAL_WIDTH;
 
 
 //----------------------------------------------------
 //Current options
 //----------------------------------------------------
-var currentOptions={}
+var currentTimerBackdropColor;
 var currentCountType;
 var currentSounds;
 var currentAlertTextColor,currentAlertBackgroundColor;
@@ -148,6 +148,10 @@ function checkCheckmark(category, item){
             }
             $(".countCheckmark").addClass('invisible');
             $("#"+item+"CountCheckmark").removeClass('invisible');
+            break;
+        case 'Timer Backdrop Color':
+            $(".timerBackdropColorCheckmark").addClass('invisible');
+            $("#"+item+"TimerBackdropColorCheckmark").removeClass('invisible');
             break;
         case 'Time Color':
             $(".timeColorCheckmark").addClass('invisible');
@@ -215,6 +219,13 @@ function setCustomizationOption(category, item) {
                 default:
                     break;
             }
+            break;
+        case 'Timer Backdrop Color':
+            if(item.toLowerCase()==currentTheme&&!fromLoad&&!fromTheme){
+                return;
+            }
+            changeTimerBackdropColor(item.toLowerCase());
+            saveData();
             break;
         case 'Time Color':
             if(item.toLowerCase()==currentTimeColor&&!fromLoad&&!fromTheme){
@@ -607,11 +618,16 @@ function resize(obj){
         'height':NB.getHostObject().height-$("#container").height(),
         'top':$("#container").height()
     });
+    $("#backdrop").height($(".third").height()+$(".arrowbtnsDiv").height());
+    $("#backdrop").css({
+        'border-radius':INITIAL_BACKDROP_BORDERRADIUS*ratio+"px",
+    });
 }
 function saveData(){
     hostobject = NB.getHostObject();
     hostobject.currentProgressAnimation = currentProgressAnimation;
     hostobject.currentTimerColor = currentTimerColor;
+    hostobject.currentTimerBackdropColor = currentTimerBackdropColor;
     hostobject.currentButtonColor = currentButtonColor;
     hostobject.currentBackground = currentBackground;
     hostobject.currentTimeColor = currentTimeColor;
@@ -662,6 +678,7 @@ function loadData(){
         currentAlertTextColor = loaded_data.currentAlertTextColor;
         currentAlertBackgroundColor = loaded_data.currentAlertBackgroundColor;
         currentCountType = loaded_data.currentCountType;
+        currentTimerBackdropColor = loaded_data.currentTimerBackdropColor;
     } else {
     	//defaults
         alerts = [];
@@ -680,11 +697,13 @@ function loadData(){
         currentSounds = {};
         currentAlertBackgroundColor = 'red';
         currentAlertTextColor = 'black';
+        currentTimerBackdropColor = 'transparent';
     }
     //settings that don't mess with themes
     chooseEvent(currentEvent);
     setupSounds();
     //settings not included in theme
+
     setCustomizationOption('Count Mode', currentCountType);
     setCustomizationOption('Timer Labels', showLabels?"Show":"Hide");
     setCustomizationOption('Progress Bar Type', currentProgressAnimation);
@@ -700,6 +719,7 @@ function loadData(){
     setCustomizationOption('Time Color', currentTimeColor);
     setCustomizationOption('Alert Background Color', currentAlertBackgroundColor);
     setCustomizationOption('Alert Text Color', currentAlertTextColor);
+    setCustomizationOption('Timer Backdrop Color', currentTimerBackdropColor);
 
 }
 
