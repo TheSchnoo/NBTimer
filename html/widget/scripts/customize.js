@@ -314,7 +314,8 @@ function changeAlertTextColor(color){
     }
 }
 function checkNotifs(){
-    if(currentBackground =='black'){
+    var currentBG = $("body").css('background-color')
+    if(currentBG =="rgb(0, 0,0)"||currentBG=="rgb(49, 32, 6)"){
         $("#gear").attr('src', 'img/gear-white.png');
         $("#countModeNotif").css('color', 'white');
         $("#alert-count-super").css('color', 'white');

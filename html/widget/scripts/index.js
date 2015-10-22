@@ -229,6 +229,11 @@ function setCustomizationOption(category, item) {
                 return;
             }
             changeTimerBackdropColor(item.toLowerCase());
+            if(currentTheme!='none'){
+                currentTheme = 'none';
+                $(".themeCheckmark").addClass('invisible');
+                clearImage();
+            }
             saveData();
             break;
         case 'Time Color':
@@ -236,6 +241,11 @@ function setCustomizationOption(category, item) {
                 return;
             }
             changeTimeColor(item.toLowerCase());
+            if(currentTheme!='none'){
+                currentTheme = 'none';
+                $(".themeCheckmark").addClass('invisible');
+                clearImage();
+            }
             break;
 		case 'Theme':
             if(item.toLowerCase()==currentTheme&&!fromLoad&&!fromTheme){
@@ -248,7 +258,11 @@ function setCustomizationOption(category, item) {
             if(item.toLowerCase()==currentProgressAnimation&&!fromLoad&&!fromTheme){
                 return;
             }
-			var hai = changeProgressAnimation(item.toLowerCase());
+			changeProgressAnimation(item.toLowerCase());
+            // if(currentTheme!='none'){
+            //     currentTheme = 'none';
+            //     $(".themeCheckmark").addClass('invisible');
+            // }
 			saveData();
 			break;
 		case 'Background':
@@ -256,6 +270,11 @@ function setCustomizationOption(category, item) {
                 return;
             }
 			changeBackgroundColor(item.toLowerCase());
+            if(currentTheme!='none'){
+                currentTheme = 'none';
+                $(".themeCheckmark").addClass('invisible');
+                clearImage();
+            }
 			saveData();
 			break;
 		case 'Progress Bar Color':
@@ -263,6 +282,11 @@ function setCustomizationOption(category, item) {
                 return;
             }
 			changeTimerColor(item.toLowerCase());
+            if(currentTheme!='none'){
+                currentTheme = 'none';
+                $(".themeCheckmark").addClass('invisible');
+                clearImage();
+            }
 			saveData();
 			break;
 		case 'Button Color':
@@ -270,6 +294,11 @@ function setCustomizationOption(category, item) {
                 return;
             }
 			changeButtonColor(item.toLowerCase());
+            if(currentTheme!='none'){
+                currentTheme = 'none';
+                $(".themeCheckmark").addClass('invisible');
+                clearImage();
+            }
 			saveData();
 			break;
         case 'Timer Labels':
@@ -277,6 +306,10 @@ function setCustomizationOption(category, item) {
                 return;
             }
             changeLabelsDisplay(item.toLowerCase());
+            // if(currentTheme!='none'){
+            //     currentTheme = 'none';
+            //     $(".themeCheckmark").addClass('invisible');
+            // }
             saveData();
             break;
         case 'Snooze Button Options':
@@ -306,6 +339,11 @@ function setCustomizationOption(category, item) {
                 return;
             }
             changeAlertBackgroundColor(item.toLowerCase());
+            if(currentTheme!='none'){
+                currentTheme = 'none';
+                $(".themeCheckmark").addClass('invisible');
+                clearImage();
+            }
             saveData();
             break;
         case 'Alert Text Color':
@@ -313,6 +351,11 @@ function setCustomizationOption(category, item) {
                 return;
             }
             changeAlertTextColor(item.toLowerCase());
+            if(currentTheme!='none'){
+                currentTheme = 'none';
+                $(".themeCheckmark").addClass('invisible');
+                clearImage();
+            }
             saveData();
             break;
 		default:
@@ -730,8 +773,9 @@ function loadData(){
     setCustomizationOption('Progress Bar Type', currentProgressAnimation);
     setCustomizationOption('Snooze Button Options', snoozeTime);
     //if there is a theme, apply it, ignore the rest of the things.
-    if(currentTheme!="none"){
+    if(currentTheme.toLowerCase()!="none"){
         setCustomizationOption('Theme', currentTheme);
+        console.log('changed theme on load')
         return;
     }
     //settings included in theme.
