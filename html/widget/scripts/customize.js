@@ -363,7 +363,7 @@ function addImage(theme){
             break;
         case'winter':
             img = 'snowflake';
-            maxNum = 9;
+            maxNum = 18;
             break;
         case 'halloween':
             img = 'pumpkin';
