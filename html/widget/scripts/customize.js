@@ -154,6 +154,7 @@ function changeTheme(theme){
             currentAlertBackgroundColor = 'red';
             currentAlertTextColor = 'black';
             currentTimerBackdropColor = 'yellow';
+            changeArrowColor('yellow');
             break;
     	case "digital":
     		startColor = "white";
@@ -171,6 +172,7 @@ function changeTheme(theme){
             currentTimerBackdropColor = 'transparent';
             currentAlertBackgroundColor = 'red';
             currentAlertTextColor = 'black';
+            changeArrowColor('white');
 	   		break;
 	    case "simple":
 	    	startColor = "black";
@@ -188,7 +190,44 @@ function changeTheme(theme){
             currentButtonColor = 'grey';
             currentAlertBackgroundColor = 'grey';
             currentAlertTextColor = 'black';
+            changeArrowColor('black');
 	        break;
+        case "winter":
+            startColor = "#126CA4";
+            endColor = "#b40000";
+            $("body").css({
+                'font-family':'sans-serif'
+            });
+            $(".btns").css({
+                'font-family':'sans-serif'
+            });
+            currentTimerColor = '#248dc5';
+            currentTimeColor= '#248dc5';
+            currentTimerBackdropColor = '#fdfdfd';
+            currentBackground = '#a3d0e8';
+            currentButtonColor = '#04669b';
+            currentAlertBackgroundColor = '#d3e1ff';
+            currentAlertTextColor = '#04669b';
+            changeArrowColor('white');
+            break;
+        case "halloween":
+            startColor = "black";
+            endColor = "#a73ae7";
+            $("body").css({
+                'font-family':'sans-serif'
+            });
+            $(".btns").css({
+                'font-family':'sans-serif'
+            });
+            currentTimerColor = '#a73ae7';
+            currentTimeColor= '#ff9a00';
+            currentTimerBackdropColor = '#312006';
+            currentBackground = '#312006';
+            currentButtonColor = '#ff9a00';
+            currentAlertBackgroundColor = '#a73ae7';
+            currentAlertTextColor = 'black';
+            changeArrowColor('white');
+            break;
 
 	    default:
 	    	startColor = "black";
