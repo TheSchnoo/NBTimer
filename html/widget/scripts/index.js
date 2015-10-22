@@ -592,7 +592,6 @@ function resize(obj){
     $(".arrowbtns").css('margin-left', $(".arrowbtnsDiv").width()*0.5-$(".arrowbtns").width()/2);
     $(".display").css('margin-left',$(".arrowbtnsDiv").width()/2-$(".display").width()/2);
     $("#progressbar").css('left', $("#container").width()/2 - $("#progressbar").width()/2)
-    $(".btns").css('background', BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
     $("#slice").css('left', $("#container").width()/2-$("#slice").width()/2);
     $("#border-left").css('height',NB.getHostObject().height-20+"px");
     $("#border-right").css('height',NB.getHostObject().height+"px");
