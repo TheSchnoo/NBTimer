@@ -57,6 +57,9 @@ function changeBackgroundColor(color){
 function changeTimerColor(color){
     changeTheme('none');
     if(color.split("")[0]=="#"){
+        if(currentProgressAnimation=="circle"){
+            $(".pie").css("border-color", color);
+        }
         if(currentProgressAnimation=="pie"){
             $(".timer .fill >#slice >.pie").css("background-color", color);
         } else if(currentProgressAnimation == "bar"){
@@ -64,7 +67,7 @@ function changeTimerColor(color){
         }
         currentTimerColor = color;
         saveData();
-        return;
+        return color;
     }
     if(color=="white"){
     	if(currentProgressAnimation=="circle"){
@@ -74,7 +77,11 @@ function changeTimerColor(color){
         	$(".timer .fill >#slice >.pie").css("background-color", 'white');
         } if(currentProgressAnimation == "bar"){
     		$("#progressbar div").css('background-color', 'white');
-    }
+        }  
+
+        currentTimerColor = color;
+        saveData();
+        return 'white';
     }
     currentTimerColor = color;
     color = getColorCode(color);
@@ -85,6 +92,7 @@ function changeTimerColor(color){
     } else if(currentProgressAnimation == "bar"){
     	$("#progressbar div").css('background-color', TIMER_COLORS[color]);
     }
+    return TIMER_COLORS[color];
 }
 
 function changeButtonColor(color){
@@ -193,6 +201,7 @@ function changeTheme(theme){
     setCustomizationOption('Alert Background Color', currentAlertBackgroundColor);
     setCustomizationOption('Alert Text Color', currentAlertTextColor);
     setCustomizationOption('Timer Backdrop Color', currentTimerBackdropColor);
+    setCustomizationOption('Progress Bar Color', currentTimerColor);
     // $("#slice, #progressbar").remove();
     currentTheme = theme;
     resize();
@@ -309,6 +318,15 @@ function addImage(theme){
     switch(theme){
         case 'autumn':
             img = 'leaf';
+            maxNum = 4;
+            break;
+        case'winter':
+            img = 'snowflake';
+            maxNum = 9;
+            break;
+        case 'halloween':
+            img = 'pumpkin';
+            maxNum = 9;
             break;
         default:
             return;
@@ -318,5 +336,6 @@ function addImage(theme){
     var randPosition_top = Math.random()*$("#rest").height()-100;
     var randPosition_left = Math.random()*$("#rest").width()-100;
     var randDegree = Math.random()*360;
-    $("#rest").append('<img class="themeImg"src="src/'+img+'.png"style="position:fixed;width:'+randSize+'px;height:'+randSize+'px;top:'+randPosition_top+'px;left:'+randPosition_left+'px;z-index:-100;-webkit-transform:rotate('+randDegree+'deg)"/>');
+    var randImg = String(Math.floor(Math.random()*maxNum)+1);
+    $("#rest").append('<img class="themeImg"src="src/photos/'+img+'/'+img+randImg+'.png"style="position:fixed;width:'+randSize+'px;height:'+randSize+'px;top:'+randPosition_top+'px;left:'+randPosition_left+'px;z-index:-100;-webkit-transform:rotate('+randDegree+'deg)"/>');
 }

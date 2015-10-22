@@ -379,6 +379,9 @@ img {
 #dialog input, #dialog2 input, #dialog3 input, #dialog4 input{
     color:black;
 }
+#dialog4{
+    height:140px;
+}
 
 #timerNums{
     float:right;
@@ -415,14 +418,14 @@ img {
 }
 
 #menu{
-    font-size:1em;
-    width:130px;
+    font-size:0.85em;
+    width:100px;
 }
 .subMenu{
     width:110px;
 }
 .subsubMenu{
-    width:120px;
+    width:110px;
 }
 #alertSign{
     position:fixed;

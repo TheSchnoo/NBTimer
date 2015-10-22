@@ -78,7 +78,7 @@ var ARROW_IMAGES = [["red-up.png", 'red-down.png'],["green-up.png", 'green-down.
 //----------------------------------------------------
 //Resize constants and variables
 //----------------------------------------------------
-var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 1, INITIAL_MENU_WIDTH = 130, INITIAL_SUBMENU_WIDTH = 110,INITIAL_SUBSUBMENU_WIDTH = 120, INITIAL_GLYPH_SIZE = 14, INITIAL_COUNTMODENOTIF_SIZE = 0.8, INITIAL_BACKDROP_BORDERRADIUS = 30;
+var INITIAL_HEIGHT = 400, INITIAL_WIDTH = 350, INITIAL_TIME_FONTSIZE = 50, INITIAL_LABELS_FONTSIZE = 14, INITIAL_BUTTONS_FONTSIZE = 13, INITIAL_BUTTONS_WIDTH = 65, INITIAL_BUTTONS_HEIGHT = 35, INITIAL_ARROWS_HEIGHT = 10, INITIAL_ARROWS_WIDTH = 40, INITIAL_BUTTON_BORDERRADIUS = 17, INITIAL_CIRCLE_SIZE= 320,INITIAL_COLON_SIZE = 40, INITIAL_MENU_FONT_SIZE = 0.85, INITIAL_MENU_WIDTH = 100, INITIAL_SUBMENU_WIDTH = 110,INITIAL_SUBSUBMENU_WIDTH = 110, INITIAL_GLYPH_SIZE = 14, INITIAL_COUNTMODENOTIF_SIZE = 0.8, INITIAL_BACKDROP_BORDERRADIUS = 30;
 var ratio = NB.getHostObject().width/INITIAL_WIDTH;
 
 
@@ -185,6 +185,7 @@ function checkCheckmark(category, item){
             $("#"+item+"TimerLabelCheckmark").removeClass('invisible');
             break;
         case 'Snooze Button Options':
+            item = item.replace(" ","");
             $(".snoozeButtonCheckmark").addClass('invisible');
             $("#"+item+"SnoozeButtonCheckmark").removeClass('invisible');
             break;
@@ -279,6 +280,24 @@ function setCustomizationOption(category, item) {
             saveData();
             break;
         case 'Snooze Button Options':
+            if(typeof item == 'number'){
+                switch (item){
+                    case 0:
+                        item = "None";
+                        break;
+                    case 60:
+                        item = "1 Min";
+                        break;
+                    case 300:
+                        item = "5 Min";
+                        break;
+                    case 600:
+                        item = "10 Min";
+                        break;
+                    default:
+                        break;
+                }
+            }
         	changeSnoozeTime(item.toLowerCase());
         	saveData();
             break;
@@ -710,6 +729,7 @@ function loadData(){
     setCustomizationOption('Count Mode', currentCountType);
     setCustomizationOption('Timer Labels', showLabels?"Show":"Hide");
     setCustomizationOption('Progress Bar Type', currentProgressAnimation);
+    setCustomizationOption('Snooze Button Options', snoozeTime);
     //if there is a theme, apply it, ignore the rest of the things.
     if(currentTheme!="none"){
         setCustomizationOption('Theme', currentTheme);

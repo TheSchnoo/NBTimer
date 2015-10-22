@@ -79,8 +79,8 @@ UI.prototype.drawTimer = function(percent) {
         '-o-transform':'rotate('+deg+'deg)',
 
         'transform':'rotate('+deg+'deg)',
-        'border-color':TIMER_COLORS[getColorCode(currentTimerColor)],
-        'background-color':currentProgressAnimation=="pie"?TIMER_COLORS[getColorCode(currentTimerColor)]:'none'
+        'border-color':changeTimerColor(currentTimerColor),
+        'background-color':currentProgressAnimation=="pie"?changeTimerColor(currentTimerColor):'none'
 
     });
 };
@@ -411,6 +411,8 @@ Timer.prototype.startUp = function(e) {
         } else {
             $(".display").css('color',endColor);
             $(".colon").css('color',endColor);
+            $("#pauseBtn").addClass('invisible');
+            $("#startBtn").removeClass('invisible');
             timer.printTime();
             timer.pause();
             timer.isStarted = false;
@@ -420,6 +422,16 @@ Timer.prototype.startUp = function(e) {
             }
             if(!hideSnooze){
                 $("#snooze").removeClass('invisible');
+            }
+            if (currentSounds.during!="None"&&currentSounds.during!=undefined){
+                duringAudio.pause();
+                duringAudio.currentTime = 0;
+            }
+            if(currentSounds.after!="None"&&currentSounds.after!=undefined){
+                if(!duringAudio.ended){
+                    duringAudio.pause()
+                }
+                afterAudio.play();
             }
             // if(currentSounds.after){
             //     if(!duringAudio.ended){

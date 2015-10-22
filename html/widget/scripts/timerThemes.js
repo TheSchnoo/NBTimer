@@ -105,8 +105,9 @@ function TimerThemer() {
 		$('#timer-labels-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible timerLabelCheckmark" id="'+name.toLowerCase()+'TimerLabelCheckmark"aria-hidden="true"></li>');
 	}
 	function addSnoozeButtonOption(name, theme) {
+		name1 = name.replace(" ","");
 		// backgroundColors[name] = color;
-		$('#snooze-button-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible snoozeButtonCheckmark" id="'+name.toLowerCase()+'SnoozeButtonCheckmark"aria-hidden="true"></li>');
+		$('#snooze-button-options').append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible snoozeButtonCheckmark" id="'+name1.toLowerCase()+'SnoozeButtonCheckmark"aria-hidden="true"></li>');
 	}
 	function addThemeOption(name){
 		$("#theme-options").append('<li><span class="menu-option">' + name + '</span>&nbsp;<span class="glyphicon glyphicon-ok invisible themeCheckmark" id="'+name.toLowerCase()+'ThemeCheckmark"aria-hidden="true"></li>');
@@ -183,9 +184,6 @@ function changeSnoozeTime(item){
 			break;
 		case "1 min":
 			hideSnooze = false;
-			if(timer.isStarted==false){
-				$("#snooze").removeClass('invisible');
-			}
 			snoozeTime=60;
 			//add 1 min
 			break;
