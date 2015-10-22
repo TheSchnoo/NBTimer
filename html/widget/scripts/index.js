@@ -141,6 +141,9 @@ function toggleEditingMenu(state) {
 
 function checkCheckmark(category, item){
     item = item.toLowerCase();
+    if(item.split("")[0]=="#"){
+        return;
+    }
     switch(category) {
         case 'Count Mode':
             if(item=="none"){

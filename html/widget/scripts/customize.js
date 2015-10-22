@@ -24,7 +24,14 @@ function getColorCode(color){
     return color;
 }
 function changeBackgroundColor(color){
+
     changeTheme('none');
+    if(color.split("")[0]=="#"){
+        $("body").css('background-color', color);
+        currentBackground = color;
+        saveData();
+        return;
+    }
     if(color=="transparent"){
         $("body").css("background-color", "transparent");
 
@@ -49,6 +56,16 @@ function changeBackgroundColor(color){
 
 function changeTimerColor(color){
     changeTheme('none');
+    if(color.split("")[0]=="#"){
+        if(currentProgressAnimation=="pie"){
+            $(".timer .fill >#slice >.pie").css("background-color", color);
+        } else if(currentProgressAnimation == "bar"){
+            $("#progressbar div").css('background-color', color);
+        }
+        currentTimerColor = color;
+        saveData();
+        return;
+    }
     if(color=="white"){
     	if(currentProgressAnimation=="circle"){
         	$(".pie").css("border-color", "white");
@@ -72,6 +89,12 @@ function changeTimerColor(color){
 
 function changeButtonColor(color){
     changeTheme('none');
+    if(color.split("")[0]=="#"){
+        $(".btns").css('background', color);
+        currentButtonColor = color;
+        saveData();
+        return;
+    }
     currentButtonColor = color;
     color = getColorCode(color);
     $(".btns").css('background',BUTTON_COLORS[getColorCode(currentButtonColor)][1]);
@@ -178,6 +201,15 @@ function changeTheme(theme){
 
 function changeTimeColor(color){
     changeTheme('none');
+    if(color.split("")[0]=="#"){
+        startColor = color;
+        currentTimeColor = color;
+        $(".colon").css('color', startColor);
+        $(".display").css('color', startColor);
+        $(".timerLabel").css('color', startColor);
+        saveData();
+        return;
+    }
     currentTimeColor = color;
     if(color=="white"){
         startColor = "white";
@@ -195,6 +227,12 @@ function changeTimeColor(color){
 
 function changeAlertBackgroundColor(color){
     changeTheme('none');
+    if(color.split("")[0]=="#"){
+        $("#alert-modal").css('background-color', color);
+        currentAlertBackgroundColor = color;
+        saveData();
+        return;
+    }
     currentAlertBackgroundColor = color;
     $("#countModeNotif").css('color', 'black');
     if(color=="white"){
@@ -211,6 +249,12 @@ function changeAlertBackgroundColor(color){
 }
 function changeAlertTextColor(color){
     changeTheme('none');
+    if(color.split("")[0]=="#"){
+        $("#alert-modal-dialogue").css('color', color);
+        currentAlertTextColor = color;
+        saveData();
+        return;
+    }
     currentAlertTextColor = color;
     if(color=="white"){
         $("#alert-modal-dialogue").css('color', 'white');
@@ -235,6 +279,12 @@ function checkNotifs(){
 }
 function changeTimerBackdropColor(color){
     changeTheme('none');
+    if(color.split("")[0]=="#"){
+        $("#backdrop").css('background-color', color);
+        currentTimerBackdropColor = color;
+        saveData();
+        return;
+    }
     currentTimerBackdropColor = color;
     if(color=="white"){
         $("#backdrop").css('background-color', 'white');
