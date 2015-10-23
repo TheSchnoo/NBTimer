@@ -229,6 +229,24 @@ function changeTheme(theme){
             currentAlertTextColor = 'black';
             changeArrowColor('white');
             break;
+        case "pedro":
+            startColor = "#041A0D";
+            endColor = "#F7F9F9";
+            $("body").css({
+                'font-family':'sans-serif'
+            });
+            $(".btns").css({
+                'font-family':'sans-serif'
+            });
+            currentTimerColor = '#3E78B2';
+            currentTimeColor= '#3E78B2';
+            currentTimerBackdropColor = '#7399B8';
+            currentBackground = '#F7F9F9';
+            currentButtonColor = '#3E78B2';
+            currentAlertBackgroundColor = '#7399B8';
+            currentAlertTextColor = 'white';
+            changeArrowColor('white');
+            break;
 
 	    default:
 	    	startColor = "black";

@@ -62,6 +62,8 @@ function TimerThemer() {
 		addThemeOption("Autumn");
 		addThemeOption("Winter");
 		addThemeOption("Halloween");
+		addThemeOption("Pedro");
+
 		//alert color
 		addAlertBackgroundOption("Transparent");
 		addAlertBackgroundOption("White");

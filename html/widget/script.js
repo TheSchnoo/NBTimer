@@ -135,60 +135,60 @@ UI.prototype.stopWatch = function(finish) {
 };
 UI.prototype.stopWatchUp = function(finish) {
     
-    // this.timerFinish = finish;
+    this.timerFinish = finish;
 
-    // var seconds = (this.timerFinish-(new Date().getTime()))/1000;
+    var seconds = (this.timerFinish-(new Date().getTime()))/1000;
 
-    // // if (seconds == 0){
-    // //     console.log('end');
-    // //     return;
-    // // }
-    // // if (seconds <0){
-    // //     // do{
-    // //     //     clearInterval(the_timer);
-    // //     // }while(seconds==0)
-    // //     console.log('a');
-    // //     return;
-    // // }
-    //  if(seconds < 0){
-        
-    //     this.drawTimer(100);
-    //     this.drawBar(100);
-
-    //     startBtn.disabled = false;
-    //     timer.isStarted = false;
-    //     timer.isPaused = true;
+    // if (seconds == 0){
     //     console.log('end');
-    //     if(currentSounds.after!="None"&&currentSounds.after!=undefined){
-    //         if(!duringAudio.ended){
-    //             duringAudio.pause()
-    //         }
-    //         afterAudio.play();
-    //     }
-    //     runEvent();   
-    //     this.drawTimer(0);
-    //     this.drawBar(0);
-    //     finish = finish + 5000;
-
+    //     return;
     // }
-    // else {
+    // if (seconds <0){
+    //     // do{
+    //     //     clearInterval(the_timer);
+    //     // }while(seconds==0)
+    //     console.log('a');
+    //     return;
+    // }
+     if(seconds < 0){
         
-    //     var percent = 100-((seconds/timerSeconds)*100);
+        this.drawTimer(0);
+        this.drawBar(0);
 
-    //     this.drawTimer(percent);
-    //     this.drawBar(percent);
-    // }
-    countUpUI = countUpUI - 1;
-    if (countUpUI > 0){
-        var percent = 100 - ((countUpUI/finish)*100);
+        startBtn.disabled = false;
+        timer.isStarted = false;
+        timer.isPaused = true;
+        console.log('end');
+        if(currentSounds.after!="None"&&currentSounds.after!=undefined){
+            if(!duringAudio.ended){
+                duringAudio.pause()
+            }
+            afterAudio.play();
+        }
+        runEvent();   
+        this.drawTimer(0);
+        this.drawBar(0);
+        finish = finish + 5000;
+
+    }
+    else {
+        
+        var percent = ((seconds/timerSeconds)*100);
+
         this.drawTimer(percent);
         this.drawBar(percent);
     }
-    else if (countUpUI <= 0){
-        this.drawTimer(0);
-        this.drawBar(0);
-        countUpUI = finish;
-    }
+    // countUpUI = countUpUI - 1;
+    // if (countUpUI > 0){
+    //     var percent = ((timer.time/countUpUI)*100);
+    //     this.drawTimer(percent);
+    //     this.drawBar(percent);
+    // }
+    // else if (countUpUI <= 0){
+    //     this.drawTimer(0);
+    //     this.drawBar(0);
+    //     countUpUI = finish;
+    // }
 };
 
 UI.prototype.startCircle = function(sec, resetTriggered) {
@@ -200,6 +200,8 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
             
             finish = new Date().getTime()+(timerSeconds*1000);
 
+            countUpUI = new Date().getTime()+(timerSeconds*998);
+
             if (countDownTrigger === true && countUpTrigger ===false){
                 timer1 = $.timer(function() {
                 UI.prototype.stopWatch(finish);
@@ -208,9 +210,9 @@ UI.prototype.startCircle = function(sec, resetTriggered) {
                 timer1.set({ time : 50, autostart : true });
             }   
             else if (countDownTrigger === false && countUpTrigger === true){
-                countUpUI = 100;
+
                 timer1 = $.timer(function() {
-                UI.prototype.stopWatchUp(100);
+                UI.prototype.stopWatchUp(countUpUI);
                 });
 
                 timer1.set({ time : 50, autostart : true });
@@ -665,6 +667,8 @@ function init() {
     $(subSecondBtn).mousehold(200, subSecond);
     
     startBtn.onclick = function(){
+
+        starttime = timer.time;
         
         if (timer.isStarted === false){
             timer.unpause();
@@ -689,7 +693,7 @@ function init() {
                 timer.interval = 1000;
                 timer.startUp();
                 timer.resetTriggered = false;
-                timer.UI.startCircle("5", timer.resetTriggered);
+                timer.UI.startCircle(starttime, timer.resetTriggered);
                 if (timer.isPaused === true) {
                     // pauseBtn.innerHTML = "pause";
                 }
